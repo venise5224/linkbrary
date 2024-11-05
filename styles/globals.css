@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --background: #ffffff;
+  --black100: #000;
+  --black200: #111322;
+  --black300: #373740;
+  --red100: #ff5b56;
+  --gray100: #f0f6ff;
+  --gray200: #e7effb;
+  --gray300: #ccd5e3;
+  --gray400: #9fa6b2;
+  --gray500: #3e3e43;
+  --purple100: #6d6afe;
+}
+
+body {
+  color: var(--black100);
+  background-color: var(--white100);
+  font-family: "Pretendard-Regular", Arial, Helvetica, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
