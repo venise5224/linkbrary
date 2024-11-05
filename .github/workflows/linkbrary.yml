@@ -3,10 +3,11 @@ name: Linkbrary CI
 on:
   push:
     branches:
-      - main  # main 브랜치에 푸시될 때 실행
+      - main # main 브랜치에 푸시될 때 실행
+      - develop
   pull_request:
     branches:
-      - develop  # main 브랜치로의 PR이 생성될 때 실행
+      - develop # main 브랜치로의 PR이 생성될 때 실행
 
 jobs:
   lint-and-build:
@@ -19,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.15.1'  # 현재 사용 중인 Node.js 버전
+          node-version: "20.15.1" # 현재 사용 중인 Node.js 버전
 
       - name: Install dependencies
         run: npm install
