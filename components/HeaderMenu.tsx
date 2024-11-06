@@ -9,14 +9,10 @@ const HeaderMenu = () => {
     const isLoggedIn = false;
     const router = useRouter()
 
-    const handleClick = () => {
-        router.push('/login')
-    }
-
     return (
     <>
       {!isLoggedIn ? (
-          <Button onClick={handleClick} width="w-[80px] md:w-[128px]" height="h-[37px] md:h-[53px]" size="text-[14px] md:text-[18px]" type="button">로그인</Button>
+          <Button onClick={()=>{router.push('/login')}} width="w-[80px] md:w-[128px]" height="h-[37px] md:h-[53px]" size="text-[14px] md:text-[18px]" type="button">로그인</Button>
       ) : (
         <div className="flex items-center gap-[24px]">
           <Link href={'/favorite'} className="flex items-center gap-[6px] bg-gray200 border border-purple100 rounded-[4px] py-[10px] px-[12px] text-[12px] leading-[14.32px] md:text-[14px] md:leading-[16.71px] font-normal">
