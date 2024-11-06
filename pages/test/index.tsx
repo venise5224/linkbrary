@@ -1,3 +1,4 @@
+import FolderList from "@/components/modal/FolderList";
 import ModalContainer from "@/components/modal/ModalContainer";
 import ModalContent from "@/components/modal/ModalContent";
 import ModalInput from "@/components/modal/ModalInput";
@@ -21,6 +22,12 @@ export default function Test() {
       <ModalContainer title="폴더 공유" subtitle="폴더명">
         <ModalContent>
           <ModalShare />
+        </ModalContent>
+      </ModalContainer>
+      <div>폴더에 추가</div>
+      <ModalContainer title="폴더에 추가" subtitle="링크 주소">
+        <ModalContent buttonText="추가하기">
+          <FolderList />
         </ModalContent>
       </ModalContainer>
     </div>

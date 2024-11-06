@@ -26,7 +26,7 @@ const ModalShareItem = ({
           style={{ fill: color }}
         />
       </div>
-      <div>{text}</div>
+      <div className="text-[13px] leading-[15px] text-[#444444] ">{text}</div>
     </div>
   );
 };

@@ -13,18 +13,19 @@ const ModalContainer = ({
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }) => {
   return (
-    <div className="relative w-[360px]">
-      <div className="flex flex-col bg-white rounded-[15px] border border-gray300">
-        <div className="w-[280px] flex flex-col items-center gap-2 mt-8 mb-6 mx-auto text-black300 text-xl leading-6 font-bold">
+    <div className="relative w-[360px] px-8 py-10 flex flex-col gap-6 bg-white rounded-[15px] border border-gray300">
+      <div className="flex flex-col items-center justify-center">
+        <div className="w-[280px] gap-2 text-black300 text-xl leading-6 font-bold">
           {title}
-          {subtitle && (
-            <div className="text-sm leading-[22px] font-normal text-gray400">
-              {subtitle}
-            </div>
-          )}
         </div>
-        <div className="mx-auto mb-8">{children}</div>
+        {subtitle && (
+          <div className="text-sm leading-[22px] font-normal text-gray400">
+            {subtitle}
+          </div>
+        )}
+        <div>{children}</div>
       </div>
+
       <button
         type="button"
         onClick={onClick}
