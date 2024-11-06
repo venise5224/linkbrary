@@ -11,7 +11,7 @@ const Favorite = () => {
       </div>
       <ContentLayout>
         <CardsLayout>
-          {/* 카드 공통 컴포넌트 구현 예정 */}
+          {/* 카드 공통 컴포넌트로 구현 예정 */}
           <div className="border border-red-800">card</div>
           <div className="border border-red-800">card</div>
           <div className="border border-red-800">card</div>
