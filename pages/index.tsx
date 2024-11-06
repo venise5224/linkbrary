@@ -1,3 +1,5 @@
+import CardItem from "@/components/CardItem";
+
 export default function Home() {
-  return <div>인덱스 페이지</div>;
+  return <CardItem />;
 }
