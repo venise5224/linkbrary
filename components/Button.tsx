@@ -32,7 +32,7 @@ const Button = ({
         background: backgroundStyle,
         fontSize: size,
       }}
-      className="flex justify-center items-center text-white font-[600] whitespace-nowrap"
+      className="flex justify-center items-center text-white font-[600] whitespace-nowrap hover:opacity-90"
       {...props}
     >
       {children}
