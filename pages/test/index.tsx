@@ -1,6 +1,7 @@
-import ModalContainer from "@/components/modal/modalContainer";
-import ModalContent from "@/components/modal/modalContent";
-import ModalInput from "@/components/modal/modalInput";
+import ModalContainer from "@/components/modal/ModalContainer";
+import ModalContent from "@/components/modal/ModalContent";
+import ModalInput from "@/components/modal/ModalInput";
+import ModalShare from "@/components/modal/ModalShare";
 
 export default function Test() {
   return (
@@ -15,6 +16,12 @@ export default function Test() {
       <div>폴더 삭제</div>
       <ModalContainer title="폴더 삭제" subtitle="폴더명">
         <ModalContent buttonText="삭제하기"></ModalContent>
+      </ModalContainer>
+      <div>폴더 공유</div>
+      <ModalContainer title="폴더 공유" subtitle="폴더명">
+        <ModalContent>
+          <ModalShare />
+        </ModalContent>
       </ModalContainer>
     </div>
   );
