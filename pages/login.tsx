@@ -1,6 +1,8 @@
 import AuthInput from "@/components/Auth/AuthInput";
+import SnsLogin from "@/components/Auth/SnsLogin";
 import Button from "@/components/Button";
 import AuthLayout from "@/components/Layout/AuthLayout";
+import Image from "next/image";
 import Link from "next/link";
 
 const Login = () => {
@@ -32,6 +34,7 @@ const Login = () => {
         <Button width="w-full" height="h-[53px]" className="mt-[30px]">
           로그인
         </Button>
+        <SnsLogin />
       </form>
     </AuthLayout>
   );
