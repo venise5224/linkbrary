@@ -5,11 +5,13 @@ const ModalContainer = ({
   title,
   subtitle,
   children,
+  buttonText,
   onClick,
 }: {
   title: string;
   subtitle?: string;
-  children: ReactNode;
+  children?: ReactNode;
+  buttonText?: string;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }) => {
   return (
@@ -24,7 +26,16 @@ const ModalContainer = ({
           </div>
         )}
       </div>
-      <div className="flex justify-center">{children}</div>
+      <div className="flex justify-center">
+        <div>
+          {children && <div>{children}</div>}
+          {buttonText && (
+            <button type="button" className="bg-blue-300 w-full">
+              {buttonText}
+            </button>
+          )}
+        </div>
+      </div>
 
       {/* 모달 닫기 버튼 */}
       <button
