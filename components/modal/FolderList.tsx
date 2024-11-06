@@ -13,8 +13,8 @@ const FolderList = () => {
 
   return (
     <div>
-      {list.map((item) => (
-        <FolderItem key={item.id} title={item.title} />
+      {list.map((item, index) => (
+        <FolderItem key={item.id} title={item.title} index={index} />
       ))}
     </div>
   );

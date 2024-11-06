@@ -8,7 +8,7 @@ const ModalContent = ({
   children?: ReactNode;
 }) => {
   return (
-    <div className="">
+    <div>
       {children && <div>{children}</div>}
       {buttonText && (
         <button type="button" className="bg-blue-300 w-full">
