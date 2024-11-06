@@ -2,7 +2,6 @@ import AuthInput from "@/components/Auth/AuthInput";
 import SnsLogin from "@/components/Auth/SnsLogin";
 import Button from "@/components/Button";
 import AuthLayout from "@/components/Layout/AuthLayout";
-import Image from "next/image";
 import Link from "next/link";
 
 const Login = () => {
@@ -18,7 +17,7 @@ const Login = () => {
         </Link>
       </p>
       <form
-        className="w-full sm:max-w-[325px] mt-[30px]"
+        className="w-full sm:max-w-[325px] md:max-w-[400px] mt-[30px]"
         aria-labelledby="login-form"
       >
         <AuthInput
