@@ -16,6 +16,7 @@ const Button = ({
   radius = "8px",
   color = "positive",
   size = "18px",
+  className = "",
   ...props
 }: ButtonProps) => {
   const backgroundStyle =
@@ -29,7 +30,7 @@ const Button = ({
         borderRadius: radius,
         background: backgroundStyle,
       }}
-      className={`flex justify-center ${width} ${height} ${size} items-center text-white font-[600] whitespace-nowrap hover:opacity-90`}
+      className={`flex justify-center ${width} ${height} ${size} ${className} items-center text-white font-[600] whitespace-nowrap hover:opacity-90`}
       {...props}
     >
       {children}
