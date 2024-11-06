@@ -18,6 +18,7 @@ interface easySignUpProps extends easySignInProps {
   name: string;
 }
 
+// 회원가입
 export const postSignUp = async (body: signUpProps) => {
   try {
     const res = await axiosInstance.post("/auth/sign-up", body);
@@ -27,6 +28,7 @@ export const postSignUp = async (body: signUpProps) => {
   }
 };
 
+// 로그인
 export const postSignIn = async (body: signInProps) => {
   try {
     const res = await axiosInstance.post("/auth/sign-in", body);
@@ -36,6 +38,7 @@ export const postSignIn = async (body: signInProps) => {
   }
 };
 
+// 간편 회원가입
 export const postEasySignUp = async (
   provider: "google" | "kakao",
   body: easySignUpProps
@@ -48,6 +51,7 @@ export const postEasySignUp = async (
   }
 };
 
+// 간편 로그인
 export const postEasySignIn = async (
   provider: "google" | "kakao",
   body: easySignInProps
