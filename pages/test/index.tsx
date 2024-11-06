@@ -5,7 +5,7 @@ import ModalShare from "@/components/modal/ModalShare";
 
 export default function Test() {
   return (
-    <div>
+    <div className="m-10">
       <div>테스트 페이지</div>
       <div>폴더 이름 변경</div>
       <ModalContainer title="폴더 이름 변경" buttonText="변경하기">
