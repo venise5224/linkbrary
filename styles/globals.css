@@ -22,6 +22,7 @@
   --gray300: #ccd5e3;
   --gray400: #9fa6b2;
   --gray500: #3e3e43;
+  --gray600: #6b6b6b;
   --purple100: #6d6afe;
 }
 
@@ -50,4 +51,17 @@ li {
 button {
   cursor: pointer;
   font-family: inherit;
+}
+
+em {
+  font-style: normal;
+}
+
+/* 랜딩페이지 그라데이션 텍스트 */
+@layer utilities {
+  .gradient-text {
+    background: linear-gradient(90.99deg, #6d6afe 0.12%, #6ae3fe 101.84%);
+    background-clip: text;
+    color: transparent;
+  }
 }
