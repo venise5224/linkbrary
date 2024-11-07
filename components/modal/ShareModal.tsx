@@ -1,11 +1,11 @@
 import ModalContainer from "./modalComponents/ModalContainer";
 import ModalShare from "./modalComponents/ModalShare";
 
-const EditModal = () => {
+const ShareModal = ({ folderName }: { folderName: string }) => {
   return (
-    <ModalContainer title="폴더 공유" subtitle="폴더명">
+    <ModalContainer title="폴더 공유" subtitle={folderName}>
       <ModalShare />
     </ModalContainer>
   );
 };
-export default EditModal;
+export default ShareModal;

@@ -1,10 +1,10 @@
 import ModalContainer from "./modalComponents/ModalContainer";
 
-const DeleteLinkModal = () => {
+const DeleteLinkModal = ({ link }: { link: string }) => {
   return (
     <ModalContainer
       title="링크 삭제"
-      subtitle="httpw://www.abc.com"
+      subtitle={link}
       buttonText="삭제하기"
       buttonColor="negative"
     ></ModalContainer>
