@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/router";
+import { postSignIn, postSignUp } from "@/lib/api/auth";
 
 interface FormValues {
   email: string;
@@ -78,7 +79,15 @@ export function useForm(isSignUp = false) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (isSignUp && isFormInvalid()) return;
+    if (isFormInvalid()) return;
+    const { email, password, nickname } = values;
+
+    if (isSignUp) {
+      postSignUp({ email, password, name: nickname || "" });
+    } else {
+      postSignIn({ email, password });
+    }
+
     setValues(INITIAL_VALUES);
   };
 

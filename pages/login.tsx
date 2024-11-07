@@ -45,7 +45,12 @@ const Login = () => {
           onBlur={handleBlur}
           error={errors.password}
         />
-        <Button width="w-full" height="h-[53px]" className="mt-[30px]">
+        <Button
+          type="submit"
+          width="w-full"
+          height="h-[53px]"
+          className="mt-[30px]"
+        >
           로그인
         </Button>
         <SnsLogin />
