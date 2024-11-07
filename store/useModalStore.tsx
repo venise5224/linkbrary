@@ -1,16 +1,18 @@
 import { create } from "zustand";
 
-interface IStoreState {
-  showModal: boolean;
-  onOpen: (id: string) => void;
-  onClose: () => void;
+interface ModalStore {
+  modalType: string | null;
+  isOpen: boolean;
+  openModal: (id: string) => void;
+  closeModal: (id: string) => void;
 }
 
-const useModalStore = create<IStoreState>((set) => {
+const useModalStore = create<ModalStore>((set) => {
   return {
-    showModal: false,
-    onOpen: () => set({ showModal: true }),
-    onClose: () => set({ showModal: false }),
+    modalType: null,
+    isOpen: false,
+    openModal: (type: string) => set({ modalType: type, isOpen: true }),
+    closeModal: () => set({ modalType: null, isOpen: false }),
   };
 });
 export default useModalStore;
