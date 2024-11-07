@@ -3,7 +3,7 @@ import AddModal from "@/components/modal/AddModal";
 import DeleteFolderModal from "@/components/modal/DeleteFolderModal";
 import DeleteLinkModal from "@/components/modal/DeleteLinkModal";
 import EditModal from "@/components/modal/EditModal";
-import ShareModal from "@/components/modal/ShareModal";
+import SNSModal from "@/components/modal/ShareModal";
 interface ItemType {
   id: number;
   title: string;
@@ -24,7 +24,7 @@ export default function Test() {
         <AddModal list={list} />
         <DeleteFolderModal folderName="공부" />
         <DeleteLinkModal link="www.abc.com" />
-        <ShareModal folderName="공부" />
+        <SNSModal folderName="공부" />
         <EditModal folderName="공부" />
       </div>
     </div>
