@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Profile from "@/public/icons/profile.png";
+import Profile from "@/public/icons/profile.svg";
 import Star from "@/public/icons/star.png";
 import Link from "next/link";
 import Button from "./Button";
