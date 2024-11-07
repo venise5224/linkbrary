@@ -23,7 +23,7 @@ const Login = () => {
         <AuthInput
           text="이메일"
           type="text"
-          name="password"
+          name="email"
           placeholder="이메일을 입력해주세요."
         />
         <AuthInput
