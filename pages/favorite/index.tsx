@@ -1,5 +1,5 @@
 import CardsLayout from "@/components/Layout/CardsLayout";
-import ContentLayout from "@/components/Layout/ContentLayout";
+import Container from "@/components/Layout/Container";
 
 const Favorite = () => {
   return (
@@ -9,7 +9,7 @@ const Favorite = () => {
           ⭐️ 즐겨찾기
         </h2>
       </div>
-      <ContentLayout>
+      <Container>
         <CardsLayout>
           {/* 카드 공통 컴포넌트로 구현 예정 */}
           <div className="border border-red-800">card</div>
@@ -19,7 +19,7 @@ const Favorite = () => {
           <div className="border border-red-800">card</div>
           <div className="border border-red-800">card</div>
         </CardsLayout>
-      </ContentLayout>
+      </Container>
     </>
   );
 };
