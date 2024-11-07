@@ -3,7 +3,7 @@ import AddModal from "@/components/modal/AddModal";
 import DeleteFolderModal from "@/components/modal/DeleteFolderModal";
 import DeleteLinkModal from "@/components/modal/DeleteLinkModal";
 import EditModal from "@/components/modal/EditModal";
-import SNSModal from "@/components/modal/ShareModal";
+import SNSModal from "@/components/modal/SNSModal";
 interface ItemType {
   id: number;
   title: string;
