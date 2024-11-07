@@ -23,9 +23,9 @@ const config: Config = {
         white200: "var(--white200)",
       },
       screens: {
-        sm: "375px",
-        md: "768px",
-        lg: "1200px",
+        sm: { min: "343px", max: "767px" },
+        md: { min: "768px", max: "1199px" },
+        lg: { min: "1200px" },
       },
     },
   },
