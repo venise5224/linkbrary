@@ -4,9 +4,20 @@ import React, { InputHTMLAttributes, useState } from "react";
 interface AuthInputProps extends InputHTMLAttributes<HTMLInputElement> {
   text: string;
   name: string;
+  error?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const AuthInput = ({ text, name, type, ...props }: AuthInputProps) => {
+const AuthInput = ({
+  text,
+  name,
+  error,
+  type,
+  value,
+  onChange,
+  ...props
+}: AuthInputProps) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const toggleClick = () => {
@@ -21,8 +32,14 @@ const AuthInput = ({ text, name, type, ...props }: AuthInputProps) => {
       <div className="relative">
         <input
           {...props}
-          type={isPasswordVisible ? "text" : type}
-          className="w-full h-[60px] rounded-lg border border-gray300 px-[15px] py-[18px] pr-[40px] outline-purple100"
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          type={isPasswordVisible && type === "password" ? "text" : type}
+          className={`w-full h-[60px] rounded-lg border px-[15px] py-[18px] pr-[40px] outline-purple100 ${
+            error ? "border-red-500" : "border-gray300"
+          }`}
         />
         {type === "password" && (
           <Image
@@ -38,6 +55,7 @@ const AuthInput = ({ text, name, type, ...props }: AuthInputProps) => {
             className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
           />
         )}
+        {error && <div className="text-red-500 text-sm mt-1">{error}</div>}
       </div>
     </div>
   );
