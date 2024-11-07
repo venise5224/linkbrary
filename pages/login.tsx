@@ -23,11 +23,13 @@ const Login = () => {
         <AuthInput
           text="이메일"
           type="text"
+          name="password"
           placeholder="이메일을 입력해주세요."
         />
         <AuthInput
           text="비밀번호"
           type="password"
+          name="password"
           placeholder="비밀번호를 입력해주세요."
         />
         <Button width="w-full" height="h-[53px]" className="mt-[30px]">
