@@ -7,10 +7,13 @@ interface ItemType {
   title: string;
   totalCount: number;
 }
-const FolderItem = ({ index, item }: { index: number; item: ItemType }) => {
+const FolderItem = ({ item }: { item: ItemType }) => {
   const [selected, setSelected] = useState(false);
-  const bgColor = index % 2 === 0 ? "bg-white" : "bg-[#F0F6FF]";
+
+  const bgColor = selected ? "bg-gray100" : "bg-white";
+
   const { title, totalCount } = item;
+
   const onClickFolder = () => {
     setSelected(!selected);
   };

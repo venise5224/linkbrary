@@ -14,8 +14,8 @@ const list: ItemType[] = [
 const FolderList = ({ list }: { list: ItemType[] }) => {
   return (
     <ul className="mb-6 flex flex-col gap-1 min-w-[280px] w-full">
-      {list.map((item, index) => (
-        <FolderItem key={item.id} item={item} index={index} />
+      {list.map((item) => (
+        <FolderItem key={item.id} item={item} />
       ))}
     </ul>
   );
