@@ -1,5 +1,6 @@
 import { GetServerSideProps } from "next";
 import { getFavorites } from "@/lib/api/link";
+import { useEffect, useState } from "react";
 import CardItem from "@/components/CardItem";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import Container from "@/components/Layout/Container";
@@ -19,18 +20,37 @@ interface FavoriteProps {
   favoriteList: FavoriteDataType[];
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  try {
-    const res = await getFavorites();
-    return { props: { favoriteList: res || [] } };
-  } catch (error) {
-    console.error("서버사이드에러", error);
-    return { props: { favoriteList: [] } };
-  }
-};
+// 추후 severside 로 구현 예정
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   try {
+//     const res = await getFavorites();
+//     return { props: { favoriteList: res || [] } };
+//   } catch (error) {
+//     console.error("서버사이드에러", error);
+//     return { props: { favoriteList: [] } };
+//   }
+// };
 
-const FavoritePage: React.FC<FavoriteProps> = ({ favoriteList }) => {
-  console.log(favoriteList);
+const FavoritePage = () => {
+  const [favorites, setFavorites] = useState<FavoriteDataType[]>([]);
+
+  useEffect(() => {
+    // 비동기 데이터 호출 함수
+    const fetchFavorites = async () => {
+      try {
+        const data = await getFavorites();
+        console.log(data.list);
+        if (data) {
+          setFavorites(data.list);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchFavorites(); // 함수 실행
+  }, []);
+
   return (
     <>
       <div className="page-title pt-[10px] md:pt-5 pb-10 md:pb-[60px] bg-gray100 text-center">
@@ -40,13 +60,22 @@ const FavoritePage: React.FC<FavoriteProps> = ({ favoriteList }) => {
       </div>
       <Container>
         <CardsLayout>
-          {/* 카드 공통 컴포넌트로 구현 예정 */}
-          <div className="border border-red-800">card</div>
-          <div className="border border-red-800">card</div>
-          <div className="border border-red-800">card</div>
-          <div className="border border-red-800">card</div>
-          <div className="border border-red-800">card</div>
-          <div className="border border-red-800">card</div>
+          {favorites.length > 0 ? (
+            favorites.map((favorite) => (
+              <CardItem
+                key={favorite.id} // 고유한 key 값
+                id={favorite.id}
+                favorite={favorite.favorite}
+                url={favorite.url}
+                title={favorite.title}
+                imageSource={favorite.imageSource}
+                description={favorite.description}
+                createdAt={favorite.createdAt}
+              />
+            ))
+          ) : (
+            <div>즐겨찾기 항목이 없습니다.</div>
+          )}
         </CardsLayout>
       </Container>
     </>
