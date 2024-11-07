@@ -51,9 +51,7 @@ export const getLinks = async () => {
 // 유저의 즐겨찾기 링크 조회(auth)
 export const getFavorites = async () => {
   try {
-    const res = await proxy.get("/api/favorites", {
-      withCredentials: true,
-    });
+    const res = await proxy.get("/api/favorites");
     if (res.status >= 200 && res.status < 300) return res.data;
   } catch (err) {
     console.error("에러 메시지: ", err instanceof Error ? err.message : err);

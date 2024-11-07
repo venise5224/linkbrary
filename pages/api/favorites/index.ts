@@ -9,6 +9,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   console.log("Received cookies:", cookies); // 쿠키 전체 확인
   console.log("Access Token:", accessToken); // accessToken 확인
 
+  // 인증 오류 처리 (accessToken이 없으면 401 응답)
+  if (!accessToken) {
+    return res.status(401).json({ message: "인증 오류: 토큰이 없습니다." });
+  }
+
   switch (req.method) {
     case "GET":
       // 즐겨찾기 목록 조회
@@ -20,13 +25,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           }
         );
         return res.status(200).json(response.data);
-      } catch (err) {
+      } catch (err: any) {
+        // 즐겨찾기 폴더가 없는 경우 (404 처리)
+        if (err.response?.status === 404) {
+          return res.status(404).json({ message: "즐겨찾기 폴더가 없습니다." });
+        }
+
         console.error(err);
         return res
           .status(500)
-          .json({ message: "즐겨찾기 목록 조회에 실패했습니다." });
+          .json({ message: "서버 에러 : 즐겨찾기 목록 조회에 실패했습니다." });
       }
     default:
+      // 지원하지 않는 메서드
       res.setHeader("Allow", ["GET"]);
       return res.status(405).end(`메서드 ${req.method}는 허용되지 않습니다.`);
   }
