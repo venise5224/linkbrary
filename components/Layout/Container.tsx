@@ -1,10 +1,10 @@
 import React from "react";
 
-interface ContentLayoutProps {
+interface ContainerProps {
   children: React.ReactNode;
 }
 
-const ContentLayout = ({ children }: ContentLayoutProps) => {
+const Container = ({ children }: ContainerProps) => {
   return (
     <div className="w-full max-w-[1125px] mx-auto p-[10px] md:p-10 px-[32.5px]">
       {children}
@@ -12,4 +12,4 @@ const ContentLayout = ({ children }: ContentLayoutProps) => {
   );
 };
 
-export default ContentLayout;
+export default Container;
