@@ -1,18 +1,20 @@
-function timeAgo(createdAt: string) {
+function timeAgo(createdAt: string): string {
   const createdDate = new Date(createdAt);
   const currentDate = new Date();
 
-  const secondsDiff = Math.floor((currentDate - createdDate) / 1000); // 초 단위 차이
-  const minutesDiff = Math.floor(secondsDiff / 60); // 분 단위 차이
-  const hoursDiff = Math.floor(minutesDiff / 60); // 시간 단위 차이
-  const daysDiff = Math.floor(hoursDiff / 24); // 일 단위 차이
+  const secondsDiff = Math.floor(
+    (currentDate.getTime() - createdDate.getTime()) / 1000
+  );
+  const minutesDiff = Math.floor(secondsDiff / 60);
+  const hoursDiff = Math.floor(minutesDiff / 60);
+  const daysDiff = Math.floor(hoursDiff / 24); //
 
   if (hoursDiff < 1) {
-    return `${secondsDiff}초 전`; // 1시간 미만
+    return `${secondsDiff}초 전`;
   } else if (hoursDiff < 24) {
-    return `${hoursDiff}시간 전`; // 1일 미만
+    return `${hoursDiff}시간 전`;
   } else {
-    return `${daysDiff}일 전`; // 1일 이상
+    return `${daysDiff}일 전`;
   }
 }
 
