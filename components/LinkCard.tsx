@@ -16,7 +16,7 @@ interface CardItemProps extends linkDataType {
   isFavoritePage?: boolean; // 즐겨찾기 페이지 여부를 판별하는 flag
 }
 
-const CardItem = ({ isFavoritePage, ...info }: CardItemProps) => {
+const LinkCard = ({ isFavoritePage, ...info }: CardItemProps) => {
   const [isSubscribed, seIsSubscribed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -87,4 +87,4 @@ const CardItem = ({ isFavoritePage, ...info }: CardItemProps) => {
   );
 };
 
-export default CardItem;
+export default LinkCard;
