@@ -19,11 +19,7 @@ const AddFolderModal = ({ folderName }: { folderName: string }) => {
     };
     if (value !== "") {
       try {
-        const res = await postFolders(body, {
-          headers: {
-            // Authorization: `Bearer ${accessToken}`, // Authorization 헤더에 토큰 추가
-          },
-        });
+        const res = await postFolders(body);
         console.log(res); //res를 필요없을지도
       } catch (error) {
         console.log(error);
