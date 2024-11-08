@@ -12,13 +12,22 @@ const AddFolderModal = ({ folderName }: { folderName: string }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
+  //토큰 받아오기
   const handleSubmit = async () => {
     const body = {
       name: value,
     };
     if (value !== "") {
-      const res = await postFolders(body);
-      console.log(res);
+      try {
+        const res = await postFolders(body, {
+          headers: {
+            // Authorization: `Bearer ${accessToken}`, // Authorization 헤더에 토큰 추가
+          },
+        });
+        console.log(res); //res를 필요없을지도
+      } catch (error) {
+        console.log(error);
+      }
     }
     closeModal();
   };

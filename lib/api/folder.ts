@@ -15,9 +15,16 @@ export const getFolders = async () => {
 };
 
 // 유저의 폴더 생성(auth)
-export const postFolders = async (body: folderApiProps) => {
+export const postFolders = async (
+  body: folderApiProps,
+  { headers }: { headers: Record<string, string> }
+) => {
   try {
-    const res = await proxy.post("/api/folders", body);
+    const res = await proxy.post(
+      "/api/folders",
+      body
+      // headers: ...headers
+    );
     if (res.status >= 200 && res.status < 300) return res.data;
   } catch (err) {
     console.error("에러 메시지: ", err instanceof Error ? err.message : err);
