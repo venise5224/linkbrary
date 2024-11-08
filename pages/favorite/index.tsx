@@ -1,7 +1,6 @@
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getFavorites } from "@/lib/api/link";
-import { useEffect, useState } from "react";
-import CardItem from "@/components/CardItem";
+import LinkCard from "@/components/LinkCard";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import Container from "@/components/Layout/Container";
 
@@ -20,34 +19,45 @@ interface FavoriteProps {
   favoriteList: FavoriteDataType[];
 }
 
-// 추후 severside 로 구현 예정
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   try {
-//     const res = await getFavorites();
-//     return { props: { favoriteList: res || [] } };
-//   } catch (error) {
-//     console.error("서버사이드에러", error);
-//     return { props: { favoriteList: [] } };
-//   }
-// };
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const { req } = context;
 
-const FavoritePage = () => {
-  const [favoriteList, setFavoriteList] = useState<FavoriteDataType[]>([]);
+  // 클라이언트의 쿠키 가져오기
+  const cookies = req.headers.cookie || "";
 
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        const data = await getFavorites();
-        if (data) {
-          setFavoriteList(data.list);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  try {
+    const res = await getFavorites({
+      headers: {
+        Cookie: cookies, // 쿠키를 그대로 포함시킴
+      },
+    });
+    return { props: { favoriteList: res.list || [] } };
+  } catch (error) {
+    console.error("서버사이드에러", error);
+    return { props: { favoriteList: [] } };
+  }
+};
 
-    fetchFavorites();
-  }, []);
+const FavoritePage = ({ favoriteList }: FavoriteProps) => {
+  // 임시 보류
+  // const [favoriteList, setFavoriteList] = useState<FavoriteDataType[]>([]);
+
+  // useEffect(() => {
+  //   const fetchFavorites = async () => {
+  //     try {
+  //       const data = await getFavorites();
+  //       if (data) {
+  //         setFavoriteList(data.list);
+  //       }
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   };
+
+  //   fetchFavorites();
+  // }, []);
 
   return (
     <>
@@ -60,7 +70,7 @@ const FavoritePage = () => {
         <CardsLayout>
           {favoriteList.length > 0
             ? favoriteList.map((favorite) => (
-                <CardItem
+                <LinkCard
                   key={favorite.id}
                   id={favorite.id}
                   url={favorite.url}
