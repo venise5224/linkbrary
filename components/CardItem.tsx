@@ -12,7 +12,11 @@ interface linkDataType {
   createdAt: string;
 }
 
-const CardItem = (info: linkDataType) => {
+interface CardItemProps extends linkDataType {
+  isFavoritePage?: boolean; // 즐겨찾기 페이지 여부를 판별하는 flag
+}
+
+const CardItem = ({ isFavoritePage, ...info }: CardItemProps) => {
   const [isSubscribed, seIsSubscribed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,31 +32,33 @@ const CardItem = (info: linkDataType) => {
           alt="링크 미리보기"
           fill
         />
-        {isSubscribed ? (
-          <div
-            onClick={() => seIsSubscribed(!isSubscribed)}
-            className="absolute top-[15px] right-[15px] z-1"
-          >
-            <Image
-              src="/icons/star-fill.svg"
-              width={32}
-              height={32}
-              alt="subscripe button"
-            />
-          </div>
-        ) : (
-          <div
-            onClick={() => seIsSubscribed(!isSubscribed)}
-            className="absolute top-[15px] right-[15px] z-1"
-          >
-            <Image
-              src="/icons/star-empty.svg"
-              width={32}
-              height={32}
-              alt="subscripe button"
-            />
-          </div>
-        )}
+        {/* isFavoritePage가 false일 때만 즐겨찾기 버튼 렌더링 */}
+        {!isFavoritePage &&
+          (isSubscribed ? (
+            <div
+              onClick={() => seIsSubscribed(!isSubscribed)}
+              className="absolute top-[15px] right-[15px] z-1"
+            >
+              <Image
+                src="/icons/star-fill.svg"
+                width={32}
+                height={32}
+                alt="subscripe button"
+              />
+            </div>
+          ) : (
+            <div
+              onClick={() => seIsSubscribed(!isSubscribed)}
+              className="absolute top-[15px] right-[15px] z-1"
+            >
+              <Image
+                src="/icons/star-empty.svg"
+                width={32}
+                height={32}
+                alt="subscripe button"
+              />
+            </div>
+          ))}
       </section>
 
       <section className="w-full h-[40%] flex flex-col justify-between gap-[10px] pt-[15px] px-[20px] pb-[10px]">
@@ -60,12 +66,15 @@ const CardItem = (info: linkDataType) => {
           <span className="text-sm text-gray-400">
             {createdTime || "1일 전"}
           </span>
-          <div
-            className="relative w-[21px] h-[17px]"
-            onClick={(state) => setIsOpen(!state)}
-          >
-            <Image src="/icons/kebab.svg" alt="kebab button" fill />
-          </div>
+          {/* isFavoritePage가 false일 때만 케밥 버튼 렌더링 */}
+          {!isFavoritePage && (
+            <div
+              className="relative w-[21px] h-[17px]"
+              onClick={(state) => setIsOpen(!state)}
+            >
+              <Image src="/icons/kebab.svg" alt="kebab button" fill />
+            </div>
+          )}
         </div>
         <div className="text-[black100] text-lg ">
           {info.description || "설명"}

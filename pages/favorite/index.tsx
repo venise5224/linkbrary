@@ -69,6 +69,7 @@ const FavoritePage = () => {
                 imageSource={favorite.imageSource}
                 description={favorite.description}
                 createdAt={favorite.createdAt}
+                isFavoritePage={true}
               />
             ))
           ) : (
