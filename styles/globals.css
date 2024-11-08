@@ -10,21 +10,6 @@
   font-style: normal;
 }
 
-:root {
-  --background: #ffffff;
-  --white200: #f5f5f5;
-  --black100: #000;
-  --black200: #111322;
-  --black300: #373740;
-  --red100: #ff5b56;
-  --gray100: #f0f6ff;
-  --gray200: #e7effb;
-  --gray300: #ccd5e3;
-  --gray400: #9fa6b2;
-  --gray500: #3e3e43;
-  --purple100: #6d6afe;
-}
-
 body {
   color: var(--black100);
   background-color: var(--white100);
@@ -50,4 +35,21 @@ li {
 button {
   cursor: pointer;
   font-family: inherit;
+}
+
+em {
+  font-style: normal;
+}
+
+/* 랜딩페이지 그라데이션 텍스트 */
+@layer utilities {
+  .gradient-text {
+    background: linear-gradient(90.99deg, #6d6afe 0.12%, #6ae3fe 101.84%);
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+input {
+  outline: none;
 }
