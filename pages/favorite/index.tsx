@@ -35,7 +35,6 @@ const FavoritePage = () => {
   const [favoriteList, setFavoriteList] = useState<FavoriteDataType[]>([]);
 
   useEffect(() => {
-    // 비동기 데이터 호출 함수
     const fetchFavorites = async () => {
       try {
         const data = await getFavorites();
@@ -59,23 +58,34 @@ const FavoritePage = () => {
       </div>
       <Container>
         <CardsLayout>
-          {favoriteList.length > 0 ? (
-            favoriteList.map((favorite) => (
-              <CardItem
-                key={favorite.id} // 고유한 key 값
-                id={favorite.id}
-                url={favorite.url}
-                title={favorite.title}
-                imageSource={favorite.imageSource}
-                description={favorite.description}
-                createdAt={favorite.createdAt}
-                isFavoritePage={true}
-              />
-            ))
-          ) : (
-            <div>즐겨찾기 항목이 없습니다.</div>
-          )}
+          {favoriteList.length > 0
+            ? favoriteList.map((favorite) => (
+                <CardItem
+                  key={favorite.id}
+                  id={favorite.id}
+                  url={favorite.url}
+                  title={favorite.title}
+                  imageSource={favorite.imageSource}
+                  description={favorite.description}
+                  createdAt={favorite.createdAt}
+                  isFavoritePage={true}
+                />
+              ))
+            : null}
         </CardsLayout>
+
+        {/* 즐겨찾기 항목이 없을 때 보여줄 메시지 (공통 컴포넌트로 사용할 건지 논의 필요) */}
+        {favoriteList.length === 0 && (
+          <div className="flex flex-col justify-center items-center h-full p-10 bg-gray100 text-center text-gray600">
+            <div className="text-2xl md:text-3xl font-semibold text-gray600">
+              <span className="block mb-4">⭐️</span>
+              즐겨찾기 항목이 없습니다.
+            </div>
+            <div className="text-sm text-purple100 mt-2">
+              저장한 즐겨찾기 항목을 추가해보세요.
+            </div>
+          </div>
+        )}
       </Container>
     </>
   );
