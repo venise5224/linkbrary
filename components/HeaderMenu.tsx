@@ -2,7 +2,7 @@ import Image from "next/image";
 import Profile from "@/public/icons/profile.svg";
 import Star from "@/public/icons/star.png";
 import Link from "next/link";
-import Button from "./Button";
+import SubmitButton from "./SubMitButton";
 import { useRouter } from "next/router";
 
 const HeaderMenu = () => {
@@ -12,7 +12,7 @@ const HeaderMenu = () => {
   return (
     <>
       {!isLoggedIn ? (
-        <Button
+        <SubmitButton
           onClick={() => {
             router.push("/login");
           }}
@@ -22,7 +22,7 @@ const HeaderMenu = () => {
           type="button"
         >
           로그인
-        </Button>
+        </SubmitButton>
       ) : (
         <div className="flex items-center gap-[24px]">
           <Link
