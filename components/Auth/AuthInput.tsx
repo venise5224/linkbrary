@@ -3,9 +3,10 @@ import React, { InputHTMLAttributes, useState } from "react";
 
 interface AuthInputProps extends InputHTMLAttributes<HTMLInputElement> {
   text: string;
+  name: string;
 }
 
-const AuthInput = ({ text, type, ...props }: AuthInputProps) => {
+const AuthInput = ({ text, name, type, ...props }: AuthInputProps) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const toggleClick = () => {
@@ -14,7 +15,7 @@ const AuthInput = ({ text, type, ...props }: AuthInputProps) => {
 
   return (
     <div className="mb-6">
-      <label htmlFor={type} className="text-[14px] block mb-[12px]">
+      <label htmlFor={name} className="text-[14px] block mb-[12px]">
         {text}
       </label>
       <div className="relative">
