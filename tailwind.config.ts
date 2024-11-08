@@ -23,9 +23,9 @@ const config: Config = {
         purple100: "#6d6afe",
       },
       screens: {
-        sm: "343px",
-        md: "768px",
-        lg: "1200px",
+        sm: { min: "343px", max: "767px" },
+        md: { min: "768px", max: "1199px" },
+        lg: { min: "1200px" },
       },
     },
   },
