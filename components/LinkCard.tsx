@@ -28,7 +28,7 @@ const LinkCard = ({ isFavoritePage, ...info }: CardItemProps) => {
       <section className="relative w-full h-[60%]">
         <Image
           src={info.imageSource || `/images/no-content.svg`}
-          objectFit="cover"
+          className="object-cover"
           alt="링크 미리보기"
           fill
         />

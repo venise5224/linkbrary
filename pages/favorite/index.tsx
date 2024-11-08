@@ -1,5 +1,5 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { getFavorites } from "@/lib/api/link";
+import { proxy } from "@/lib/api/axiosInstanceApi";
 import LinkCard from "@/components/LinkCard";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import Container from "@/components/Layout/Container";
@@ -28,37 +28,21 @@ export const getServerSideProps: GetServerSideProps = async (
   const cookies = req.headers.cookie || "";
 
   try {
-    const res = await getFavorites({
+    const res = await proxy.get("/api/favorites", {
       headers: {
         Cookie: cookies, // 쿠키를 그대로 포함시킴
       },
     });
-    return { props: { favoriteList: res.list || [] } };
+
+    const { list, totalCount } = res.data || { list: [], totalCount: 0 };
+    return { props: { favoriteList: list, totalCount } };
   } catch (error) {
     console.error("서버사이드에러", error);
-    return { props: { favoriteList: [] } };
+    return { props: { favoriteList: [], totalCount: 0 } };
   }
 };
 
-const FavoritePage = ({ favoriteList }: FavoriteProps) => {
-  // 임시 보류
-  // const [favoriteList, setFavoriteList] = useState<FavoriteDataType[]>([]);
-
-  // useEffect(() => {
-  //   const fetchFavorites = async () => {
-  //     try {
-  //       const data = await getFavorites();
-  //       if (data) {
-  //         setFavoriteList(data.list);
-  //       }
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
-
-  //   fetchFavorites();
-  // }, []);
-
+const FavoritePage = ({ favoriteList, totalCount }: FavoriteProps) => {
   return (
     <>
       <div className="page-title pt-[10px] md:pt-5 pb-10 md:pb-[60px] bg-gray100 text-center">
