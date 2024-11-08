@@ -12,7 +12,7 @@ interface linkDataType {
   createdAt: string;
 }
 
-const CardItem = (info: linkDataType) => {
+const LinkCard = (info: linkDataType) => {
   const [isSubscribed, seIsSubscribed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -78,4 +78,4 @@ const CardItem = (info: linkDataType) => {
   );
 };
 
-export default CardItem;
+export default LinkCard;
