@@ -4,7 +4,7 @@ const ModalInput = ({
   placeholder,
   name,
 }: {
-  placeholder?: string;
+  placeholder: string;
   name: string;
 }) => {
   return (

@@ -1,6 +1,6 @@
-import { MouseEvent, ReactNode } from "react";
 import { IoIosClose } from "react-icons/io";
 import Button from "../../Button";
+import { ModalPropType } from "@/types/modalTypes";
 
 const ModalContainer = ({
   title,
@@ -9,22 +9,17 @@ const ModalContainer = ({
   buttonText,
   buttonColor,
   onClick,
-}: {
-  title: string;
-  subtitle?: string;
-  children?: ReactNode;
-  buttonText?: string;
-  buttonColor?: "positive" | "negative";
-  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-}) => {
+}: ModalPropType) => {
   return (
     <div className="z-30 absolute top-0 left-0 flex justify-center items-center bg-black/40 h-screen w-screen">
       <div className="z-20 relative w-[360px] py-8 px-10 flex flex-col gap-6 bg-white rounded-[15px] border border-gray300">
         {/* 제목 + 부제목 */}
         <div className="flex flex-col items-center justify-center gap-2">
-          <div className="text-center w-[280px] gap-2 text-black300 text-xl leading-6 font-bold">
-            {title}
-          </div>
+          {title && (
+            <div className="text-center w-[280px] gap-2 text-black300 text-xl leading-6 font-bold">
+              {title}
+            </div>
+          )}
           {subtitle && (
             <div className="text-sm leading-[22px] font-normal text-gray400">
               {subtitle}

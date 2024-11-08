@@ -1,6 +1,7 @@
+import { ModalKeysType } from "@/components/modal/modalManager/ModalManager";
 import useModalStore from "@/store/useModalStore";
 
-const useModal = (type: string) => {
+const useModal = (type: ModalKeysType) => {
   const { modalType, isOpen, openModal, closeModal } = useModalStore();
   return {
     isOpen: modalType === type && isOpen,

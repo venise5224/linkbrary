@@ -1,13 +1,9 @@
 import { cls } from "@/lib/utils";
+import { FolderItemType } from "@/types/modalTypes";
 import { useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 
-interface ItemType {
-  id: number;
-  title: string;
-  totalCount: number;
-}
-const FolderItem = ({ item }: { item: ItemType }) => {
+const FolderItem = ({ item }: { item: FolderItemType }) => {
   const [selected, setSelected] = useState(false);
 
   const bgColor = selected ? "bg-gray100" : "bg-white";
