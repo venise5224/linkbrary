@@ -1,5 +1,5 @@
 import { IoIosClose } from "react-icons/io";
-import Button from "../../Button";
+import SubmitButton from "../../SubMitButton";
 import { ModalPropType } from "@/types/modalTypes";
 import useModalStore from "@/store/useModalStore";
 import { MouseEvent, useRef } from "react";
@@ -46,14 +46,14 @@ const ModalContainer = ({
 
           {/* 제출 버튼 */}
           {buttonText && (
-            <Button
+            <SubmitButton
               type="button"
               width="w-full"
               height="h-[51px] "
               color={buttonColor}
             >
               {buttonText}
-            </Button>
+            </SubmitButton>
           )}
         </div>
 

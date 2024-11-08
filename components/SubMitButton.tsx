@@ -9,7 +9,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: string;
 }
 
-const Button = ({
+const SubmitButton = ({
   children,
   width = "auto",
   height = "53px",
@@ -38,4 +38,4 @@ const Button = ({
   );
 };
 
-export default Button;
+export default SubmitButton;

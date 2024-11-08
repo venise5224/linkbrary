@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Button from "@/components/Button";
+import SubmitButton from "@/components/SubMitButton";
 import HomeMain from "@/public/images/home_main.png";
 import sectionLink from "@/public/images/section_link.png";
 import sectionFolder from "@/public/images/section_folder.png";
@@ -38,12 +38,12 @@ const HomePage = () => {
           <br className="lg:hidden" />
           관리해 보세요
         </h1>
-        <Button
+        <SubmitButton
           onClick={handleClick}
           className="mt-[24px] w-[200px] h-[37px] text-[14px] md:mt-[40px] md:w-[350px] md:h-[53px] md:text-[18px] lg:mt-[40px] lg:w-[350px] lg:h-[53px] lg:text-[18px]"
         >
           링크 추가하기
-        </Button>
+        </SubmitButton>
         <Image
           src={HomeMain}
           width={1118}
