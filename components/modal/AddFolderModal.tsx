@@ -12,7 +12,6 @@ const AddFolderModal = ({ folderName }: { folderName: string }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
-  //토큰 받아오기
   const handleSubmit = async () => {
     const body = {
       name: value,
@@ -20,7 +19,7 @@ const AddFolderModal = ({ folderName }: { folderName: string }) => {
     if (value !== "") {
       try {
         const res = await postFolders(body);
-        console.log(res); //res를 필요없을지도
+        console.log(res);
       } catch (error) {
         console.log(error);
       }
