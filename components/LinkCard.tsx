@@ -1,6 +1,7 @@
 import { useState } from "react";
 import timeAgo from "@/util/timAgo";
 import Image from "next/image";
+import Dropdown from "./Dropdown";
 
 interface linkDataType {
   id: number;
@@ -60,11 +61,9 @@ const LinkCard = (info: linkDataType) => {
           <span className="text-sm text-gray-400">
             {createdTime || "1일 전"}
           </span>
-          <div
-            className="relative w-[21px] h-[17px]"
-            onClick={(state) => setIsOpen(!state)}
-          >
+          <div className="relative w-[21px] h-[17px]">
             <Image src="/icons/kebab.svg" alt="kebab button" fill />
+            <Dropdown isOpen={isOpen} onClose={() => setIsOpen(!state)} />
           </div>
         </div>
         <div className="text-[black100] text-lg ">
