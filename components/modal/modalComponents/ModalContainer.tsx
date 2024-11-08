@@ -1,6 +1,7 @@
 import { IoIosClose } from "react-icons/io";
 import Button from "../../Button";
 import { ModalPropType } from "@/types/modalTypes";
+import useModalStore from "@/store/useModalStore";
 
 const ModalContainer = ({
   title,
@@ -10,6 +11,7 @@ const ModalContainer = ({
   buttonColor,
   onClick,
 }: ModalPropType) => {
+  const { closeModal } = useModalStore();
   return (
     <div className="z-30 absolute top-0 left-0 flex justify-center items-center bg-black/40 h-screen w-screen">
       <div className="z-20 relative w-[360px] py-8 px-10 flex flex-col gap-6 bg-white rounded-[15px] border border-gray300">
@@ -46,7 +48,7 @@ const ModalContainer = ({
         {/* 모달 닫기 버튼 */}
         <button
           type="button"
-          onClick={onClick}
+          onClick={() => closeModal()}
           className="bg-gray200 absolute top-4 right-4 rounded-full size-6 flex justify-center items-center"
         >
           <IoIosClose className="text-gray400" strokeWidth={2} />
