@@ -1,7 +1,7 @@
 import { useForm } from "@/hooks/useForm";
 import AuthInput from "@/components/Auth/AuthInput";
 import SnsLogin from "@/components/Auth/SnsLogin";
-import Button from "@/components/Button";
+import SubmitButton from "@/components/SubMitButton";
 import AuthLayout from "@/components/Layout/AuthLayout";
 import Link from "next/link";
 
@@ -45,14 +45,14 @@ const Login = () => {
           onBlur={handleBlur}
           error={errors.password}
         />
-        <Button
+        <SubmitButton
           type="submit"
           width="w-full"
           height="h-[53px]"
           className="mt-[30px]"
         >
           로그인
-        </Button>
+        </SubmitButton>
         <SnsLogin />
       </form>
     </AuthLayout>
