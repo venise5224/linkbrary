@@ -1,4 +1,4 @@
-import { cls } from "@/lib/utils";
+import { bindCls } from "@/lib/utils";
 import { FolderItemType } from "@/types/modalTypes";
 import { useState } from "react";
 import { FaCheck } from "react-icons/fa6";
@@ -15,7 +15,7 @@ const FolderItem = ({ item }: { item: FolderItemType }) => {
   };
   return (
     <li
-      className={cls(
+      className={bindCls(
         bgColor,
         "w-full p-2 flex h-10 rounded-lg items-center justify-between"
       )}
@@ -23,7 +23,7 @@ const FolderItem = ({ item }: { item: FolderItemType }) => {
     >
       <div className="flex items-center gap-2">
         <div
-          className={cls(
+          className={bindCls(
             "text-base",
             selected ? "text-purple100" : "text-black300"
           )}
