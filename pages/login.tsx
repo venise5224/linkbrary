@@ -21,7 +21,7 @@ const Login = () => {
         </Link>
       </p>
       <form
-        className="w-full sm:max-w-[325px] md:max-w-[400px] mt-[30px]"
+        className="w-full sm:max-w-[325px] md:max-w-[400px] lg:max-w-[400px] mt-[30px]"
         aria-labelledby="login-form"
         onSubmit={handleSubmit}
       >
