@@ -1,14 +1,26 @@
 import { ChangeEvent, useState } from "react";
 import ModalContainer from "./modalComponents/ModalContainer";
 import ModalInput from "./modalComponents/ModalInput";
+import { postFolders } from "@/lib/api/folder";
+import useModalStore from "@/store/useModalStore";
 
 const AddFolderModal = ({ folderName }: { folderName: string }) => {
   const [value, setValue] = useState("");
+
+  const { closeModal } = useModalStore();
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
-  const handleSubmit = () => {
-    // api 요청
+  const handleSubmit = async () => {
+    const body = {
+      name: value,
+    };
+    if (value !== "") {
+      const res = await postFolders(body);
+      console.log(res);
+    }
+    closeModal();
   };
   return (
     <ModalContainer
