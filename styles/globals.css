@@ -4,7 +4,8 @@
 
 @font-face {
   font-family: "Pretendard-Regular";
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff");
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
   font-weight: 400;
   font-style: normal;
 }
@@ -34,6 +35,19 @@ li {
 button {
   cursor: pointer;
   font-family: inherit;
+}
+
+em {
+  font-style: normal;
+}
+
+/* 랜딩페이지 그라데이션 텍스트 */
+@layer utilities {
+  .gradient-text {
+    background: linear-gradient(90.99deg, #6d6afe 0.12%, #6ae3fe 101.84%);
+    background-clip: text;
+    color: transparent;
+  }
 }
 
 input {

@@ -8,4 +8,5 @@ const AddFolderModal = ({ folderName }: { folderName: string }) => {
     </ModalContainer>
   );
 };
+
 export default AddFolderModal;
