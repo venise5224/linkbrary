@@ -6,7 +6,7 @@ interface FolderData {
 }
 
 const FolderTag = (list: FolderData[]) => {
-  const folderStyle = "py-[8px] px-[12px] border border-[#6D6AFE] rounded-md";
+  const folderStyle = "py-[8px] px-[12px] border border-purple-100 rounded-md";
 
   return (
     <div className="flex flex-wrap gap-[8px]">
