@@ -65,7 +65,6 @@ const FavoritePage = () => {
               <CardItem
                 key={favorite.id} // 고유한 key 값
                 id={favorite.id}
-                favorite={favorite.favorite}
                 url={favorite.url}
                 title={favorite.title}
                 imageSource={favorite.imageSource}
