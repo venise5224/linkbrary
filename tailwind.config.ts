@@ -20,6 +20,7 @@ const config: Config = {
         gray300: "#ccd5e3",
         gray400: "#9fa6b2",
         gray500: "#3e3e43",
+        gray600: "#6b6b6b",
         purple100: "#6d6afe",
       },
       screens: {
