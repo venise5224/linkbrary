@@ -8,12 +8,12 @@ import sectionSearch from "@/public/images/section_search.png";
 import { useRouter } from "next/router";
 
 const sectionStyle =
-  "flex flex-col md:flex-row md:items-center md:gap-[51px] lg:gap-[157px]";
+  "flex flex-col md:flex-row md:items-center md:gap-[51px] lg:flex-row lg:items-center lg:gap-[157px]";
 const sectionContent = "flex flex-col md:w-[262px] lg:w-[291px]";
 const sectionTitleStyle =
-  "text-[24px] leading-[28.64px] font-bold md:text-[48px] md:leading-[57.28px]";
+  "text-[24px] leading-[28.64px] font-bold md:text-[48px] md:leading-[57.28px] lg:text-[48px] lg:leading-[57.28px]";
 const sectionDescriptionStyle =
-  "mt-[10px] text-[15px] leading-[22.5px] font-medium text-gray600 md:text-[16px] md:leading-[24px]";
+  "mt-[10px] text-[15px] leading-[22.5px] font-medium text-gray600 md:text-[16px] md:leading-[24px] lg:text-[16px] lg:leading-[24px]";
 const sectionImageStyle =
   "mt-[24px] w-[325px] h-[265.91px] md:w-[385px] md:h-[315px] lg:w-[550px] lg:h-[450px]";
 
@@ -32,7 +32,7 @@ const HomePage = () => {
   return (
     <main>
       <div className="flex flex-col items-center bg-gray100">
-        <h1 className="mt-[28px] text-[32px] leading-[42px] font-bold md:mt-[40px] lg:mt-[70px] md:text-[64px] md:leading-[80px] text-center">
+        <h1 className="mt-[28px] text-[32px] leading-[42px] font-bold md:mt-[40px] lg:mt-[70px] md:text-[64px] md:leading-[80px] lg:text-[64px] lg:leading-[80px] text-center">
           <span className="gradient-text">세상의 모든 정보</span>
           를<br /> 쉽게 저장하고
           <br className="lg:hidden" />
@@ -40,7 +40,7 @@ const HomePage = () => {
         </h1>
         <Button
           onClick={handleClick}
-          className="mt-[24px] w-[200px] h-[37px] text-[14px] md:mt-[40px] md:w-[350px] md:h-[53px] md:text-[18px]"
+          className="mt-[24px] w-[200px] h-[37px] text-[14px] md:mt-[40px] md:w-[350px] md:h-[53px] md:text-[18px] lg:mt-[40px] lg:w-[350px] lg:h-[53px] lg:text-[18px]"
         >
           링크 추가하기
         </Button>
@@ -74,7 +74,9 @@ const HomePage = () => {
           />
         </section>
 
-        <section className={`${sectionStyle} md:flex-row-reverse`}>
+        <section
+          className={`${sectionStyle} md:flex-row-reverse lg:flex-row-reverse`}
+        >
           <div className={sectionContent}>
             <strong className={sectionTitleStyle}>
               링크를 폴더로 <span className="gradient-text">관리</span>하세요
@@ -113,7 +115,9 @@ const HomePage = () => {
           />
         </section>
 
-        <section className={`${sectionStyle} md:flex-row-reverse`}>
+        <section
+          className={`${sectionStyle} md:flex-row-reverse lg:flex-row-reverse`}
+        >
           <div className={sectionContent}>
             <strong className={sectionTitleStyle}>
               저장한 링크를 <span className="gradient-text">검색</span>해 보세요
