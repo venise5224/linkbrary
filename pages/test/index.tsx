@@ -1,4 +1,4 @@
-import { Switch } from "@/components/modal/modalManager/ModalManager";
+import { Modal } from "@/components/modal/modalManager/ModalManager";
 import useModalStore from "@/store/useModalStore";
 
 export default function Test() {
@@ -24,7 +24,7 @@ export default function Test() {
       <button type="button" onClick={() => openModal("SNSModal")}>
         공유 버튼
       </button>
-      {isOpen && <Switch />}
+      {isOpen && <Modal />}
     </div>
   );
 }

@@ -17,7 +17,7 @@ export const ModalType = {
 
 export type ModalKeysType = keyof typeof ModalType;
 
-export const Switch = () => {
+export const Modal = () => {
   const { modalType, isOpen, props } = useModalStore();
 
   if (!modalType || !isOpen) return null;
