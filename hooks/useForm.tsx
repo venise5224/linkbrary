@@ -85,7 +85,10 @@ export function useForm(isSignUp = false) {
     if (isSignUp) {
       postSignUp({ email, password, name: nickname || "" });
     } else {
-      postSignIn({ email, password });
+      const data: any = postSignIn({ email, password });
+      if (data) {
+        router.push("/"); // 로그인 성공 후 대시보드로 리디렉션
+      }
     }
 
     setValues(INITIAL_VALUES);

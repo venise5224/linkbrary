@@ -1,4 +1,4 @@
-import { useForm } from "@/hooks/useForm"; // 훅을 import합니다.
+import { useForm } from "@/hooks/useForm";
 import AuthInput from "@/components/Auth/AuthInput";
 import SnsLogin from "@/components/Auth/SnsLogin";
 import Button from "@/components/Button";
