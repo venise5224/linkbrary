@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode } from "react";
+import { ReactNode } from "react";
 
 export interface ModalPropType {
   title?: string;
