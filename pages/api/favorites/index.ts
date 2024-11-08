@@ -6,10 +6,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
 
-  console.log("Received cookies:", cookies); // 쿠키 전체 확인
-  console.log("Access Token:", accessToken); // accessToken 확인
-
-  // 인증 오류 처리 (accessToken이 없으면 401 응답)
   if (!accessToken) {
     return res.status(401).json({ message: "인증 오류: 토큰이 없습니다." });
   }

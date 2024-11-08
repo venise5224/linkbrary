@@ -32,16 +32,15 @@ interface FavoriteProps {
 // };
 
 const FavoritePage = () => {
-  const [favorites, setFavorites] = useState<FavoriteDataType[]>([]);
+  const [favoriteList, setFavoriteList] = useState<FavoriteDataType[]>([]);
 
   useEffect(() => {
     // 비동기 데이터 호출 함수
     const fetchFavorites = async () => {
       try {
         const data = await getFavorites();
-        console.log(data.list);
         if (data) {
-          setFavorites(data.list);
+          setFavoriteList(data.list);
         }
       } catch (err) {
         console.error(err);
@@ -60,8 +59,8 @@ const FavoritePage = () => {
       </div>
       <Container>
         <CardsLayout>
-          {favorites.length > 0 ? (
-            favorites.map((favorite) => (
+          {favoriteList.length > 0 ? (
+            favoriteList.map((favorite) => (
               <CardItem
                 key={favorite.id} // 고유한 key 값
                 id={favorite.id}
