@@ -47,7 +47,7 @@ const FavoritePage = () => {
       }
     };
 
-    fetchFavorites(); // 함수 실행
+    fetchFavorites();
   }, []);
 
   return (
