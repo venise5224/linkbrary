@@ -25,7 +25,7 @@ const ModalContainer = ({
     >
       <div
         ref={modalRef}
-        className="z-20 relative w-[330px] md:w-[360px] py-8 px-10 flex flex-col gap-6 bg-white rounded-[15px] border border-gray300"
+        className="z-20 relative w-[300px] md:w-[360px] xl:w-[360px] py-8 px-10 flex flex-col gap-6 bg-white rounded-[15px] border border-gray300"
       >
         {/* 제목 + 부제목 */}
         <div className="flex flex-col items-center justify-center gap-2">
