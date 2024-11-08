@@ -6,7 +6,6 @@ export interface ModalPropType {
   children?: ReactNode;
   buttonText?: string;
   buttonColor?: "positive" | "negative";
-  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   folderName?: string;
   list?: FolderItemType[];
   link?: string;

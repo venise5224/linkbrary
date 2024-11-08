@@ -9,7 +9,6 @@ const ModalContainer = ({
   children,
   buttonText,
   buttonColor,
-  onClick,
 }: ModalPropType) => {
   const { closeModal } = useModalStore();
   return (
