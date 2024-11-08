@@ -10,6 +10,7 @@ const ModalContainer = ({
   children,
   buttonText,
   buttonColor,
+  onClick,
 }: ModalPropType) => {
   const { closeModal } = useModalStore();
   const modalRef = useRef<HTMLDivElement | null>(null);
@@ -48,6 +49,7 @@ const ModalContainer = ({
           {buttonText && (
             <Button
               type="button"
+              onClick={onClick}
               width="w-full"
               height="h-[51px] "
               color={buttonColor}
