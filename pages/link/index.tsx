@@ -1,9 +1,9 @@
 import { SearchInput } from "../../components/Search/SearchInput";
-import AddLinkInput from "../../components/Link/AddLinkInput";
 import Container from "@/components/Layout/Container";
-import FolderTag from "../../components/FolderTag";
 import CardsLayout from "@/components/Layout/CardsLayout";
-import CardItem from "@/components/CardItem";
+import AddLinkInput from "../../components/Link/AddLinkInput";
+import FolderTag from "../../components/FolderTag";
+import LinkCard from "../../components/LinkCard";
 import Image from "next/image";
 
 const LinkPage = () => {
@@ -55,7 +55,7 @@ const LinkPage = () => {
           </div>
           <CardsLayout>
             {list.map((link) => (
-              <CardItem key={link.id} info={link} />
+              <LinkCard key={link.id} info={link} />
             ))}
           </CardsLayout>
         </Container>
