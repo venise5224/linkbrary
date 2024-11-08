@@ -20,7 +20,7 @@ const CardItem = (info: linkDataType) => {
   const createdTime = timeAgo(info.createdAt);
 
   return (
-    <div className="w-[340px] h-[344px] rounded-[12px] shadow-lg mt-20 ml-20 overflow-hidden cursor-pointer hover:scale-105 hover:duration-300">
+    <div className="w-[340px] h-[344px] rounded-[12px] shadow-lg overflow-hidden cursor-pointer hover:scale-105 hover:duration-300">
       <section className="relative w-full h-[60%]">
         <Image
           src={info.imageSource || `/images/no-content.svg`}
