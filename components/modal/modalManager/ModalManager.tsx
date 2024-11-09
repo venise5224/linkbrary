@@ -30,10 +30,10 @@ export const Modal = () => {
         <AddModal
           list={
             props.list || [
-              { id: 1, title: "코딩팁", totalCount: 7 },
-              { id: 2, title: "채용 사이트", totalCount: 7 },
-              { id: 3, title: "유용한 글", totalCount: 7 },
-              { id: 4, title: "나만의 장소", totalCount: 7 },
+              { id: 1, name: "코딩팁", linkCount: 7, createAt: "" },
+              { id: 2, name: "채용 사이트", linkCount: 7, createAt: "" },
+              { id: 3, name: "유용한 글", linkCount: 7, createAt: "" },
+              { id: 4, name: "나만의 장소", linkCount: 7, createAt: "" },
             ]
           }
         />
