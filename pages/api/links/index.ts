@@ -12,12 +12,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === "POST") {
     try {
-      const response = await axiosInstance.post("/links", req.body, {
+      await axiosInstance.post("/links", req.body, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
       return res.status(201).json({ message: "링크 추가 성공" }); // 테스트 필요
     } catch (error) {
       if (isAxiosError(error) && error.response) {
