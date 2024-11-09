@@ -2,6 +2,7 @@ import SubmitButton from "../SubMitButton";
 import ModalContainer from "./modalComponents/ModalContainer";
 
 const DeleteFolderModal = ({ folderName }: { folderName: string }) => {
+  console.log("folderName", folderName);
   return (
     <ModalContainer title="폴더 삭제" subtitle={folderName}>
       <SubmitButton
