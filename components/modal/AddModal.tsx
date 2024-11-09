@@ -4,10 +4,11 @@ import ModalContainer from "./modalComponents/ModalContainer";
 import SubmitButton from "../SubMitButton";
 import { useState } from "react";
 import { postLink } from "@/lib/api/link";
+import useModalStore from "@/store/useModalStore";
 
 const AddModal = ({ list, link }: { list: FolderItemType[]; link: string }) => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
-
+  const { closeModal } = useModalStore();
   const handleSubmit = async () => {
     const body = {
       folderId: Number(selectedId),
@@ -18,6 +19,8 @@ const AddModal = ({ list, link }: { list: FolderItemType[]; link: string }) => {
         await postLink(body);
       } catch (error) {
         console.log(error, "링크 생성 에러");
+      } finally {
+        closeModal();
       }
     }
   };
