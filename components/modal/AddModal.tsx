@@ -3,12 +3,24 @@ import FolderList from "./modalComponents/FolderList";
 import ModalContainer from "./modalComponents/ModalContainer";
 import SubmitButton from "../SubMitButton";
 import { useState } from "react";
+import { postLink } from "@/lib/api/link";
 
 const AddModal = ({ list, link }: { list: FolderItemType[]; link: string }) => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  const handleSubmit = () => {
-    //링크 생성 api 요청 또는 id 전달
+  const handleSubmit = async () => {
+    const body = {
+      url: link,
+      folderId: Number(selectedId),
+    };
+    if (link !== "" && selectedId) {
+      try {
+        const res = await postLink(body); // 테스트 필요 (상위에서 list, link받아서)
+        console.log(res);
+      } catch (error) {
+        console.log(error, "링크 생성 에러");
+      }
+    }
   };
 
   const handleClickFolderItem = (id: number) => {

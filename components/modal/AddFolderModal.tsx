@@ -22,7 +22,7 @@ const AddFolderModal = ({ folderName }: { folderName: string }) => {
         const res = await postFolders(body);
         console.log(res);
       } catch (error) {
-        console.log(error);
+        console.log(error, "폴더 생성 에러");
       }
     }
     closeModal();
