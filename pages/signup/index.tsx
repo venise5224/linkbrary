@@ -4,7 +4,7 @@ import AuthLayout from "@/components/Layout/AuthLayout";
 import Link from "next/link";
 import useForm from "@/hooks/useForm";
 
-const Signup = () => {
+const SignupPage = () => {
   const { values, errors, handleChange, handleBlur, handleSubmit } =
     useForm(true);
 
@@ -74,4 +74,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupPage;

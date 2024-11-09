@@ -5,7 +5,7 @@ import SubmitButton from "@/components/SubMitButton";
 import AuthLayout from "@/components/Layout/AuthLayout";
 import Link from "next/link";
 
-const Login = () => {
+const LoginPage = () => {
   const {
     values,
     errors,
@@ -68,4 +68,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
