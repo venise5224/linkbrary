@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/router";
 import { postSignIn, postSignUp } from "@/lib/api/auth";
+import useAuthStore from "@/store/useAuthStore";
 
 interface FormValues {
   email: string;
@@ -20,6 +21,7 @@ export function useForm(isSignUp = false) {
   const [values, setValues] = useState<FormValues>(INITIAL_VALUES);
   const [errors, setErrors] = useState<FormValues>(INITIAL_VALUES);
   const router = useRouter();
+  const { login } = useAuthStore();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -77,18 +79,16 @@ export function useForm(isSignUp = false) {
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (isFormInvalid()) return;
     const { email, password, nickname } = values;
 
     if (isSignUp) {
-      postSignUp({ email, password, name: nickname || "" });
+      await postSignUp({ email, password, name: nickname || "" });
     } else {
-      const data: any = postSignIn({ email, password });
-      if (data) {
-        router.push("/"); // 로그인 성공 후 대시보드로 리디렉션
-      }
+      await login({ email, password });
+      router.push("/"); // 로그인 성공 후 대시보드로 리디렉션
     }
 
     setValues(INITIAL_VALUES);
