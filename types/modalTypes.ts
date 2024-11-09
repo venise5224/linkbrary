@@ -11,7 +11,7 @@ export interface ModalPropType {
 
 export interface FolderItemType {
   id: number;
-  createAt: string;
+  createdAt: string;
   name: string;
   linkCount: number;
 }
