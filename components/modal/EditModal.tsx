@@ -9,6 +9,8 @@ const EditModal = ({ folderName }: { folderName: string }) => {
 
   const { closeModal } = useModalStore();
 
+  // 폴더 정보를 먼저 가져와야함
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };

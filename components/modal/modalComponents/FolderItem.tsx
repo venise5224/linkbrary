@@ -17,7 +17,7 @@ const FolderItem = ({ item }: { item: FolderItemType }) => {
     <li
       className={bindCls(
         bgColor,
-        "w-full p-2 flex h-10 rounded-lg items-center justify-between"
+        "w-full p-2 flex h-10 rounded-lg items-center justify-between cursor-pointer"
       )}
       onClick={onClickFolder}
     >
