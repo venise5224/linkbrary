@@ -1,45 +1,46 @@
 import { bindCls } from "@/lib/utils";
 import { FolderItemType } from "@/types/modalTypes";
-import { useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 
 const FolderItemRadio = ({
   item,
-  isSelected,
+  selectedId,
+  onClick,
 }: {
   item: FolderItemType;
-  isSelected: boolean;
+  selectedId: number | null;
+  onClick: (id: number) => void;
 }) => {
-  // const bgColor = selected ? "bg-gray100" : "bg-white";
-
   const { name, linkCount, id } = item;
+  let isSelected = id === selectedId;
+  const bgColor = isSelected ? "bg-gray100" : "bg-white";
 
-  const onClickFolder = () => {
-    // setSelected(!selected);
+  const onClickFolderItem = () => {
+    onClick(id);
   };
   return (
     <li
       className={bindCls(
-        // bgColor,
+        bgColor,
         "w-full p-2 flex h-10 rounded-lg items-center justify-between cursor-pointer"
       )}
-      onClick={onClickFolder}
+      onClick={onClickFolderItem}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex justify-start items-center p-2">
+        <label htmlFor={String(id)}>{name}</label>
         <input
           value={name}
           type="radio"
           className="opacity-0"
           id={String(id)}
         />
-        <label htmlFor={String(id)}>{name}</label>
         <div className="text-gray400 text-sm">{linkCount}개 링크</div>
       </div>
-      {/* {selected && ( */}
-      <div>
-        <FaCheck className="text-purple100" />
-      </div>
-      {/* )} */}
+      {isSelected && (
+        <div>
+          <FaCheck className="text-purple100" />
+        </div>
+      )}
     </li>
   );
 };

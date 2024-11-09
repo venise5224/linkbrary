@@ -1,14 +1,24 @@
 import { FolderItemType } from "@/types/modalTypes";
 import FolderItemRadio from "./FolderItemRadio";
-import { useState } from "react";
 
-const FolderList = ({ list }: { list: FolderItemType[] | undefined }) => {
-  const [isSelected, setIsSelected] = useState(false);
-  const [selectedId, setSelectedId] = useState<number[]>();
+const FolderList = ({
+  list,
+  selectedId,
+  onClick,
+}: {
+  list: FolderItemType[] | undefined;
+  selectedId: number | null;
+  onClick: (id: number) => void;
+}) => {
   return (
     <ul className="mb-6 flex flex-col gap-1 w-full">
       {list?.map((item) => (
-        <FolderItemRadio key={item.id} item={item} isSelected={isSelected} />
+        <FolderItemRadio
+          key={item.id}
+          item={item}
+          selectedId={selectedId}
+          onClick={onClick}
+        />
       ))}
     </ul>
   );
