@@ -6,8 +6,14 @@ import AuthLayout from "@/components/Layout/AuthLayout";
 import Link from "next/link";
 
 const Login = () => {
-  const { values, errors, handleChange, handleBlur, handleSubmit } =
-    useForm(false);
+  const {
+    values,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    isFormInvalid,
+  } = useForm(false);
 
   return (
     <div className="bg-gray100 min-h-screen">
@@ -51,6 +57,7 @@ const Login = () => {
             width="w-full"
             height="h-[53px]"
             className="mt-[30px]"
+            disabled={isFormInvalid()}
           >
             로그인
           </SubmitButton>
