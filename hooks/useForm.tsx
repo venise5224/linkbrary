@@ -1,11 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/router";
 import { postSignIn, postSignUp } from "@/lib/api/auth";
-<<<<<<< HEAD
 import useAuthStore from "@/store/useAuthStore";
-=======
 import { TbWashDryP } from "react-icons/tb";
->>>>>>> bd01a01a645bcfaec8f99a51af43a1574eac7830
 
 interface FormValues {
   email: string;
@@ -89,12 +86,6 @@ const useForm = (isSignUp = false) => {
     const { email, password, nickname } = values;
 
     if (isSignUp) {
-<<<<<<< HEAD
-      await postSignUp({ email, password, name: nickname || "" });
-    } else {
-      await login({ email, password });
-      router.push("/"); // 로그인 성공 후 대시보드로 리디렉션
-=======
       const data = await postSignUp({ email, password, name: nickname || "" });
 
       if (data) {
@@ -103,14 +94,13 @@ const useForm = (isSignUp = false) => {
         alert("회원가입 실패: 이메일 또는 비밀번호를 확인해주세요.");
       }
     } else {
-      const data = await postSignIn({ email, password });
+      const data = await login({ email, password });
 
       if (data) {
         router.push("/");
       } else {
         alert("로그인 실패: 이메일 또는 비밀번호를 확인해주세요.");
       }
->>>>>>> bd01a01a645bcfaec8f99a51af43a1574eac7830
     }
 
     setValues(INITIAL_VALUES);
