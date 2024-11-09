@@ -33,7 +33,7 @@ export default function Test() {
                 linkCount: 1,
               },
             ],
-            link: "https://example.com",
+            link: "https://example1.com",
           })
         }
       >

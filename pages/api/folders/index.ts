@@ -12,12 +12,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === "POST") {
     try {
-      const response = await axiosInstance.post("/folders", req.body, {
+      await axiosInstance.post("/folders", req.body, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
       return res.status(200).json({ message: "폴더 생성 성공" });
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {

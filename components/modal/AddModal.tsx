@@ -15,8 +15,7 @@ const AddModal = ({ list, link }: { list: FolderItemType[]; link: string }) => {
     };
     if (link !== "" && selectedId) {
       try {
-        const res = await postLink(body);
-        console.log(res);
+        await postLink(body);
       } catch (error) {
         console.log(error, "링크 생성 에러");
       }
