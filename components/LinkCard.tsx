@@ -36,7 +36,7 @@ const LinkCard = ({ isFavoritePage, ...info }: CardItemProps) => {
         {!isFavoritePage &&
           (isSubscribed ? (
             <div
-              onClick={() => seIsSubscribed(!isSubscribed)}
+              onClick={() => setIsSubscribed(!isSubscribed)}
               className="absolute top-[15px] right-[15px] z-1"
             >
               <Image
@@ -48,7 +48,7 @@ const LinkCard = ({ isFavoritePage, ...info }: CardItemProps) => {
             </div>
           ) : (
             <div
-              onClick={() => seIsSubscribed(!isSubscribed)}
+              onClick={() => setIsSubscribed(!isSubscribed)}
               className="absolute top-[15px] right-[15px] z-1"
             >
               <Image
