@@ -1,4 +1,4 @@
-import { useForm } from "@/hooks/useForm";
+import useForm from "@/hooks/useForm";
 import AuthInput from "@/components/Auth/AuthInput";
 import SnsLogin from "@/components/Auth/SnsLogin";
 import SubmitButton from "@/components/SubMitButton";

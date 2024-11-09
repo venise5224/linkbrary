@@ -16,7 +16,7 @@ const INITIAL_VALUES: FormValues = {
   passwordConfirm: "",
 };
 
-export function useForm(isSignUp = false) {
+const useForm = (isSignUp = false) => {
   const [values, setValues] = useState<FormValues>(INITIAL_VALUES);
   const [errors, setErrors] = useState<FormValues>(INITIAL_VALUES);
   const router = useRouter();
@@ -52,7 +52,7 @@ export function useForm(isSignUp = false) {
       if (!value) {
         setErrors((prev) => ({
           ...prev,
-          nickname: "닉네임을 입력해주세요.",
+          nickname: "이름을 입력해주세요.",
         }));
       }
     } else if (name === "password") {
@@ -118,4 +118,6 @@ export function useForm(isSignUp = false) {
     handleSubmit,
     isFormInvalid,
   };
-}
+};
+
+export default useForm;
