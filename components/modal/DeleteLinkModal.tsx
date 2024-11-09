@@ -4,7 +4,6 @@ import ModalContainer from "./modalComponents/ModalContainer";
 const DeleteLinkModal = ({ link }: { link: string }) => {
   return (
     <ModalContainer title="링크 삭제" subtitle={link}>
-      {" "}
       <SubmitButton
         type="button"
         // onClick={handleSubmit}
