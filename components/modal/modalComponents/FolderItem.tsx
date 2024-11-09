@@ -8,7 +8,7 @@ const FolderItem = ({ item }: { item: FolderItemType }) => {
 
   const bgColor = selected ? "bg-gray100" : "bg-white";
 
-  const { title, totalCount } = item;
+  const { name, linkCount } = item;
 
   const onClickFolder = () => {
     setSelected(!selected);
@@ -28,9 +28,9 @@ const FolderItem = ({ item }: { item: FolderItemType }) => {
             selected ? "text-purple100" : "text-black300"
           )}
         >
-          {title}
+          {name}
         </div>
-        <div className="text-gray400 text-sm">{totalCount}개 링크</div>
+        <div className="text-gray400 text-sm">{linkCount}개 링크</div>
       </div>
       {selected && (
         <div>
