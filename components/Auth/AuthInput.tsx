@@ -5,8 +5,8 @@ interface AuthInputProps extends InputHTMLAttributes<HTMLInputElement> {
   text: string;
   name: string;
   error?: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const AuthInput = ({
