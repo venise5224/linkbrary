@@ -4,9 +4,10 @@ import Star from "@/public/icons/star.png";
 import Link from "next/link";
 import SubmitButton from "./SubMitButton";
 import { useRouter } from "next/router";
+import useAuthStore from "@/store/useAuthStore";
 
 const HeaderMenu = () => {
-  const isLoggedIn = false;
+  const { user, isLoggedIn } = useAuthStore();
   const router = useRouter();
 
   return (
@@ -40,8 +41,7 @@ const HeaderMenu = () => {
           </Link>
           <div className="flex items-center gap-[6px] text-[14px] leading-[16.71px] font-normal">
             <Image src={Profile} width={28} height={28} alt="프로필" />
-            {/* 임시 유저 네임 */}
-            <span className="hidden md:block lg:block">전상민</span>
+            <span className="hidden md:block lg:block">{user?.name}</span>
           </div>
         </div>
       )}

@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/router";
 import { postSignIn, postSignUp } from "@/lib/api/auth";
+import useAuthStore from "@/store/useAuthStore";
 import { TbWashDryP } from "react-icons/tb";
 
 interface FormValues {
@@ -21,6 +22,7 @@ const useForm = (isSignUp = false) => {
   const [values, setValues] = useState<FormValues>(INITIAL_VALUES);
   const [errors, setErrors] = useState<FormValues>(INITIAL_VALUES);
   const router = useRouter();
+  const { login } = useAuthStore();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -92,7 +94,7 @@ const useForm = (isSignUp = false) => {
         alert("회원가입 실패: 이메일 또는 비밀번호를 확인해주세요.");
       }
     } else {
-      const data = await postSignIn({ email, password });
+      const data = await login({ email, password });
 
       if (data) {
         router.push("/");

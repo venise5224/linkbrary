@@ -1,6 +1,6 @@
 import axiosInstance, { proxy } from "./axiosInstanceApi";
 
-interface signInProps {
+export interface signInProps {
   email: string;
   password: string;
 }
@@ -9,7 +9,7 @@ interface signUpProps extends signInProps {
   name: string;
 }
 
-interface easySignInProps {
+export interface easySignInProps {
   token: string;
   redirectUri: string;
 }
