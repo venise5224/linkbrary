@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { postLink } from "@/lib/api/link";
 import Image from "next/image";
-import Button from "../Button";
+import SubmitButton from "../SubMitButton";
 
 const AddLinkInput = (folderId: number) => {
   const [value, setValue] = useState("");
@@ -28,9 +28,9 @@ const AddLinkInput = (folderId: number) => {
         placeholder="링크를 추가해 보세요."
         className="flex-grow"
       />
-      <Button color="positive" className="w-[80px] h-[37px]">
+      <SubmitButton color="positive" className="w-[80px] h-[37px]">
         추가하기
-      </Button>
+      </SubmitButton>
     </form>
   );
 };

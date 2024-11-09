@@ -1,4 +1,4 @@
-import axiosInstance from "./axiosInstanceApi";
+import axiosInstance, { proxy } from "./axiosInstanceApi";
 
 interface signInProps {
   email: string;
@@ -31,7 +31,7 @@ export const postSignUp = async (body: signUpProps) => {
 // 로그인
 export const postSignIn = async (body: signInProps) => {
   try {
-    const res = await axiosInstance.post("/auth/sign-in", body);
+    const res = await proxy.post("/api/auth/sign-in", body);
     if (res.status >= 200 && res.status < 300) return res.data;
   } catch (err) {
     console.error("에러 메시지: ", err instanceof Error ? err.message : err);

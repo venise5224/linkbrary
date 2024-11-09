@@ -1,5 +1,5 @@
 import AuthInput from "@/components/Auth/AuthInput";
-import Button from "@/components/Button";
+import SubmitButton from "@/components/SubMitButton";
 import AuthLayout from "@/components/Layout/AuthLayout";
 import Link from "next/link";
 
@@ -16,7 +16,7 @@ const signup = () => {
         </Link>
       </p>
       <form
-        className="w-full sm:max-w-[325px] md:max-w-[400px] mt-[30px]"
+        className="w-full sm:max-w-[325px] md:max-w-[400px] lg:max-w-[400px] mt-[30px]"
         aria-labelledby="login-form"
       >
         <AuthInput
@@ -43,9 +43,9 @@ const signup = () => {
           name="passwordConfirm"
           placeholder="비밀번호를 다시 입력해주세요."
         />
-        <Button width="w-full" height="h-[53px]" className="mt-[30px]">
+        <SubmitButton width="w-full" height="h-[53px]" className="mt-[30px]">
           회원가입
-        </Button>
+        </SubmitButton>
       </form>
     </AuthLayout>
   );
