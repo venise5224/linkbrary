@@ -4,14 +4,7 @@ import { ModalPropType } from "@/types/modalTypes";
 import useModalStore from "@/store/useModalStore";
 import { MouseEvent, useRef } from "react";
 
-const ModalContainer = ({
-  title,
-  subtitle,
-  children,
-  buttonText,
-  buttonColor,
-  onClick,
-}: ModalPropType) => {
+const ModalContainer = ({ title, subtitle, children }: ModalPropType) => {
   const { closeModal } = useModalStore();
   const modalRef = useRef<HTMLDivElement | null>(null);
   const onClickBackDrop = (e: MouseEvent<HTMLDivElement>) => {
@@ -41,22 +34,9 @@ const ModalContainer = ({
             </div>
           )}
         </div>
-        {/* children -> inpul, sns공유, folder list 등.. */}
+        {/* children -> input, sns공유, folder list 등.. */}
         <div className="flex justify-center items-center flex-col">
           {children && <>{children}</>}
-
-          {/* 제출 버튼 */}
-          {buttonText && (
-            <SubmitButton
-              type="button"
-              onClick={onClick}
-              width="w-full"
-              height="h-[51px] "
-              color={buttonColor}
-            >
-              {buttonText}
-            </SubmitButton>
-          )}
         </div>
 
         {/* 모달 닫기 버튼 */}
