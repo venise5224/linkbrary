@@ -36,6 +36,7 @@ export const Modal = () => {
               { id: 4, name: "나만의 장소", linkCount: 7, createAt: "" },
             ]
           }
+          link={props.link || ""}
         />
       );
     case "DeleteFolderModal":
