@@ -17,7 +17,7 @@ interface CardItemProps extends linkDataType {
 }
 
 const LinkCard = ({ isFavoritePage, ...info }: CardItemProps) => {
-  const [isSubscribed, seIsSubscribed] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const formattedDate = info.createdAt?.slice(0, 10).replace(/-/g, ".");
