@@ -10,12 +10,12 @@ const AddModal = ({ list, link }: { list: FolderItemType[]; link: string }) => {
 
   const handleSubmit = async () => {
     const body = {
-      url: link,
       folderId: Number(selectedId),
+      url: link,
     };
     if (link !== "" && selectedId) {
       try {
-        const res = await postLink(body); // 테스트 필요 (상위에서 list, link받아서)
+        const res = await postLink(body);
         console.log(res);
       } catch (error) {
         console.log(error, "링크 생성 에러");

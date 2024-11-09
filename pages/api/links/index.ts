@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === "POST") {
     try {
-      const response = await axiosInstance.post("/folders", req.body, {
+      const response = await axiosInstance.post("/links", req.body, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
