@@ -44,8 +44,8 @@ export const getServerSideProps = async (
 const LinkPage = ({ links, folders }: LinkPageProps) => {
   return (
     <>
-      <div className="bg-gray100 w-full h-[219px] flex justify-center items-center text-sm">
-        <AddLinkInput folders={folders} />
+      <div className="bg-gray100 w-full h-[219px] flex justify-center items-center">
+        <AddLinkInput folderList={folders} />
       </div>
       <main className="mt-[40px]">
         <Container>
