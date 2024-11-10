@@ -1,19 +1,20 @@
 import { GetServerSidePropsContext } from "next";
 import { proxy } from "@/lib/api/axiosInstanceApi";
-import { SearchInput } from "../../components/Search/SearchInput";
 import { LinkData } from "@/types/linkTypes";
 import { FolderData } from "@/types/folderTypes";
+import { SearchInput } from "../../components/Search/SearchInput";
 import Container from "@/components/Layout/Container";
 import CardsLayout from "@/components/Layout/CardsLayout";
-import FolderTag from "../../components/FolderTag";
-import LinkCard from "../../components/LinkCard";
 import AddLinkInput from "@/components/link/AddLinkInput";
 import ActionButtons from "@/components/link/ActionButtons";
+import FolderTag from "../../components/FolderTag";
+import LinkCard from "../../components/LinkCard";
 
 interface LinkPageProps {
-  links: LinkData[];
-  folders: FolderData[];
+  linkList: LinkData[];
+  folderList: FolderData[];
 }
+
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
@@ -35,23 +36,23 @@ export const getServerSideProps = async (
 
   return {
     props: {
-      links: links.list || [], // 기본값 처리
-      folders: folders || [], // 기본값 처리
+      linkList: links.list || [],
+      folderList: folders || [],
     },
   };
 };
 
-const LinkPage = ({ links, folders }: LinkPageProps) => {
+const LinkPage = ({ linkList, folderList }: LinkPageProps) => {
   return (
     <>
       <div className="bg-gray100 w-full h-[219px] flex justify-center items-center">
-        <AddLinkInput folderList={folders} />
+        <AddLinkInput folderList={folderList} />
       </div>
       <main className="mt-[40px]">
         <Container>
           <SearchInput />
           <div className="flex justify-between mt-[40px]">
-            <FolderTag list={folders} />
+            {folderList && <FolderTag folderList={folderList} />}
             <button className="w-[79px] h-[19px] text-purple100">
               폴더 추가 +
             </button>
@@ -61,7 +62,7 @@ const LinkPage = ({ links, folders }: LinkPageProps) => {
             <ActionButtons />
           </div>
           <CardsLayout>
-            {links.map((link) => (
+            {linkList.map((link) => (
               <LinkCard key={link.id} info={link} />
             ))}
           </CardsLayout>

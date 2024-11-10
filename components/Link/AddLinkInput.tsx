@@ -1,13 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { FolderData } from "@/types/folderTypes";
+import { FolderListData } from "@/types/folderTypes";
 import Image from "next/image";
 import SubmitButton from "../SubMitButton";
 
-interface AddLinkInputProps {
-  folderList: FolderData[];
-}
-
-const AddLinkInput = ({ folderList }: AddLinkInputProps) => {
+const AddLinkInput = ({ folderList }: FolderListData) => {
   const [link, setLink] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

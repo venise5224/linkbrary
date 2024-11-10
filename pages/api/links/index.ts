@@ -6,14 +6,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
 
-  console.log("서버에서 전달받은 쿠키의 값: ", cookies);
-  console.log("서버에서 전달받은 토큰의 값: ", accessToken);
-
   switch (req.method) {
     case "GET":
       // 유저의 전체 링크 조회
       try {
-
         const response = await axiosInstance.get("/links", {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
