@@ -14,15 +14,15 @@ interface linkDataType {
 }
 
 interface CardItemProps extends linkDataType {
-  isFavoritePage?: boolean; // 즐겨찾기 페이지 여부를 판별하는 flag
   onEdit: () => void;
   openDelete: () => void;
+  isFavoritePage?: boolean; // 즐겨찾기 페이지 여부를 판별하는 flag
 }
 
 const LinkCard = ({
-  isFavoritePage,
   onEdit,
   openDelete,
+  isFavoritePage,
   ...info
 }: CardItemProps) => {
   const [isSubscribed, setIsSubscribed] = useState(false);

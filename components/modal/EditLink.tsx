@@ -1,44 +1,48 @@
 import { ChangeEvent, useState } from "react";
+import { putLinkURL } from "@/lib/api/link";
+import { useLinkCardStore } from "@/store/useLinkCardStore";
 import ModalContainer from "./modalComponents/ModalContainer";
 import ModalInput from "./modalComponents/ModalInput";
 import useModalStore from "@/store/useModalStore";
 import SubmitButton from "../SubMitButton";
 
-const EditLink = ({ folderName }: { folderName: string }) => {
+const EditLink = ({
+  folderName,
+  link,
+  linkId,
+}: {
+  folderName: string;
+  link: string;
+  linkId: number;
+}) => {
   const [value, setValue] = useState("");
-
   const { closeModal } = useModalStore();
-
-  // 링크 정보를 먼저 가져와야함
+  const { updateLink } = useLinkCardStore();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
+
   const handleSubmit = async () => {
     const body = {
-      name: value,
+      url: value,
     };
-    // if (value !== "") {
-    //   try {
-    //     const res = await putFolder(folderId, body);
-    //     console.log(res);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
+    if (value !== "") {
+      await updateLink(linkId, body);
+    }
     closeModal();
   };
   return (
     <ModalContainer title="링크 주소 변경">
       <ModalInput
-        placeholder="내용 입력"
+        placeholder={link}
         name={folderName}
         value={value}
         onChange={handleChange}
       />
       <SubmitButton
         type="button"
-        // onClick={handleSubmit}
+        onClick={handleSubmit}
         width="w-full"
         height="h-[51px] "
         color="positive"

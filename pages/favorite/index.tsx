@@ -2,7 +2,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { proxy } from "@/lib/api/axiosInstanceApi";
 import { Modal } from "@/components/modal/modalManager/ModalManager";
 import { useLinkCardStore } from "@/store/useLinkCardStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import LinkCard from "@/components/LinkCard";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import Container from "@/components/Layout/Container";
@@ -55,8 +55,8 @@ const FavoritePage = ({ initialLinkCardList, totalCount }: FavoriteProps) => {
   }, [initialLinkCardList, setLinkCardList]);
 
   // EditLink 호출
-  const openEdit = () => {
-    openModal("EditLink");
+  const openEdit = (link: string, linkId: number) => {
+    openModal("EditLink", { link, linkId: linkId ?? null });
   };
 
   // DeleteLinkModal 호출
@@ -83,7 +83,7 @@ const FavoritePage = ({ initialLinkCardList, totalCount }: FavoriteProps) => {
                   imageSource={favorite.imageSource}
                   description={favorite.description}
                   createdAt={favorite.createdAt}
-                  onEdit={() => openEdit()}
+                  onEdit={() => openEdit(favorite.url, favorite.id)}
                   openDelete={() => openDelete(favorite.url, favorite.id)}
                   //isFavoritePage={true}
                 />
