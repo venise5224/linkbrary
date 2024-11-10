@@ -1,5 +1,7 @@
+import useModalStore from "@/store/useModalStore";
 import SubmitButton from "../SubMitButton";
 import ModalContainer from "./modalComponents/ModalContainer";
+import { deleteFolder } from "@/lib/api/folder";
 
 const DeleteFolderModal = ({
   folderName,
@@ -8,12 +10,22 @@ const DeleteFolderModal = ({
   folderName: string;
   folderId: number;
 }) => {
-  console.log("folderName", folderName);
+  const { closeModal } = useModalStore();
+  const handleSubmit = async () => {
+    try {
+      await deleteFolder(folderId);
+    } catch (error) {
+      console.log(error, "폴더 삭제 에러");
+    } finally {
+      closeModal();
+    }
+  };
+
   return (
     <ModalContainer title="폴더 삭제" subtitle={folderName}>
       <SubmitButton
         type="button"
-        // onClick={handleSubmit}
+        onClick={handleSubmit}
         width="w-full"
         height="h-[51px]"
         color="negative"
