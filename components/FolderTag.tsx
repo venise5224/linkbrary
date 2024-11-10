@@ -2,10 +2,10 @@ import { useRouter } from "next/router";
 import { FolderData } from "@/types/folderTypes";
 
 interface FolderTagProps {
-  list: FolderData[];
+  folderList: FolderData[];
 }
 
-const FolderTag = ({ list }: FolderTagProps) => {
+const FolderTag = ({ folderList }: FolderTagProps) => {
   const router = useRouter();
   const { folder: currentFolderId } = router.query;
 
@@ -22,7 +22,7 @@ const FolderTag = ({ list }: FolderTagProps) => {
   return (
     <ul className="flex flex-wrap gap-[8px]">
       <button className={folderStyle}>전체</button>
-      {list.map((folder) => (
+      {folderList.map((folder) => (
         <button
           key={folder.id}
           className={`${folderStyle} ${folder.id === Number(currentFolderId) && "bg-purple100 text-white"}`}
