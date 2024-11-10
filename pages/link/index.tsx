@@ -5,8 +5,8 @@ import { FolderData } from "@/types/folderTypes";
 import { SearchInput } from "../../components/Search/SearchInput";
 import Container from "@/components/Layout/Container";
 import CardsLayout from "@/components/Layout/CardsLayout";
-import ActionButtons from "@/components/link/ActionButtons";
-import AddLinkInput from "@/components/link/AddLinkInput";
+import ActionButtons from "@/components/Link/ActionButtons";
+import AddLinkInput from "@/components/Link/AddLinkInput";
 import FolderTag from "../../components/FolderTag";
 import LinkCard from "../../components/LinkCard";
 
