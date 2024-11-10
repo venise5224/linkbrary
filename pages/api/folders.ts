@@ -6,6 +6,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
 
+  console.log("getFolder 요청 : ", accessToken);
+
   switch (req.method) {
     case "GET":
       // 유저의 모든 폴더 조회

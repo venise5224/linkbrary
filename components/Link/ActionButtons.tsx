@@ -7,7 +7,7 @@ const ActionButtons = () => (
       { src: "/icons/pen.svg", alt: "이름 변경", text: "이름 변경" },
       { src: "/icons/delete.svg", alt: "삭제", text: "삭제" },
     ].map(({ src, alt, text }) => (
-      <button key={text} className="flex items-center gap-[4px]">
+      <button key={text} className=" flex items-center gap-[4px] text-sm ">
         <Image width={18} height={18} src={src} alt={alt} />
         <span>{text}</span>
       </button>

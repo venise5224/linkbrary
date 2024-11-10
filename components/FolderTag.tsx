@@ -5,7 +5,11 @@ interface FolderData {
   linkCount: number;
 }
 
-const FolderTag = (list: FolderData[]) => {
+interface FolderTagProps {
+  list: FolderData[];
+}
+
+const FolderTag = ({ list }: FolderTagProps) => {
   const folderStyle = "py-[8px] px-[12px] border border-purple-100 rounded-md";
 
   return (
