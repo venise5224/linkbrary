@@ -54,13 +54,12 @@ const FavoritePage = ({ initialLinkCardList, totalCount }: FavoriteProps) => {
     setLinkCardList(initialLinkCardList);
   }, [initialLinkCardList, setLinkCardList]);
 
-  // dropdown 수정 버튼
-  const handleEdit = () => {
-    //setIsModalOpen(true); // 모달 열기
-    //setSelectedLink();
+  // EditLink 호출
+  const openEdit = () => {
+    openModal("EditLink");
   };
 
-  // 삭제 버튼 클릭 시 DeleteLinkModal 호출
+  // DeleteLinkModal 호출
   const openDelete = (link: string, linkId: number) => {
     openModal("DeleteLinkModal", { link, linkId: linkId ?? null });
   };
@@ -84,7 +83,7 @@ const FavoritePage = ({ initialLinkCardList, totalCount }: FavoriteProps) => {
                   imageSource={favorite.imageSource}
                   description={favorite.description}
                   createdAt={favorite.createdAt}
-                  onEdit={() => handleEdit()}
+                  onEdit={() => openEdit()}
                   openDelete={() => openDelete(favorite.url, favorite.id)}
                   //isFavoritePage={true}
                 />

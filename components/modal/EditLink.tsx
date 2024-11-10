@@ -29,7 +29,7 @@ const EditLink = ({ folderName }: { folderName: string }) => {
     closeModal();
   };
   return (
-    <ModalContainer title="폴더 이름 변경">
+    <ModalContainer title="링크 주소 변경">
       <ModalInput
         placeholder="내용 입력"
         name={folderName}
