@@ -54,16 +54,7 @@ const FavoritePage = ({ favoriteList, totalCount }: FavoriteProps) => {
         <CardsLayout>
           {favoriteList.length > 0
             ? favoriteList.map((favorite) => (
-                <LinkCard
-                  key={favorite.id}
-                  id={favorite.id}
-                  url={favorite.url}
-                  title={favorite.title}
-                  imageSource={favorite.imageSource}
-                  description={favorite.description}
-                  createdAt={favorite.createdAt}
-                  isFavoritePage={true}
-                />
+                <LinkCard key={favorite.id} info={favorite} />
               ))
             : null}
         </CardsLayout>

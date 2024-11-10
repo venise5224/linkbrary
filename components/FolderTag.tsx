@@ -17,18 +17,21 @@ const FolderTag = ({ folderList }: FolderListData) => {
 
   return (
     <ul className="flex flex-wrap gap-[8px]">
-      <button className={folderStyle} onClick={() => handleSubmit("")}>
-        전체
-      </button>
-      {folderList.map((folder) => (
-        <button
-          key={folder.id}
-          className={`${folderStyle} ${folder.id === Number(currentFolderId) && "bg-purple100 text-white"}`}
-          type="submit"
-          onClick={() => handleSubmit(folder.id)}
-        >
-          {folder.name}
+      <li>
+        <button className={folderStyle} onClick={() => handleSubmit("")}>
+          전체
         </button>
+      </li>
+      {folderList.map((folder) => (
+        <li key={folder.id}>
+          <button
+            className={`${folderStyle} ${folder.id === Number(currentFolderId) && "bg-purple100 text-white"}`}
+            type="submit"
+            onClick={() => handleSubmit(folder.id)}
+          >
+            {folder.name}
+          </button>
+        </li>
       ))}
     </ul>
   );
