@@ -39,7 +39,15 @@ export default function Test() {
       >
         폴더에 추가 버튼
       </button>
-      <button type="button" onClick={() => openModal("DeleteFolderModal")}>
+      <button
+        type="button"
+        onClick={() =>
+          openModal("DeleteFolderModal", {
+            folderName: "NAME",
+            folderId: 1,
+          })
+        }
+      >
         폴더 삭제 버튼
       </button>
       <button type="button" onClick={() => openModal("DeleteLinkModal")}>
