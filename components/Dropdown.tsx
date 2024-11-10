@@ -1,15 +1,23 @@
 import React from "react";
 
 interface DropdownProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isDropdownOpen: boolean;
+  onEdit: () => void;
+  openDelete: () => void;
 }
 
-const Dropdown = ({ isOpen, onClose }: DropdownProps) => {
+const Dropdown = ({ isDropdownOpen, onEdit, openDelete }: DropdownProps) => {
+  const buttonStyle =
+    "block w-full py-2 text-sm hover:bg-gray200 hover:text-purple100";
+
   return (
-    <div className="absolute top-0 right-0 border border-red-800">
-      <button>수정</button>
-      <button>삭제</button>
+    <div className="absolute top-[17px] right-0 flex flex-col gap-[2px] min-w-[100px] bg-white shadow-lg rounded">
+      <button className={buttonStyle} onClick={onEdit}>
+        수정하기
+      </button>
+      <button className={buttonStyle} onClick={openDelete}>
+        삭제하기
+      </button>
     </div>
   );
 };

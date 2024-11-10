@@ -42,7 +42,12 @@ export const Modal = () => {
     case "DeleteFolderModal":
       return <DeleteFolderModal folderName={props.folderName || "폴더이름"} />;
     case "DeleteLinkModal":
-      return <DeleteLinkModal link={props.link || "링크"} />;
+      return (
+        <DeleteLinkModal
+          link={props.link || "링크"}
+          linkId={Number(props.linkId)}
+        />
+      );
     case "EditModal":
       return <EditModal folderName={props.folderName || "폴더이름"} />;
     case "SNSModal":
