@@ -9,7 +9,7 @@ const DeleteFolderModal = ({ folderName }: { folderName: string }) => {
         type="button"
         // onClick={handleSubmit}
         width="w-full"
-        height="h-[51px] "
+        height="h-[51px]"
         color="negative"
       >
         삭제하기

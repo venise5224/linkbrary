@@ -1,9 +1,9 @@
 import SubmitButton from "../SubMitButton";
 import ModalContainer from "./modalComponents/ModalContainer";
 
-const DeleteLinkModal = ({ link }: { link: string }) => {
+const EditLinkModal = ({ link }: { link: string }) => {
   return (
-    <ModalContainer title="링크 삭제" subtitle={link}>
+    <ModalContainer title="링크 수정" subtitle={link}>
       <SubmitButton
         type="button"
         // onClick={handleSubmit}
@@ -16,4 +16,4 @@ const DeleteLinkModal = ({ link }: { link: string }) => {
     </ModalContainer>
   );
 };
-export default DeleteLinkModal;
+export default EditLinkModal;
