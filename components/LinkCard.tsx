@@ -2,21 +2,20 @@ import { useState } from "react";
 import timeAgo from "@/util/timAgo";
 import Image from "next/image";
 
-interface linkDataType {
-  id: number;
-  title: string;
-  description: string;
-  favorite?: boolean;
-  imageSource: string;
-  url: string;
-  createdAt: string;
+interface LinkCardProps {
+  info: {
+    id: number;
+    title: string;
+    description: string;
+    favorite?: boolean;
+    imageSource: string;
+    url: string;
+    createdAt: string;
+  };
+  isFavoritePage?: boolean;
 }
 
-interface CardItemProps extends linkDataType {
-  isFavoritePage?: boolean; // 즐겨찾기 페이지 여부를 판별하는 flag
-}
-
-const LinkCard = ({ isFavoritePage, ...info }: CardItemProps) => {
+const LinkCard = ({ isFavoritePage, info }: LinkCardProps) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
