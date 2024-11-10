@@ -9,7 +9,34 @@ export default function Test() {
       <button type="button" onClick={() => openModal("AddFolderModal")}>
         폴더 추가 버튼
       </button>
-      <button type="button" onClick={() => openModal("AddModal")}>
+      <button
+        type="button"
+        onClick={() =>
+          openModal("AddModal", {
+            list: [
+              {
+                id: 687,
+                createdAt: "2024-11-09T00:45:29.718Z",
+                name: "1",
+                linkCount: 1,
+              },
+              {
+                id: 684,
+                createdAt: "2024-11-08T22:57:45.804Z",
+                name: "폴더2",
+                linkCount: 0,
+              },
+              {
+                id: 682,
+                createdAt: "2024-11-08T10:08:14.650Z",
+                name: "폴더1",
+                linkCount: 1,
+              },
+            ],
+            link: "https://example1.com",
+          })
+        }
+      >
         폴더에 추가 버튼
       </button>
       <button type="button" onClick={() => openModal("DeleteFolderModal")}>

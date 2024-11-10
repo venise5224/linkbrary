@@ -4,9 +4,6 @@ export interface ModalPropType {
   title?: string;
   subtitle?: string;
   children?: ReactNode;
-  buttonText?: string;
-  buttonColor?: "positive" | "negative";
-  onClick?: () => void;
   folderName?: string;
   list?: FolderItemType[];
   link?: string;
@@ -14,7 +11,7 @@ export interface ModalPropType {
 
 export interface FolderItemType {
   id: number;
-  createAt: string;
+  createdAt: string;
   name: string;
   linkCount: number;
 }
