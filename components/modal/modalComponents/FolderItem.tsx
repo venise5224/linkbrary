@@ -1,40 +1,36 @@
-import { cls } from "@/lib/utils";
+import { bindCls } from "@/lib/utils";
+import { FolderItemType } from "@/types/modalTypes";
 import { useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 
-interface ItemType {
-  id: number;
-  title: string;
-  totalCount: number;
-}
-const FolderItem = ({ item }: { item: ItemType }) => {
+const FolderItem = ({ item }: { item: FolderItemType }) => {
   const [selected, setSelected] = useState(false);
 
   const bgColor = selected ? "bg-gray100" : "bg-white";
 
-  const { title, totalCount } = item;
+  const { name, linkCount } = item;
 
   const onClickFolder = () => {
     setSelected(!selected);
   };
   return (
     <li
-      className={cls(
+      className={bindCls(
         bgColor,
-        "w-full p-2 flex h-10 rounded-lg items-center justify-between"
+        "w-full p-2 flex h-10 rounded-lg items-center justify-between cursor-pointer"
       )}
       onClick={onClickFolder}
     >
       <div className="flex items-center gap-2">
         <div
-          className={cls(
+          className={bindCls(
             "text-base",
             selected ? "text-purple100" : "text-black300"
           )}
         >
-          {title}
+          {name}
         </div>
-        <div className="text-gray400 text-sm">{totalCount}개 링크</div>
+        <div className="text-gray400 text-sm">{linkCount}개 링크</div>
       </div>
       {selected && (
         <div>
