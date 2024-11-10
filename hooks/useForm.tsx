@@ -1,6 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/router";
 import { postSignIn, postSignUp } from "@/lib/api/auth";
+import useAuthStore from "@/store/useAuthStore";
+import { TbWashDryP } from "react-icons/tb";
 
 interface FormValues {
   email: string;
@@ -16,10 +18,11 @@ const INITIAL_VALUES: FormValues = {
   passwordConfirm: "",
 };
 
-export function useForm(isSignUp = false) {
+const useForm = (isSignUp = false) => {
   const [values, setValues] = useState<FormValues>(INITIAL_VALUES);
   const [errors, setErrors] = useState<FormValues>(INITIAL_VALUES);
   const router = useRouter();
+  const { login } = useAuthStore();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -52,7 +55,7 @@ export function useForm(isSignUp = false) {
       if (!value) {
         setErrors((prev) => ({
           ...prev,
-          nickname: "닉네임을 입력해주세요.",
+          nickname: "이름을 입력해주세요.",
         }));
       }
     } else if (name === "password") {
@@ -77,17 +80,26 @@ export function useForm(isSignUp = false) {
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (isFormInvalid()) return;
     const { email, password, nickname } = values;
 
     if (isSignUp) {
-      postSignUp({ email, password, name: nickname || "" });
-    } else {
-      const data: any = postSignIn({ email, password });
+      const data = await postSignUp({ email, password, name: nickname || "" });
+
       if (data) {
-        router.push("/"); // 로그인 성공 후 대시보드로 리디렉션
+        router.push("/login");
+      } else {
+        alert("회원가입 실패: 이메일 또는 비밀번호를 확인해주세요.");
+      }
+    } else {
+      const data = await login({ email, password });
+
+      if (data) {
+        router.push("/");
+      } else {
+        alert("로그인 실패: 이메일 또는 비밀번호를 확인해주세요.");
       }
     }
 
@@ -118,4 +130,6 @@ export function useForm(isSignUp = false) {
     handleSubmit,
     isFormInvalid,
   };
-}
+};
+
+export default useForm;
