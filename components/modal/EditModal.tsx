@@ -3,6 +3,7 @@ import ModalContainer from "./modalComponents/ModalContainer";
 import ModalInput from "./modalComponents/ModalInput";
 import useModalStore from "@/store/useModalStore";
 import { putFolder } from "@/lib/api/folder";
+import SubmitButton from "../SubMitButton";
 
 const EditModal = ({ folderName }: { folderName: string }) => {
   const [value, setValue] = useState("");
@@ -29,17 +30,22 @@ const EditModal = ({ folderName }: { folderName: string }) => {
     closeModal();
   };
   return (
-    <ModalContainer
-      title="폴더 이름 변경"
-      buttonText="변경하기"
-      onClick={handleSubmit}
-    >
+    <ModalContainer title="폴더 이름 변경">
       <ModalInput
         placeholder="내용 입력"
         name={folderName}
         value={value}
         onChange={handleChange}
       />
+      <SubmitButton
+        type="button"
+        // onClick={handleSubmit}
+        width="w-full"
+        height="h-[51px] "
+        color="positive"
+      >
+        변경하기
+      </SubmitButton>
     </ModalContainer>
   );
 };
