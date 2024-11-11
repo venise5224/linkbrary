@@ -1,12 +1,8 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { proxy } from "@/lib/api/axiosInstanceApi";
-import { Modal } from "@/components/modal/modalManager/ModalManager";
-import { useLinkCardStore } from "@/store/useLinkCardStore";
-import { useEffect, useState } from "react";
 import LinkCard from "@/components/LinkCard";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import Container from "@/components/Layout/Container";
-import useModalStore from "@/store/useModalStore";
 
 interface FavoriteDataType {
   id: number;

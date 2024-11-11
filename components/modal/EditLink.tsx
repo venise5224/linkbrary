@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from "react";
-import { putLinkURL } from "@/lib/api/link";
 import { useLinkCardStore } from "@/store/useLinkCardStore";
 import ModalContainer from "./modalComponents/ModalContainer";
 import ModalInput from "./modalComponents/ModalInput";

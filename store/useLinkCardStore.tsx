@@ -35,6 +35,7 @@ export const useLinkCardStore = create<LinkCardStore>((set) => ({
   updateLink: async (linkId: number, body: UpdateLinkBody) => {
     try {
       await putLinkURL(linkId, body);
+
       const res = await getLinks();
       const updatedList = res.list;
 

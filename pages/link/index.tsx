@@ -40,6 +40,7 @@ export const getServerSideProps = async (
 
   return {
     props: {
+      link: links || [],
       linkList: links.list || [],
       folderList: folders || [],
     },
@@ -47,6 +48,7 @@ export const getServerSideProps = async (
 };
 
 const LinkPage = ({ linkList, folderList }: LinkPageProps) => {
+  console.log(linkList);
   const { isOpen, openModal } = useModalStore();
   const { linkCardList, setLinkCardList } = useLinkCardStore();
 
@@ -84,7 +86,7 @@ const LinkPage = ({ linkList, folderList }: LinkPageProps) => {
             <ActionButtons />
           </div>
           <CardsLayout>
-            {linkList.map((link) => (
+            {linkCardList.map((link) => (
               <LinkCard
                 key={link.id}
                 onEdit={() => openEdit(link.url, link.id)}
