@@ -1,14 +1,16 @@
 import { GetServerSidePropsContext } from "next";
+import { useRouter } from "next/router";
 import { proxy } from "@/lib/api/axiosInstanceApi";
 import { LinkData } from "@/types/linkTypes";
 import { FolderData } from "@/types/folderTypes";
 import { SearchInput } from "../../components/Search/SearchInput";
 import Container from "@/components/Layout/Container";
 import CardsLayout from "@/components/Layout/CardsLayout";
-import ActionButtons from "@/components/Link/ActionButtons";
-import AddLinkInput from "@/components/Link/AddLinkInput";
+import ActionButtons from "@/components/link/ActionButtons";
+import AddLinkInput from "@/components/link/AddLinkInput";
 import FolderTag from "../../components/FolderTag";
 import LinkCard from "../../components/LinkCard";
+import SearchResultMessage from "@/components/Search/SearchResultMessage";
 
 interface LinkPageProps {
   linkList: LinkData[];
@@ -43,6 +45,9 @@ export const getServerSideProps = async (
 };
 
 const LinkPage = ({ linkList, folderList }: LinkPageProps) => {
+  const router = useRouter();
+  const { search } = router.query;
+
   return (
     <>
       <div className="bg-gray100 w-full h-[219px] flex justify-center items-center">
@@ -51,6 +56,7 @@ const LinkPage = ({ linkList, folderList }: LinkPageProps) => {
       <main className="mt-[40px]">
         <Container>
           <SearchInput />
+          {search && <SearchResultMessage message={String(search)} />}
           <div className="flex justify-between mt-[40px]">
             {folderList && <FolderTag folderList={folderList} />}
             <button className="w-[79px] h-[19px] text-purple100">
