@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import timeAgo from "@/util/timAgo";
 import Image from "next/image";
 import Dropdown from "./Dropdown";
@@ -13,22 +14,19 @@ interface LinkCardProps {
     url: string;
     createdAt: string;
   };
-  onEdit: () => void;
-  openDelete: () => void;
-  isFavoritePage?: boolean;
+  onEdit?: () => void;
+  openDelete?: () => void;
 }
 
-const LinkCard = ({
-  isFavoritePage,
-  onEdit,
-  openDelete,
-  info,
-}: LinkCardProps) => {
+const LinkCard = ({ onEdit, openDelete, info }: LinkCardProps) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const formattedDate = info.createdAt?.slice(0, 10).replace(/-/g, ".");
   const createdTime = timeAgo(info.createdAt);
+
+  const router = useRouter();
+  const isFavoritePage = router.pathname === "/favorite";
 
   // dropdown 버튼
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
@@ -43,33 +41,24 @@ const LinkCard = ({
             alt="링크 미리보기"
             fill
           />
-          {/* isFavoritePage가 false일 때만 즐겨찾기 버튼 렌더링 */}
-          {!isFavoritePage &&
-            (isSubscribed ? (
-              <div
-                onClick={() => setIsSubscribed(!isSubscribed)}
-                className="absolute top-[15px] right-[15px] z-1"
-              >
-                <Image
-                  src="/icons/star-fill.svg"
-                  width={32}
-                  height={32}
-                  alt="subscripe button"
-                />
-              </div>
-            ) : (
-              <div
-                onClick={() => setIsSubscribed(!isSubscribed)}
-                className="absolute top-[15px] right-[15px] z-1"
-              >
-                <Image
-                  src="/icons/star-empty.svg"
-                  width={32}
-                  height={32}
-                  alt="subscripe button"
-                />
-              </div>
-            ))}
+          {/* isFavoritePage일 때만 즐겨찾기 버튼 렌더링 */}
+          {!isFavoritePage && (
+            <div
+              onClick={() => setIsSubscribed(!isSubscribed)}
+              className="absolute top-[15px] right-[15px] z-1"
+            >
+              <Image
+                src={
+                  isSubscribed
+                    ? "/icons/star-fill.svg"
+                    : "/icons/star-empty.svg"
+                }
+                width={32}
+                height={32}
+                alt="subscribe button"
+              />
+            </div>
+          )}
         </section>
 
         <section className="w-full h-[40%] flex flex-col justify-between gap-[10px] pt-[15px] px-[20px] pb-[10px]">
@@ -77,7 +66,7 @@ const LinkCard = ({
             <span className="text-sm text-gray-400">
               {createdTime || "1일 전"}
             </span>
-            {/* isFavoritePage가 false일 때만 케밥 버튼 렌더링 */}
+            {/* isFavoritePage일 때만 케밥 버튼 렌더링 */}
             {!isFavoritePage && (
               <div className="relative">
                 <button

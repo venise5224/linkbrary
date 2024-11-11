@@ -1,4 +1,4 @@
-import { deleteLinkURL, getFavorites, putLinkURL } from "@/lib/api/link";
+import { deleteLinkURL, getLinks, putLinkURL } from "@/lib/api/link";
 import { create } from "zustand";
 
 interface LinkCardDataType {
@@ -31,11 +31,11 @@ export const useLinkCardStore = create<LinkCardStore>((set) => ({
     set({ linkCardList: list, totalCount: list.length });
   },
 
-  // 수정 요청 보낸 후 목록 가져오기 (임시로 즐겨찾기 목록으로 구현)
+  // 수정 요청 보낸 후 목록 가져오기
   updateLink: async (linkId: number, body: UpdateLinkBody) => {
     try {
       await putLinkURL(linkId, body);
-      const res = await getFavorites();
+      const res = await getLinks();
       const updatedList = res.list;
 
       // 상태 업데이트
@@ -45,11 +45,11 @@ export const useLinkCardStore = create<LinkCardStore>((set) => ({
     }
   },
 
-  // 삭제 요청 보낸 후 목록 가져오기 (임시로 즐겨찾기 목록으로 구현)
+  // 삭제 요청 보낸 후 목록 가져오기
   deleteLink: async (linkId: number) => {
     try {
       await deleteLinkURL(linkId);
-      const res = await getFavorites();
+      const res = await getLinks();
       const updatedList = res.list;
 
       // 상태 업데이트

@@ -2,8 +2,8 @@ import React from "react";
 
 interface DropdownProps {
   isDropdownOpen: boolean;
-  onEdit: () => void;
-  openDelete: () => void;
+  onEdit?: () => void;
+  openDelete?: () => void;
 }
 
 const Dropdown = ({ isDropdownOpen, onEdit, openDelete }: DropdownProps) => {
