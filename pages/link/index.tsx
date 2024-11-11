@@ -48,7 +48,6 @@ export const getServerSideProps = async (
 };
 
 const LinkPage = ({ linkList, folderList }: LinkPageProps) => {
-  console.log(linkList);
   const { isOpen, openModal } = useModalStore();
   const { linkCardList, setLinkCardList } = useLinkCardStore();
 

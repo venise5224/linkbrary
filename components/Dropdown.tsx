@@ -1,12 +1,11 @@
 import React from "react";
 
 interface DropdownProps {
-  isDropdownOpen: boolean;
   onEdit?: () => void;
   openDelete?: () => void;
 }
 
-const Dropdown = ({ isDropdownOpen, onEdit, openDelete }: DropdownProps) => {
+const Dropdown = ({ onEdit, openDelete }: DropdownProps) => {
   const buttonStyle =
     "block w-full py-2 text-sm hover:bg-gray200 hover:text-purple100";
 
