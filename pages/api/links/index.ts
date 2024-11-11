@@ -1,32 +1,41 @@
-import axiosInstance from "@/lib/api/axiosInstanceApi";
-import axios, { isAxiosError } from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
+import { parse } from "cookie";
+import axiosInstance from "@/lib/api/axiosInstanceApi";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const token = req.cookies.accessToken;
-  console.log("Token:", token);
+  const cookies = parse(req.headers.cookie || "");
+  const accessToken = cookies.accessToken;
 
-  if (!token) {
-    return res.status(401).json({ error: "사용자 정보를 찾을 수 없습니다." });
-  }
-
-  if (req.method === "POST") {
-    try {
-      await axiosInstance.post("/links", req.body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return res.status(201).json({ message: "링크 추가 성공" });
-    } catch (error) {
-      if (isAxiosError(error) && error.response) {
-        const status = error.response.status;
-        const message = error.response.data?.message || "알 수 없는 오류 발생";
-        return res.status(status).json({ message });
+  switch (req.method) {
+    case "GET":
+      // 유저의 전체 링크 조회
+      try {
+        const response = await axiosInstance.get("/links", {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        return res.status(201).json(response.data);
+      } catch (err) {
+        console.error(err);
+        return res
+          .status(500)
+          .json({ message: "전체 링크 조회에 실패했습니다." });
       }
-    }
-  } else {
-    res.status(405).json({ message: "허용되지 않은 접근 방법" });
+
+    case "POST":
+      // 링크 생성 로직
+      try {
+        const response = await axiosInstance.post("/links", req.body, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        return res.status(201).json(response.data);
+      } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: "링크 생성에 실패했습니다." });
+      }
+
+    default:
+      res.setHeader("Allow", ["GET", "POST"]);
+      return res.status(405).end(`메서드 ${req.method}는 허용되지 않습니다.`);
   }
 };
 

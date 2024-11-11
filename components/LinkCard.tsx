@@ -3,28 +3,27 @@ import timeAgo from "@/util/timAgo";
 import Image from "next/image";
 import Dropdown from "./Dropdown";
 
-interface linkDataType {
-  id: number;
-  title: string;
-  description: string;
-  favorite?: boolean;
-  imageSource: string;
-  url: string;
-  createdAt: string;
-}
-
-interface CardItemProps extends linkDataType {
+interface LinkCardProps {
+  info: {
+    id: number;
+    title: string;
+    description: string;
+    favorite?: boolean;
+    imageSource: string;
+    url: string;
+    createdAt: string;
+  };
   onEdit: () => void;
   openDelete: () => void;
-  isFavoritePage?: boolean; // 즐겨찾기 페이지 여부를 판별하는 flag
+  isFavoritePage?: boolean;
 }
 
 const LinkCard = ({
+  isFavoritePage,
   onEdit,
   openDelete,
-  isFavoritePage,
-  ...info
-}: CardItemProps) => {
+  info,
+}: LinkCardProps) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
