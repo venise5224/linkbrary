@@ -1,3 +1,4 @@
+import Footer from "@/components/Layout/Footer";
 import Header from "@/components/Layout/Header";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
@@ -8,9 +9,12 @@ export default function App({ Component, pageProps }: AppProps) {
   const hidePaths = ["/login", "/signup"];
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       {!hidePaths.includes(router.pathname) && <Header />}
-      <Component {...pageProps} />
-    </>
+      <div className="flex-grow">
+        <Component {...pageProps} />
+      </div>
+      {!hidePaths.includes(router.pathname) && <Footer />}
+    </div>
   );
 }
