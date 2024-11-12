@@ -8,10 +8,12 @@ import {
   postEasySignIn,
 } from "@/lib/api/auth";
 import { getUserInfo } from "@/lib/api/user";
+import { proxy } from "@/lib/api/axiosInstanceApi";
 
 interface AuthStore {
   user: User | null;
   isLoggedIn: boolean;
+  checkLogin: () => Promise<void>;
   login: (body: signInProps) => Promise<boolean>;
   SNSLogin: (
     provider: "google" | "kakao",
@@ -25,6 +27,23 @@ const useAuthStore = create<AuthStore>()(
     (set) => ({
       user: null,
       isLoggedIn: false,
+
+      checkLogin: async () => {
+        try {
+          const response = await proxy.get("/api/auth/check");
+          if (response.data.isLoggedIn) {
+            const userInfo = await getUserInfo(); // 로그인 되어 있으면 사용자 정보 가져오기
+            if (userInfo) {
+              set({ isLoggedIn: true, user: userInfo });
+            }
+          } else {
+            set({ isLoggedIn: false, user: null });
+          }
+        } catch (error) {
+          console.error("로그인 상태 확인 중 오류 발생", error);
+          set({ isLoggedIn: false, user: null });
+        }
+      },
 
       login: async (body) => {
         try {
