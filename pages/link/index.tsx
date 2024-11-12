@@ -13,16 +13,24 @@ import AddLinkInput from "@/components/Link/AddLinkInput";
 import FolderTag from "../../components/FolderTag";
 import LinkCard from "../../components/LinkCard";
 import useModalStore from "@/store/useModalStore";
+import Pagination from "@/components/Pagination";
 
 interface LinkPageProps {
   linkList: LinkData[];
   folderList: FolderData[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
 }
 
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const { req } = context;
+  const { req, query } = context;
+
+  // 쿼리로부터 page와 pageSize를 읽고 기본값 설정
+  const page = parseInt((query.page as string) || "1", 10);
+  const pageSize = parseInt((query.pageSize as string) || "3", 10);
 
   const fetchData = async (endpoint: string) => {
     const response = await proxy.get(endpoint, {
@@ -34,7 +42,7 @@ export const getServerSideProps = async (
   };
 
   const [links, folders] = await Promise.all([
-    fetchData("/api/links"),
+    fetchData(`/api/links?page=${page}&pageSize=${pageSize}`),
     fetchData("/api/folders"),
   ]);
 
@@ -43,11 +51,20 @@ export const getServerSideProps = async (
       link: links || [],
       linkList: links.list || [],
       folderList: folders || [],
+      totalCount: links.totalCount || 0,
+      page,
+      pageSize,
     },
   };
 };
 
-const LinkPage = ({ linkList, folderList }: LinkPageProps) => {
+const LinkPage = ({
+  linkList,
+  folderList,
+  totalCount,
+  page,
+  pageSize,
+}: LinkPageProps) => {
   const { isOpen, openModal } = useModalStore();
   const { linkCardList, setLinkCardList } = useLinkCardStore();
 
@@ -94,6 +111,7 @@ const LinkPage = ({ linkList, folderList }: LinkPageProps) => {
               />
             ))}
           </CardsLayout>
+          <Pagination page={page} pageSize={pageSize} totalCount={totalCount} />
         </Container>
         {isOpen && <Modal />}
       </main>
