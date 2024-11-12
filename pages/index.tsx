@@ -32,12 +32,12 @@ const HomePage = () => {
   return (
     <main>
       <div className="flex flex-col items-center bg-gray100">
-        <h1 className="mt-[28px] text-[32px] leading-[42px] font-bold md:mt-[40px] lg:mt-[70px] md:text-[64px] md:leading-[80px] lg:text-[64px] lg:leading-[80px] text-center">
+        <h2 className="mt-[28px] text-[32px] leading-[42px] font-bold md:mt-[40px] lg:mt-[70px] md:text-[64px] md:leading-[80px] lg:text-[64px] lg:leading-[80px] text-center">
           <span className="gradient-text">세상의 모든 정보</span>
           를<br /> 쉽게 저장하고
           <br className="lg:hidden" />
-          관리해 보세요
-        </h1>
+          <span className="hidden lg:inline">&nbsp;</span>관리해 보세요
+        </h2>
         <SubmitButton
           onClick={handleClick}
           className="mt-[24px] w-[200px] h-[37px] text-[14px] md:mt-[40px] md:w-[350px] md:h-[53px] md:text-[18px] lg:mt-[40px] lg:w-[350px] lg:h-[53px] lg:text-[18px]"
