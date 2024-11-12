@@ -6,6 +6,7 @@ import sectionFolder from "@/public/images/section_folder.png";
 import sectionShare from "@/public/images/section_share.png";
 import sectionSearch from "@/public/images/section_search.png";
 import { useRouter } from "next/router";
+import useAuthStore from "@/store/useAuthStore";
 
 const sectionStyle =
   "flex flex-col md:flex-row md:items-center md:gap-[51px] lg:flex-row lg:items-center lg:gap-[157px]";
@@ -19,11 +20,11 @@ const sectionImageStyle =
 
 const HomePage = () => {
   const router = useRouter();
-  const isLoggedIn = false;
+  const { isLoggedIn } = useAuthStore();
 
   const handleClick = () => {
     if (isLoggedIn) {
-      router.push("/share");
+      router.push("/link");
     } else {
       router.push("/login");
     }
