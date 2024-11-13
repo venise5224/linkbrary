@@ -9,12 +9,12 @@ import { useLinkCardStore } from "@/store/useLinkCardStore";
 import { SearchInput } from "../../components/Search/SearchInput";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import Container from "@/components/Layout/Container";
-import ActionButtons from "@/components/link/ActionButtons";
-import AddLinkInput from "@/components/link/AddLinkInput";
 import SearchResultMessage from "@/components/Search/SearchResultMessage";
 import useModalStore from "@/store/useModalStore";
 import FolderTag from "../../components/FolderTag";
 import LinkCard from "../../components/LinkCard";
+import ActionButtons from "@/components/Link/ActionButtons";
+import AddLinkInput from "@/components/Link/AddLinkInput";
 
 interface LinkPageProps {
   linkList: LinkData[];
