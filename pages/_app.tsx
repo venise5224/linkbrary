@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const hidePaths = ["/login", "/signup"];
+  const hidePaths = ["/login", "/signup", "/404"];
 
   return (
     <div className="min-h-screen flex flex-col">
