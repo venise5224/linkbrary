@@ -1,5 +1,5 @@
 interface SearchResultMessageProps {
-  message: string;
+  message: string | string[];
 }
 
 const SearchResultMessage = ({ message }: SearchResultMessageProps) => {

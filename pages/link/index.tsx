@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { proxy } from "@/lib/api/axiosInstanceApi";
@@ -8,9 +9,9 @@ import Container from "@/components/Layout/Container";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import ActionButtons from "@/components/link/ActionButtons";
 import AddLinkInput from "@/components/link/AddLinkInput";
+import SearchResultMessage from "@/components/Search/SearchResultMessage";
 import FolderTag from "../../components/FolderTag";
 import LinkCard from "../../components/LinkCard";
-import SearchResultMessage from "@/components/Search/SearchResultMessage";
 
 interface LinkPageProps {
   linkList: LinkData[];
@@ -44,9 +45,24 @@ export const getServerSideProps = async (
   };
 };
 
-const LinkPage = ({ linkList, folderList }: LinkPageProps) => {
+const LinkPage = ({
+  linkList: initialLinkList,
+  folderList: initialFolderList,
+}: LinkPageProps) => {
   const router = useRouter();
+  const [linkList, setLinkList] = useState(initialLinkList);
+  const [folderList, setFolderList] = useState(initialFolderList);
   const { search } = router.query;
+
+  useEffect(() => {
+    const fetchNewList = async () => {
+      const res = await proxy.get("/api/links", {
+        params: { search },
+      });
+      console.log(res.data);
+    };
+    if (search !== undefined) fetchNewList();
+  }, [search]);
 
   return (
     <>
@@ -56,7 +72,7 @@ const LinkPage = ({ linkList, folderList }: LinkPageProps) => {
       <main className="mt-[40px]">
         <Container>
           <SearchInput />
-          {search && <SearchResultMessage message={String(search)} />}
+          {search && <SearchResultMessage message={search} />}
           <div className="flex justify-between mt-[40px]">
             {folderList && <FolderTag folderList={folderList} />}
             <button className="w-[79px] h-[19px] text-purple100">
