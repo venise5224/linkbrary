@@ -15,11 +15,11 @@ interface LinkCardProps {
     url: string;
     createdAt: string;
   };
-  onEdit?: () => void;
+  openEdit?: () => void;
   openDelete?: () => void;
 }
 
-const LinkCard = ({ onEdit, openDelete, info }: LinkCardProps) => {
+const LinkCard = ({ openEdit, openDelete, info }: LinkCardProps) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { isOpen: isModalOpen } = useModalStore(); // 모달 열림 상태 구독
@@ -37,6 +37,17 @@ const LinkCard = ({ onEdit, openDelete, info }: LinkCardProps) => {
 
   // dropdown 버튼
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
+
+  const dropdownItems = [
+    {
+      label: "수정하기",
+      onClick: openEdit,
+    },
+    {
+      label: "삭제하기",
+      onClick: openDelete,
+    },
+  ];
 
   return (
     <div className="w-[340px] h-[344px] rounded-[12px] shadow-lg overflow-hidden cursor-pointer hover:scale-105 hover:duration-300">
@@ -79,9 +90,7 @@ const LinkCard = ({ onEdit, openDelete, info }: LinkCardProps) => {
               >
                 <Image src="/icons/kebab.svg" alt="kebab button" fill />
               </button>
-              {isDropdownOpen && (
-                <Dropdown onEdit={onEdit} openDelete={openDelete} />
-              )}
+              {isDropdownOpen && <Dropdown items={dropdownItems} />}
             </div>
           )}
         </div>

@@ -5,10 +5,15 @@ import Link from "next/link";
 import SubmitButton from "./SubMitButton";
 import { useRouter } from "next/router";
 import useAuthStore from "@/store/useAuthStore";
+import { useEffect } from "react";
 
 const HeaderMenu = () => {
-  const { user, isLoggedIn } = useAuthStore();
+  const { user, isLoggedIn, checkLogin } = useAuthStore();
   const router = useRouter();
+
+  useEffect(() => {
+    checkLogin();
+  }, [checkLogin]);
 
   return (
     <>
