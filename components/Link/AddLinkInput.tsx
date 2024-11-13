@@ -15,6 +15,7 @@ const AddLinkInput = ({ folderList }: FolderListData) => {
 
   const handleClick = () => {
     openModal("AddModal", { list: folderList, link: link });
+    setLink("");
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
