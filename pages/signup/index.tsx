@@ -3,6 +3,7 @@ import SubmitButton from "@/components/SubMitButton";
 import AuthLayout from "@/components/Layout/AuthLayout";
 import Link from "next/link";
 import useForm from "@/hooks/useForm";
+import SnsSingUp from "@/components/Auth/SnsSignUp";
 
 const SignupPage = () => {
   const { values, errors, handleChange, handleBlur, handleSubmit } =
@@ -69,6 +70,7 @@ const SignupPage = () => {
             회원가입
           </SubmitButton>
         </form>
+        <SnsSingUp />
       </AuthLayout>
     </div>
   );
