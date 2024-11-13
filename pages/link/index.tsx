@@ -1,24 +1,27 @@
+import { useEffect } from "react";
 import { GetServerSidePropsContext } from "next";
+import { useRouter } from "next/router";
 import { proxy } from "@/lib/api/axiosInstanceApi";
 import { LinkData } from "@/types/linkTypes";
 import { FolderData } from "@/types/folderTypes";
-import { SearchInput } from "../../components/Search/SearchInput";
 import { Modal } from "@/components/modal/modalManager/ModalManager";
 import { useLinkCardStore } from "@/store/useLinkCardStore";
-import { useEffect } from "react";
-import Container from "@/components/Layout/Container";
+import { SearchInput } from "../../components/Search/SearchInput";
 import CardsLayout from "@/components/Layout/CardsLayout";
-import ActionButtons from "@/components/Link/ActionButtons";
-import AddLinkInput from "@/components/Link/AddLinkInput";
+import Container from "@/components/Layout/Container";
+import ActionButtons from "@/components/link/ActionButtons";
+import AddLinkInput from "@/components/link/AddLinkInput";
+import SearchResultMessage from "@/components/Search/SearchResultMessage";
+import useModalStore from "@/store/useModalStore";
 import FolderTag from "../../components/FolderTag";
 import LinkCard from "../../components/LinkCard";
-import useModalStore from "@/store/useModalStore";
 
 interface LinkPageProps {
   linkList: LinkData[];
   folderList: FolderData[];
 }
 
+// /link 페이지 접속시에 초기렌더링 데이터(전체 폴더, 전체링크리스트)만 fetch해서 client로 전달.
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
@@ -40,21 +43,34 @@ export const getServerSideProps = async (
 
   return {
     props: {
-      link: links || [],
       linkList: links.list || [],
       folderList: folders || [],
     },
   };
 };
 
-const LinkPage = ({ linkList, folderList }: LinkPageProps) => {
+const LinkPage = ({ linkList: initialLinkList, folderList }: LinkPageProps) => {
+  const router = useRouter();
+  const { search } = router.query;
   const { isOpen, openModal } = useModalStore();
   const { linkCardList, setLinkCardList } = useLinkCardStore();
 
+  // 검색어 입력시 관련된 목록으로 setLinkCardList
+  useEffect(() => {
+    const fetchNewList = async () => {
+      const res = await proxy.get("/api/links", {
+        params: { search },
+      });
+      console.log(res.data);
+      setLinkCardList(res.data.list);
+    };
+    if (search !== undefined) fetchNewList();
+  }, [setLinkCardList, search]);
+
   // 클라이언트에서 초기 목록을 설정
   useEffect(() => {
-    setLinkCardList(linkList);
-  }, [linkList, setLinkCardList]);
+    setLinkCardList(initialLinkList);
+  }, [initialLinkList, setLinkCardList]);
 
   // EditLink 호출
   const openEdit = (link: string, linkId: number) => {
@@ -74,6 +90,7 @@ const LinkPage = ({ linkList, folderList }: LinkPageProps) => {
       <main className="mt-[40px]">
         <Container>
           <SearchInput />
+          {search && <SearchResultMessage message={search} />}
           <div className="flex justify-between mt-[40px]">
             {folderList && <FolderTag folderList={folderList} />}
             <button className="w-[79px] h-[19px] text-purple100">
