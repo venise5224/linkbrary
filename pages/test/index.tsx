@@ -62,6 +62,9 @@ export default function Test() {
       <button type="button" onClick={() => openModal("SNSModal")}>
         공유 버튼
       </button>
+      <button type="button" onClick={() => openModal("EditLink")}>
+        링크 수정 버튼
+      </button>
       {isOpen && <Modal />}
     </div>
   );

@@ -5,7 +5,7 @@ import AddFolderModal from "../AddFolderModal";
 import DeleteLinkModal from "../DeleteLinkModal";
 import EditModal from "../EditModal";
 import SNSModal from "../SNSModal";
-import EditLinkModal from "../EditLink";
+import EditLink from "../EditLink";
 
 export const ModalType = {
   AddFolderModal: "AddFolderModal",
@@ -15,6 +15,7 @@ export const ModalType = {
   EditModal: "EditModal",
   EditLinkModal: "EditLinkModal",
   SNSModal: "SNSModal",
+  EditLink: "EditLink",
 } as const;
 
 export type ModalKeysType = keyof typeof ModalType;
@@ -49,12 +50,23 @@ export const Modal = () => {
         />
       );
     case "DeleteLinkModal":
-      return <DeleteLinkModal link={props.link || "링크"} />;
+      return (
+        <DeleteLinkModal
+          link={props.link || "링크"}
+          linkId={Number(props.linkId)}
+        />
+      );
     case "EditModal":
       return <EditModal folderName={props.folderName || "폴더이름"} />;
-    case "EditLinkModal":
-      return <EditLinkModal link={props.link || "링크"} />;
     case "SNSModal":
       return <SNSModal folderName={props.folderName || "폴더이름"} />;
+    case "EditLink":
+      return (
+        <EditLink
+          folderName={props.folderName || "폴더이름"}
+          link={props.link || "링크"}
+          linkId={Number(props.linkId)}
+        />
+      );
   }
 };

@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
+import { postFolders } from "@/lib/api/folder";
 import ModalContainer from "./modalComponents/ModalContainer";
 import ModalInput from "./modalComponents/ModalInput";
-import { postFolders } from "@/lib/api/folder";
 import useModalStore from "@/store/useModalStore";
 import SubmitButton from "../SubMitButton";
 

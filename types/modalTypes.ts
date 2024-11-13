@@ -8,6 +8,7 @@ export interface ModalPropType {
   folderId?: number;
   list?: FolderItemType[];
   link?: string;
+  linkId?: number | null;
 }
 
 export interface FolderItemType {

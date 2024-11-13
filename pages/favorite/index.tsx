@@ -22,15 +22,14 @@ interface FavoriteProps {
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const { req } = context;
-
   // 클라이언트의 쿠키 가져오기
+  const { req } = context;
   const cookies = req.headers.cookie || "";
 
   try {
     const res = await proxy.get("/api/favorites", {
       headers: {
-        Cookie: cookies, // 쿠키를 그대로 포함시킴
+        Cookie: cookies,
       },
     });
 
@@ -54,16 +53,7 @@ const FavoritePage = ({ favoriteList, totalCount }: FavoriteProps) => {
         <CardsLayout>
           {favoriteList.length > 0
             ? favoriteList.map((favorite) => (
-                <LinkCard
-                  key={favorite.id}
-                  id={favorite.id}
-                  url={favorite.url}
-                  title={favorite.title}
-                  imageSource={favorite.imageSource}
-                  description={favorite.description}
-                  createdAt={favorite.createdAt}
-                  isFavoritePage={true}
-                />
+                <LinkCard key={favorite.id} info={favorite} />
               ))
             : null}
         </CardsLayout>
