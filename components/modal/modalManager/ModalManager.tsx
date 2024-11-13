@@ -13,7 +13,6 @@ export const ModalType = {
   DeleteFolderModal: "DeleteFolderModal",
   DeleteLinkModal: "DeleteLinkModal",
   EditModal: "EditModal",
-  EditLinkModal: "EditLinkModal",
   SNSModal: "SNSModal",
   EditLink: "EditLink",
 } as const;
