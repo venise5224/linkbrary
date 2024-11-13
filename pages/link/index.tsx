@@ -30,7 +30,7 @@ export const getServerSideProps = async (
 
   // 쿼리로부터 page와 pageSize를 읽고 기본값 설정
   const page = parseInt((query.page as string) || "1", 10);
-  const pageSize = parseInt((query.pageSize as string) || "3", 10);
+  const pageSize = parseInt((query.pageSize as string) || "6", 10);
 
   const fetchData = async (endpoint: string) => {
     const response = await proxy.get(endpoint, {
