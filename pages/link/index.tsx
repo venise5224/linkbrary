@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { proxy } from "@/lib/api/axiosInstanceApi";
@@ -9,12 +9,13 @@ import { useLinkCardStore } from "@/store/useLinkCardStore";
 import { SearchInput } from "../../components/Search/SearchInput";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import Container from "@/components/Layout/Container";
-import ActionButtons from "@/components/Link/ActionButtons";
+import FolderActionsMenu from "@/components/Folder/FolderActionsMenu";
 import AddLinkInput from "@/components/Link/AddLinkInput";
 import SearchResultMessage from "@/components/Search/SearchResultMessage";
 import useModalStore from "@/store/useModalStore";
-import FolderTag from "../../components/FolderTag";
-import LinkCard from "../../components/LinkCard";
+import LinkCard from "@/components/Link/LinkCard";
+import FolderTag from "../../components/Folder/FolderTag";
+import AddFolderButton from "@/components/Folder/AddFolderButton";
 
 interface LinkPageProps {
   linkList: LinkData[];
@@ -49,10 +50,14 @@ export const getServerSideProps = async (
   };
 };
 
-const LinkPage = ({ linkList: initialLinkList, folderList }: LinkPageProps) => {
+const LinkPage = ({
+  linkList: initialLinkList,
+  folderList: initialFolderList,
+}: LinkPageProps) => {
   const router = useRouter();
   const { search } = router.query;
   const { isOpen, openModal } = useModalStore();
+  const [folderList, setFolderList] = useState(initialFolderList);
   const { linkCardList, setLinkCardList } = useLinkCardStore();
 
   // 검색어 입력시 관련된 목록으로 setLinkCardList
@@ -92,13 +97,11 @@ const LinkPage = ({ linkList: initialLinkList, folderList }: LinkPageProps) => {
           {search && <SearchResultMessage message={search} />}
           <div className="flex justify-between mt-[40px]">
             {folderList && <FolderTag folderList={folderList} />}
-            <button className="w-[79px] h-[19px] text-purple100">
-              폴더 추가 +
-            </button>
+            <AddFolderButton setFolderList={setFolderList} />
           </div>
           <div className="flex justify-between items-center mt-[24px]">
             <h1 className="text-2xl ">유용한 글</h1>
-            <ActionButtons />
+            <FolderActionsMenu />
           </div>
           <CardsLayout>
             {linkCardList.map((link) => (

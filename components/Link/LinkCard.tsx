@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import timeAgo from "@/util/timAgo";
 import Image from "next/image";
-import Dropdown from "./Dropdown";
+import Dropdown from "../Dropdown";
 import useModalStore from "@/store/useModalStore";
 
 interface LinkCardProps {
