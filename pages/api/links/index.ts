@@ -7,8 +7,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const accessToken = cookies.accessToken;
   const { page, search } = req.query;
 
-  console.log("서버에서의 search는? : ", search);
-
   switch (req.method) {
     case "GET":
       // 유저의 전체 링크 조회

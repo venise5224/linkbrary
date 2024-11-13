@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { proxy } from "@/lib/api/axiosInstanceApi";
 import { LinkData } from "@/types/linkTypes";
 import { FolderData } from "@/types/folderTypes";
+import { Modal } from "@/components/modal/modalManager/ModalManager";
+import { useLinkCardStore } from "@/store/useLinkCardStore";
 import { SearchInput } from "../../components/Search/SearchInput";
-import Container from "@/components/Layout/Container";
 import CardsLayout from "@/components/Layout/CardsLayout";
+import Container from "@/components/Layout/Container";
 import ActionButtons from "@/components/link/ActionButtons";
 import AddLinkInput from "@/components/link/AddLinkInput";
 import SearchResultMessage from "@/components/Search/SearchResultMessage";
+import useModalStore from "@/store/useModalStore";
 import FolderTag from "../../components/FolderTag";
 import LinkCard from "../../components/LinkCard";
 
@@ -18,6 +21,7 @@ interface LinkPageProps {
   folderList: FolderData[];
 }
 
+// /link 페이지 접속시에 초기렌더링 데이터(전체 폴더, 전체링크리스트)만 fetch해서 client로 전달.
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
@@ -45,24 +49,38 @@ export const getServerSideProps = async (
   };
 };
 
-const LinkPage = ({
-  linkList: initialLinkList,
-  folderList: initialFolderList,
-}: LinkPageProps) => {
+const LinkPage = ({ linkList: initialLinkList, folderList }: LinkPageProps) => {
   const router = useRouter();
-  const [linkList, setLinkList] = useState(initialLinkList);
-  const [folderList, setFolderList] = useState(initialFolderList);
   const { search } = router.query;
+  const { isOpen, openModal } = useModalStore();
+  const { linkCardList, setLinkCardList } = useLinkCardStore();
 
+  // 검색어 입력시 관련된 목록으로 setLinkCardList
   useEffect(() => {
     const fetchNewList = async () => {
       const res = await proxy.get("/api/links", {
         params: { search },
       });
       console.log(res.data);
+      setLinkCardList(res.data.list);
     };
     if (search !== undefined) fetchNewList();
-  }, [search]);
+  }, [setLinkCardList, search]);
+
+  // 클라이언트에서 초기 목록을 설정
+  useEffect(() => {
+    setLinkCardList(initialLinkList);
+  }, [initialLinkList, setLinkCardList]);
+
+  // EditLink 호출
+  const openEdit = (link: string, linkId: number) => {
+    openModal("EditLink", { link, linkId: linkId ?? null });
+  };
+
+  // DeleteLinkModal 호출
+  const openDelete = (link: string, linkId: number) => {
+    openModal("DeleteLinkModal", { link, linkId: linkId ?? null });
+  };
 
   return (
     <>
@@ -84,11 +102,17 @@ const LinkPage = ({
             <ActionButtons />
           </div>
           <CardsLayout>
-            {linkList.map((link) => (
-              <LinkCard key={link.id} info={link} />
+            {linkCardList.map((link) => (
+              <LinkCard
+                key={link.id}
+                onEdit={() => openEdit(link.url, link.id)}
+                openDelete={() => openDelete(link.url, link.id)}
+                info={link}
+              />
             ))}
           </CardsLayout>
         </Container>
+        {isOpen && <Modal />}
       </main>
     </>
   );

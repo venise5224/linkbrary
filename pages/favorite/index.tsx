@@ -22,15 +22,14 @@ interface FavoriteProps {
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const { req } = context;
-
   // 클라이언트의 쿠키 가져오기
+  const { req } = context;
   const cookies = req.headers.cookie || "";
 
   try {
     const res = await proxy.get("/api/favorites", {
       headers: {
-        Cookie: cookies, // 쿠키를 그대로 포함시킴
+        Cookie: cookies,
       },
     });
 
