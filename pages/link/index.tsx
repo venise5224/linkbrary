@@ -61,7 +61,6 @@ const LinkPage = ({ linkList: initialLinkList, folderList }: LinkPageProps) => {
       const res = await proxy.get("/api/links", {
         params: { search },
       });
-      console.log(res.data);
       setLinkCardList(res.data.list);
     };
     if (search !== undefined) fetchNewList();
