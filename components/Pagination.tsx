@@ -23,11 +23,7 @@ const Pagination: React.FC<PaginationProps> = ({
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      if (width > 1024) {
-        setMaxPagesToShow(5);
-      } else {
-        setMaxPagesToShow(3);
-      }
+      setMaxPagesToShow(width > 1024 ? 5 : 3);
     };
 
     // 초기 설정 및 리사이즈 이벤트 리스너 추가
