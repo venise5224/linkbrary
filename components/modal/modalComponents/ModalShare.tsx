@@ -8,12 +8,14 @@ import { useEffect } from "react";
 
 const ModalShare = () => {
   useEffect(() => {
-    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
+    }
   }, []);
 
   return (
     <div className="flex gap-8">
-      <div onClick={() => handleShareKakao}>
+      <div onClick={handleShareKakao}>
         <ModalShareItem src="/icons/Kakao.svg" text="카카오톡" bg="#FEE500" />
       </div>
       <div onClick={handleShareFacebook}>

@@ -24,7 +24,6 @@ export const handleShareKakao = () => {
       description: "나에게 필요한 링크만 모아 두었어요!",
       imageUrl: "/images/home_main.png",
       link: {
-        mobileWebUrl: location.href,
         webUrl: location.href,
       },
     },

@@ -35,6 +35,7 @@ const HomePage = () => {
     <main>
       <div className="flex flex-col items-center bg-gray100">
         <ModalShare />
+
         <h2 className="mt-[28px] text-[32px] leading-[42px] font-bold md:mt-[40px] lg:mt-[70px] md:text-[64px] md:leading-[80px] lg:text-[64px] lg:leading-[80px] text-center">
           <span className="gradient-text">세상의 모든 정보</span>
           를<br /> 쉽게 저장하고
