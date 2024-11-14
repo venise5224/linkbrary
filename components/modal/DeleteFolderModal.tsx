@@ -14,6 +14,7 @@ const DeleteFolderModal = ({
 }) => {
   const { closeModal } = useModalStore();
   const handleSubmit = async () => {
+    // 폴더 내에 링크 개수 0 일때만 삭제 가능 -> 링크 1개 이상이면 error toast 띄우겠습니다.
     try {
       await deleteFolder(folderId);
       toast.success(toastMessages.success.deleteFolder);
