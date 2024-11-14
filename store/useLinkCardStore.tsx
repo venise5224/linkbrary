@@ -1,24 +1,15 @@
 import { deleteLinkURL, getLinks, putLinkURL } from "@/lib/api/link";
 import { create } from "zustand";
-
-interface LinkCardDataType {
-  id: number;
-  favorite: boolean;
-  url: string;
-  title: string;
-  imageSource: string;
-  description: string;
-  createdAt: string;
-}
+import { LinkData } from "@/types/linkTypes";
 
 interface UpdateLinkBody {
   url: string;
 }
 
 interface LinkCardStore {
-  linkCardList: LinkCardDataType[];
+  linkCardList: LinkData[];
   totalCount: number;
-  setLinkCardList: (list: LinkCardDataType[]) => void;
+  setLinkCardList: (list: LinkData[]) => void;
   updateLink: (linkId: number, body: UpdateLinkBody) => Promise<void>;
   deleteLink: (linkId: number) => Promise<void>;
 }
@@ -27,7 +18,7 @@ export const useLinkCardStore = create<LinkCardStore>((set) => ({
   linkCardList: [],
   totalCount: 0,
 
-  setLinkCardList: (list: LinkCardDataType[]) => {
+  setLinkCardList: (list: LinkData[]) => {
     set({ linkCardList: list, totalCount: list.length });
   },
 

@@ -1,8 +1,14 @@
-import useModalStore from "@/store/useModalStore";
+import { FolderData } from "@/types/folderTypes";
 import Image from "next/image";
+import useModalStore from "@/store/useModalStore";
+import useRerenderFolderList from "../../hooks/useRerenderFolderList";
 
-const FolderActionsMenu = () => {
-  const { openModal } = useModalStore();
+interface FolderActionsMenuProps {
+  setFolderList: React.Dispatch<React.SetStateAction<FolderData[]>>;
+}
+
+const FolderActionsMenu = ({ setFolderList }: FolderActionsMenuProps) => {
+  const { isOpen, openModal } = useModalStore();
 
   const handleModalOpen = (text: string) => {
     switch (text) {
@@ -19,6 +25,8 @@ const FolderActionsMenu = () => {
         break;
     }
   };
+
+  useRerenderFolderList(isOpen, setFolderList);
 
   return (
     <div className="w-[192px] h-[18px] flex justify-between gap-[12px] text-gray400">
