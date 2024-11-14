@@ -17,15 +17,17 @@ export const handleShareFacebook = () => {
 
 export const handleShareKakao = () => {
   const { Kakao, location } = window;
-  Kakao.Share.sendDefault({
-    objectType: "feed",
-    content: {
-      title: "나만의 링크 모음",
-      description: "나에게 필요한 링크만 모아 두었어요!",
-      imageUrl: "/images/home_main.png",
-      link: {
-        webUrl: location.href,
+  if (window.Kakao && window.Kakao.isInitialized()) {
+    Kakao.Share.sendDefault({
+      objectType: "feed",
+      content: {
+        title: "나만의 링크 모음",
+        description: "나에게 필요한 링크만 모아 두었어요!",
+        imageUrl: "/images/home_main.png",
+        link: {
+          webUrl: location.href,
+        },
       },
-    },
-  });
+    });
+  }
 };
