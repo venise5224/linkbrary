@@ -4,6 +4,8 @@ import ModalContainer from "./modalComponents/ModalContainer";
 import ModalInput from "./modalComponents/ModalInput";
 import useModalStore from "@/store/useModalStore";
 import SubmitButton from "../SubMitButton";
+import toast from "react-hot-toast";
+import toastMessages from "@/lib/toastMessage";
 
 const AddFolderModal = ({ folderName }: { folderName: string }) => {
   const [value, setValue] = useState("");
@@ -20,8 +22,9 @@ const AddFolderModal = ({ folderName }: { folderName: string }) => {
     if (value !== "") {
       try {
         await postFolders(body);
+        toast.success(toastMessages.success.addFolder);
       } catch (error) {
-        console.log(error, "폴더 생성 에러");
+        toast.error(toastMessages.error.addFolder);
       }
     }
     closeModal();

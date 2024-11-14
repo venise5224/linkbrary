@@ -22,7 +22,6 @@ const DeleteLinkModal = ({
       toast.success(toastMessages.success.deleteLink);
     } catch (error) {
       toast.error(toastMessages.error.deleteLink);
-      console.error("Failed to delete the link:", error);
     }
   };
 

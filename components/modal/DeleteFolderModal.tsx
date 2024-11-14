@@ -17,7 +17,7 @@ const DeleteFolderModal = ({
   const { closeModal } = useModalStore();
   const [linkCount, setLinkCount] = useState(0);
 
-  // 폴더 내 링크 개수 확인
+  // 폴더 내 링크 개수 확인 -> hook으로 빼기
   const getLinkCountByFolder = async () => {
     let query;
     try {
