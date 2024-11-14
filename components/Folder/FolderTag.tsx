@@ -11,7 +11,7 @@ const FolderTag = ({ folderList }: FolderListData) => {
   const handleSubmit = (id: number | string) => {
     router.push({
       pathname: router.pathname,
-      query: { ...router.query, folder: id },
+      query: id ? { folder: id } : {},
     });
   };
 

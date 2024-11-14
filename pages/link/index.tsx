@@ -1,86 +1,75 @@
+import { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
-import { proxy } from "@/lib/api/axiosInstanceApi";
+import { useRouter } from "next/router";
 import { LinkData } from "@/types/linkTypes";
 import { FolderData } from "@/types/folderTypes";
-import { SearchInput } from "../../components/Search/SearchInput";
 import { Modal } from "@/components/modal/modalManager/ModalManager";
 import { useLinkCardStore } from "@/store/useLinkCardStore";
-import { useEffect } from "react";
-import Container from "@/components/Layout/Container";
-import CardsLayout from "@/components/Layout/CardsLayout";
-import ActionButtons from "@/components/Link/ActionButtons";
-import AddLinkInput from "@/components/Link/AddLinkInput";
-import FolderTag from "../../components/FolderTag";
-import LinkCard from "../../components/LinkCard";
+import { SearchInput } from "../../components/Search/SearchInput";
 import useModalStore from "@/store/useModalStore";
 import Pagination from "@/components/Pagination";
+import useFetchLinks from "@/hooks/useFetchLinks";
+import AddLinkInput from "@/components/Link/AddLinkInput";
+import Container from "@/components/Layout/Container";
+import SearchResultMessage from "@/components/Search/SearchResultMessage";
+import FolderTag from "@/components/Folder/FolderTag";
+import AddFolderButton from "@/components/Folder/AddFolderButton";
+import FolderActionsMenu from "@/components/Folder/FolderActionsMenu";
+import CardsLayout from "@/components/Layout/CardsLayout";
+import LinkCard from "@/components/Link/LinkCard";
+import fetchProxy from "@/lib/api/fetchProxy";
 
 interface LinkPageProps {
   linkList: LinkData[];
   folderList: FolderData[];
   totalCount: number;
-  page: number;
-  pageSize: number;
 }
 
+// /link 페이지 접속시에 초기렌더링 데이터(전체 폴더, 전체링크리스트)만 fetch해서 client로 전달.
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const { req, query } = context;
-
-  // 쿼리로부터 page와 pageSize를 읽고 기본값 설정
-  const page = parseInt((query.page as string) || "1", 10);
-  const pageSize = parseInt((query.pageSize as string) || "6", 10);
-
-  const fetchData = async (endpoint: string) => {
-    const response = await proxy.get(endpoint, {
-      headers: {
-        Cookie: req.headers.cookie,
-      },
-    });
-    return response.data;
-  };
+  const { req } = context;
 
   const [links, folders] = await Promise.all([
-    fetchData(`/api/links?page=${page}&pageSize=${pageSize}`),
-    fetchData("/api/folders"),
+    fetchProxy("/api/links", req),
+    fetchProxy("/api/folders", req),
   ]);
 
   return {
     props: {
-      link: links || [],
       linkList: links.list || [],
       folderList: folders || [],
       totalCount: links.totalCount || 0,
-      page,
-      pageSize,
     },
   };
 };
 
 const LinkPage = ({
-  linkList,
-  folderList,
+  linkList: initialLinkList,
+  folderList: initialFolderList,
   totalCount,
-  page,
-  pageSize,
 }: LinkPageProps) => {
+  const router = useRouter();
+  const { search } = router.query;
   const { isOpen, openModal } = useModalStore();
   const { linkCardList, setLinkCardList } = useLinkCardStore();
+  const [folderList, setFolderList] = useState(initialFolderList);
+
+  // 링크페이지의 query가 바뀌면 새로운 리스트로 업데이트 해주는 훅
+  useFetchLinks(router.query, setLinkCardList);
 
   // 클라이언트에서 초기 목록을 설정
   useEffect(() => {
-    setLinkCardList(linkList);
-  }, [linkList, setLinkCardList]);
+    setLinkCardList(initialLinkList);
+  }, [initialLinkList, setLinkCardList]);
 
-  // EditLink 호출
-  const openEdit = (link: string, linkId: number) => {
-    openModal("EditLink", { link, linkId: linkId ?? null });
-  };
-
-  // DeleteLinkModal 호출
-  const openDelete = (link: string, linkId: number) => {
-    openModal("DeleteLinkModal", { link, linkId: linkId ?? null });
+  const handleModalOpen = (
+    type: "EditLink" | "DeleteLinkModal",
+    link: string,
+    linkId: number
+  ) => {
+    openModal(type, { link, linkId });
   };
 
   return (
@@ -91,27 +80,28 @@ const LinkPage = ({
       <main className="mt-[40px]">
         <Container>
           <SearchInput />
+          {search && <SearchResultMessage message={search} />}
           <div className="flex justify-between mt-[40px]">
             {folderList && <FolderTag folderList={folderList} />}
-            <button className="w-[79px] h-[19px] text-purple100">
-              폴더 추가 +
-            </button>
+            <AddFolderButton setFolderList={setFolderList} />
           </div>
-          <div className="flex justify-between items-center mt-[24px]">
+          <div className="flex justify-between items-center my-[24px]">
             <h1 className="text-2xl ">유용한 글</h1>
-            <ActionButtons />
+            <FolderActionsMenu setFolderList={setFolderList} />
           </div>
           <CardsLayout>
             {linkCardList.map((link) => (
               <LinkCard
                 key={link.id}
-                openEdit={() => openEdit(link.url, link.id)}
-                openDelete={() => openDelete(link.url, link.id)}
+                openEdit={() => handleModalOpen("EditLink", link.url, link.id)}
+                openDelete={() =>
+                  handleModalOpen("DeleteLinkModal", link.url, link.id)
+                }
                 info={link}
               />
             ))}
           </CardsLayout>
-          <Pagination page={page} pageSize={pageSize} totalCount={totalCount} />
+          <Pagination totalCount={totalCount} />
         </Container>
         {isOpen && <Modal />}
       </main>
