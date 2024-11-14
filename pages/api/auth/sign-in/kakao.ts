@@ -1,59 +1,21 @@
-import axios from "axios";
 import axiosInstance from "@/lib/api/axiosInstanceApi";
 import { NextApiRequest, NextApiResponse } from "next";
 import { serialize } from "cookie";
-import { jwtDecode } from "jwt-decode";
-
-interface GoogleUserInfo {
-  name: string;
-}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { code } = req.query;
+    console.log(code);
     if (!code) {
       return res.status(400).json({ message: "인증 코드가 없습니다." });
     }
 
-    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_IDGOOGLE_CLIENT_ID;
-    const clientSecret =
-      process.env.NEXT_PUBLIC_GOOGLE_CLIENT_IDGOOGLE_CLIENT_SECRET;
     const redirectUri =
-      process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI || "http://localhost:3000/";
+      process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI || "http://localhost:3000/";
 
-    if (!clientId || !clientSecret) {
-      return res
-        .status(500)
-        .json({ message: "Google API 클라이언트 정보가 설정되지 않았습니다." });
-    }
-
-    // 토큰 요청
-    const tokenUrl = "https://oauth2.googleapis.com/token";
-    const params = {
-      code: code as string,
-      client_id: clientId,
-      client_secret: clientSecret,
-      redirect_uri: redirectUri,
-      grant_type: "authorization_code",
-    };
-
-    const tokenResponse = await axios.post(tokenUrl, params);
-    const { id_token } = tokenResponse.data;
-    if (!id_token) {
-      return res
-        .status(401)
-        .json({ message: "ID 토큰을 가져오지 못했습니다." });
-    }
-
-    // Google ID 토큰에서 사용자 정보 추출
-    const userInfo: GoogleUserInfo = jwtDecode(id_token);
-    const { name } = userInfo;
-    console.log(name);
-
-    // 이미 회원인지 체크
     try {
-      const loginResponse = await axiosInstance.post("/auth/sign-in/google", {
-        token: id_token,
+      const loginResponse = await axiosInstance.post("/auth/sign-in/kakao", {
+        token: code,
         redirectUri,
       });
 
@@ -79,14 +41,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       // 로그인 실패 시 회원가입 시도
       try {
-        const signUpResponse = await axiosInstance.post(
-          "/auth/sign-up/google",
-          {
-            name: name || "사용자",
-            token: id_token,
-            redirectUri: "http://localhost:3000",
-          }
-        );
+        const signUpResponse = await axiosInstance.post("/auth/sign-up/kakao", {
+          name: "사용자",
+          token: code,
+          redirectUri,
+        });
 
         const accessToken = signUpResponse.data.access_token;
         if (accessToken) {
