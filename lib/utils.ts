@@ -11,7 +11,22 @@ export const handleCopyUrl = () => {
 export const handleShareFacebook = () => {
   const currentUrl = window.location.href;
   const sendUrl = encodeURIComponent(currentUrl);
-  const message = `Check this out: ${currentUrl}`;
-  const shareUrl = `http://www.facebook.com/sharer/sharer.php?u=${sendUrl}&quote=${encodeURIComponent(message)}`;
+  const shareUrl = `http://www.facebook.com/sharer/sharer.php?u=${sendUrl}`;
   window.open(shareUrl);
+};
+
+export const handleShareKakao = () => {
+  const { Kakao, location } = window;
+  Kakao.Share.sendDefault({
+    objectType: "feed",
+    content: {
+      title: "나만의 링크 모음",
+      description: "나에게 필요한 링크만 모아 두었어요!",
+      imageUrl: "/images/home_main.png",
+      link: {
+        mobileWebUrl: location.href,
+        webUrl: location.href,
+      },
+    },
+  });
 };
