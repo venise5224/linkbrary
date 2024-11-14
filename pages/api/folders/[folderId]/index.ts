@@ -20,9 +20,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "DELETE":
       try {
-        console.log("folderId:", folderId);
-        console.log("id", id);
-
         await axiosInstance.delete(`/folders/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -36,10 +33,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             const status = error.response.status;
             const message =
               error.response.data?.message || "알 수 없는 오류 발생";
-            return res.status(status).json({ message });
+            console.error("Error Response Data:", error.response.data);
+            return res.status(status).json({ message: message });
           }
           console.error("Unknown Error:", error); // Axios 오류가 아닌 경우
-          // throw error;
+          throw error;
         }
         return res.status(500).json({ message: "서버 오류 발생" });
       }
