@@ -5,19 +5,16 @@ import axiosInstance from "@/lib/api/axiosInstanceApi";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
+  const { page, pageSize, search } = req.query;
 
   switch (req.method) {
     case "GET":
-      const { page = "1", pageSize = "10" } = req.query;
-
       // 유저의 전체 링크 조회
       try {
-        const response = await axiosInstance.get(
-          `/links?page=${page}&pageSize=${pageSize}`,
-          {
-            headers: { Authorization: `Bearer ${accessToken}` },
-          }
-        );
+        const response = await axiosInstance.get(`/links`, {
+          params: { page, pageSize, search }, // 만약 아무런 값이 없으면 알아서 예외시킴
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
         return res.status(201).json(response.data);
       } catch (err) {
         console.error(err);

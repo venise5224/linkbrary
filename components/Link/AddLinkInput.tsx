@@ -1,9 +1,12 @@
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 import { FolderListData } from "@/types/folderTypes";
+import { Modal } from "../modal/modalManager/ModalManager";
 import Image from "next/image";
 import SubmitButton from "../SubMitButton";
+import useModalStore from "@/store/useModalStore";
 
 const AddLinkInput = ({ folderList }: FolderListData) => {
+  const { isOpen, openModal } = useModalStore();
   const [link, setLink] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -11,7 +14,8 @@ const AddLinkInput = ({ folderList }: FolderListData) => {
   };
 
   const handleClick = () => {
-    // Addmodal 띄우면서 link 전달
+    openModal("AddModal", { list: folderList, link: link });
+    setLink("");
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -34,6 +38,7 @@ const AddLinkInput = ({ folderList }: FolderListData) => {
       <div onClick={handleClick}>
         <SubmitButton className="w-[80px] h-[37px]">추가하기</SubmitButton>
       </div>
+      {isOpen && <Modal />}
     </div>
   );
 };

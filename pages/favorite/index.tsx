@@ -1,8 +1,8 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { proxy } from "@/lib/api/axiosInstanceApi";
-import LinkCard from "@/components/LinkCard";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import Container from "@/components/Layout/Container";
+import LinkCard from "@/components/Link/LinkCard";
 
 interface FavoriteDataType {
   id: number;
