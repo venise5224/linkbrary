@@ -5,12 +5,6 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-declare global {
-  interface Window {
-    Kakao: any;
-  }
-}
-
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const hidePaths = ["/login", "/signup", "/404"];

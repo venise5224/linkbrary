@@ -13,7 +13,7 @@ const ModalShare = () => {
 
   return (
     <div className="flex gap-8">
-      <div onClick={handleShareKakao}>
+      <div onClick={() => handleShareKakao}>
         <ModalShareItem src="/icons/Kakao.svg" text="카카오톡" bg="#FEE500" />
       </div>
       <div onClick={handleShareFacebook}>
