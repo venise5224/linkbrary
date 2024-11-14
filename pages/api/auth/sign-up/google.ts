@@ -2,6 +2,11 @@ import axios from "axios";
 import axiosInstance from "@/lib/api/axiosInstanceApi";
 import { NextApiRequest, NextApiResponse } from "next";
 import { serialize } from "cookie";
+import { jwtDecode } from "jwt-decode";
+
+interface GoogleUserInfo {
+  name: string;
+}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -13,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
     const clientSecret = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET;
     const redirectUri =
-      process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI_SIGN_IN ||
+      process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI_SIGN_UP ||
       "http://localhost:3000/";
 
     if (!clientId || !clientSecret) {
@@ -22,7 +27,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         .json({ message: "Google API 클라이언트 정보가 설정되지 않았습니다." });
     }
 
-    // 토큰 요청
     const tokenUrl = "https://oauth2.googleapis.com/token";
     const params = {
       code: code as string,
@@ -40,14 +44,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         .json({ message: "ID 토큰을 가져오지 못했습니다." });
     }
 
-    // 이미 회원인지 체크
+    const userInfo: GoogleUserInfo = jwtDecode(id_token);
+    const { name } = userInfo;
+
     try {
-      const loginResponse = await axiosInstance.post("/auth/sign-in/google", {
+      const signUpResponse = await axiosInstance.post("/auth/sign-up/google", {
+        name: name || "사용자",
         token: id_token,
-        redirectUri,
+        redirectUri: "http://localhost:3000",
       });
 
-      const accessToken = loginResponse.data.access_token;
+      const accessToken = signUpResponse.data.access_token;
       if (accessToken) {
         res.setHeader(
           "Set-Cookie",
@@ -59,10 +66,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             path: "/",
           })
         );
-        return res.redirect("http://localhost:3000");
+        return res
+          .status(200)
+          .json({ message: "회원가입 성공", redirectUrl: "/" });
       }
-    } catch (loginError: any) {
-      return res.redirect("/signup");
+    } catch (signUpError: any) {
+      return res.redirect("/login");
     }
   } catch (error: any) {
     console.error("Error:", error.response?.data || error.message);

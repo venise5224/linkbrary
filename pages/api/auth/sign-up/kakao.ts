@@ -11,16 +11,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const redirectUri =
-      process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_SIGN_IN ||
+      process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_SIGN_UP ||
       "http://localhost:3000/";
 
+    // 회원가입 시도
     try {
-      const loginResponse = await axiosInstance.post("/auth/sign-in/kakao", {
+      const signUpResponse = await axiosInstance.post("/auth/sign-up/kakao", {
+        name: "사용자",
         token: code,
         redirectUri,
       });
 
-      const accessToken = loginResponse.data.access_token;
+      const accessToken = signUpResponse.data.access_token;
       if (accessToken) {
         res.setHeader(
           "Set-Cookie",
@@ -34,12 +36,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         );
         return res.redirect("http://localhost:3000");
       }
-    } catch (loginError: any) {
+    } catch (signUpError: any) {
       console.error(
-        "로그인 실패:",
-        loginError.response?.data || loginError.message
+        "회원가입 실패:",
+        signUpError.response?.data || signUpError.message
       );
-      return res.redirect("signup");
+      return res.redirect("/login");
     }
   } catch (error: any) {
     console.error("Error:", error.response?.data || error.message);
