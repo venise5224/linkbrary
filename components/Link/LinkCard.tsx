@@ -17,14 +17,12 @@ interface LinkCardProps {
     url: string;
     createdAt: string;
   };
-  openEdit?: () => void;
-  openDelete?: () => void;
 }
 
-const LinkCard = ({ openEdit, openDelete, info }: LinkCardProps) => {
+const LinkCard = ({ info }: LinkCardProps) => {
   const [isSubscribed, setIsSubscribed] = useState(info.favorite || false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { isOpen: isModalOpen } = useModalStore();
+  const { isOpen, openModal } = useModalStore();
   const { updateFavorite } = useLinkCardStore();
 
   const formattedDate = info.createdAt?.slice(0, 10).replace(/-/g, ".");
@@ -35,8 +33,8 @@ const LinkCard = ({ openEdit, openDelete, info }: LinkCardProps) => {
 
   // 모달이 열릴 때 드롭다운 닫기
   useEffect(() => {
-    if (isModalOpen) setIsDropdownOpen(false);
-  }, [isModalOpen]);
+    if (isOpen) setIsDropdownOpen(false);
+  }, [isOpen]);
 
   // 즐겨찾기 버튼 클릭 시 호출되는 함수
   const handleFavoriteToggle = async () => {
@@ -52,14 +50,22 @@ const LinkCard = ({ openEdit, openDelete, info }: LinkCardProps) => {
   // dropdown 버튼
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
+  const handleModalOpen = (
+    type: "EditLink" | "DeleteLinkModal",
+    link: string,
+    linkId: number
+  ) => {
+    openModal(type, { link, linkId });
+  };
+
   const dropdownItems = [
     {
       label: "수정하기",
-      onClick: openEdit,
+      onClick: () => handleModalOpen("EditLink", info.url, info.id),
     },
     {
       label: "삭제하기",
-      onClick: openDelete,
+      onClick: () => handleModalOpen("DeleteLinkModal", info.url, info.id),
     },
   ];
 
