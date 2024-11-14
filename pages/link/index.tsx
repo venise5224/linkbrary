@@ -6,36 +6,41 @@ import { FolderData } from "@/types/folderTypes";
 import { Modal } from "@/components/modal/modalManager/ModalManager";
 import { useLinkCardStore } from "@/store/useLinkCardStore";
 import { SearchInput } from "../../components/Search/SearchInput";
-import fetchProxy from "@/lib/api/fetchProxy";
 import useModalStore from "@/store/useModalStore";
+import Pagination from "@/components/Pagination";
 import useFetchLinks from "@/hooks/useFetchLinks";
-import CardsLayout from "@/components/Layout/CardsLayout";
-import Container from "@/components/Layout/Container";
-import FolderActionsMenu from "@/components/Folder/FolderActionsMenu";
 import AddLinkInput from "@/components/Link/AddLinkInput";
+import Container from "@/components/Layout/Container";
 import SearchResultMessage from "@/components/Search/SearchResultMessage";
-import LinkCard from "@/components/Link/LinkCard";
+import FolderTag from "@/components/Folder/FolderTag";
 import AddFolderButton from "@/components/Folder/AddFolderButton";
-import FolderTag from "../../components/Folder/FolderTag";
+import FolderActionsMenu from "@/components/Folder/FolderActionsMenu";
+import CardsLayout from "@/components/Layout/CardsLayout";
+import LinkCard from "@/components/Link/LinkCard";
+import fetchProxy from "@/lib/api/fetchProxy";
 
 interface LinkPageProps {
   linkList: LinkData[];
   folderList: FolderData[];
+  totalCount: number;
 }
 
 // /link 페이지 접속시에 초기렌더링 데이터(전체 폴더, 전체링크리스트)만 fetch해서 client로 전달.
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
+  const { req } = context;
+
   const [links, folders] = await Promise.all([
-    fetchProxy("/api/links", context.req),
-    fetchProxy("/api/folders", context.req),
+    fetchProxy("/api/links", req),
+    fetchProxy("/api/folders", req),
   ]);
 
   return {
     props: {
       linkList: links.list || [],
       folderList: folders || [],
+      totalCount: links.totalCount || 0,
     },
   };
 };
@@ -43,6 +48,7 @@ export const getServerSideProps = async (
 const LinkPage = ({
   linkList: initialLinkList,
   folderList: initialFolderList,
+  totalCount,
 }: LinkPageProps) => {
   const router = useRouter();
   const { search } = router.query;
@@ -50,7 +56,7 @@ const LinkPage = ({
   const { linkCardList, setLinkCardList } = useLinkCardStore();
   const [folderList, setFolderList] = useState(initialFolderList);
 
-  useFetchLinks(search, setLinkCardList);
+  useFetchLinks(router.query, setLinkCardList);
 
   // 클라이언트에서 초기 목록을 설정
   useEffect(() => {
@@ -94,6 +100,7 @@ const LinkPage = ({
               />
             ))}
           </CardsLayout>
+          <Pagination totalCount={totalCount} />
         </Container>
         {isOpen && <Modal />}
       </main>

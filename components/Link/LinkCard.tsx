@@ -22,7 +22,7 @@ interface LinkCardProps {
 const LinkCard = ({ openEdit, openDelete, info }: LinkCardProps) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { isOpen: isModalOpen } = useModalStore(); // 모달 열림 상태 구독
+  const { isOpen: isModalOpen } = useModalStore();
 
   const formattedDate = info.createdAt?.slice(0, 10).replace(/-/g, ".");
   const createdTime = timeAgo(info.createdAt);

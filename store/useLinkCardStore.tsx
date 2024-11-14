@@ -1,25 +1,22 @@
 import { deleteLinkURL, getLinks, putLinkURL } from "@/lib/api/link";
 import { create } from "zustand";
-import { LinkData } from "@/types/linkTypes";
 
 interface UpdateLinkBody {
   url: string;
 }
 
 interface LinkCardStore {
-  linkCardList: LinkData[];
-  totalCount: number;
-  setLinkCardList: (list: LinkData[]) => void;
+  linkCardList: LinkCardDataType[];
+  setLinkCardList: (list: LinkCardDataType[]) => void;
   updateLink: (linkId: number, body: UpdateLinkBody) => Promise<void>;
   deleteLink: (linkId: number) => Promise<void>;
 }
 
 export const useLinkCardStore = create<LinkCardStore>((set) => ({
   linkCardList: [],
-  totalCount: 0,
 
-  setLinkCardList: (list: LinkData[]) => {
-    set({ linkCardList: list, totalCount: list.length });
+  setLinkCardList: (list: LinkCardDataType[]) => {
+    set({ linkCardList: list });
   },
 
   // 수정 요청 보낸 후 목록 가져오기
@@ -31,7 +28,7 @@ export const useLinkCardStore = create<LinkCardStore>((set) => ({
       const updatedList = res.list;
 
       // 상태 업데이트
-      set({ linkCardList: updatedList, totalCount: updatedList.length });
+      set({ linkCardList: updatedList });
     } catch (error) {
       console.error("삭제 중 오류 발생:", error);
     }
@@ -45,7 +42,7 @@ export const useLinkCardStore = create<LinkCardStore>((set) => ({
       const updatedList = res.list;
 
       // 상태 업데이트
-      set({ linkCardList: updatedList, totalCount: updatedList.length });
+      set({ linkCardList: updatedList });
     } catch (error) {
       console.error("삭제 중 오류 발생:", error);
     }

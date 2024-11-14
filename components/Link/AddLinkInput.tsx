@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 import { FolderListData } from "@/types/folderTypes";
 import { Modal } from "../modal/modalManager/ModalManager";
 import Image from "next/image";
