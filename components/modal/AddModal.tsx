@@ -49,7 +49,7 @@ const AddModal = ({ list, link }: { list: FolderItemType[]; link: string }) => {
         type="button"
         onClick={handleSubmit}
         width="w-full"
-        height="h-[51px] "
+        height="h-[51px]"
         color="positive"
       >
         추가하기

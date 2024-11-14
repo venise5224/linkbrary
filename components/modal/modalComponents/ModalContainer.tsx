@@ -1,21 +1,24 @@
 import { IoIosClose } from "react-icons/io";
-import SubmitButton from "../../SubMitButton";
 import { ModalPropType } from "@/types/modalTypes";
 import useModalStore from "@/store/useModalStore";
 import { MouseEvent, useRef } from "react";
 
 const ModalContainer = ({ title, subtitle, children }: ModalPropType) => {
-  const { closeModal } = useModalStore();
+  const { isOpen, closeModal } = useModalStore();
   const modalRef = useRef<HTMLDivElement | null>(null);
   const onClickBackDrop = (e: MouseEvent<HTMLDivElement>) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node))
       closeModal();
   };
-
+  if (isOpen) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
   return (
     <div
       onClick={onClickBackDrop}
-      className="z-30 absolute top-0 left-0 flex justify-center items-center bg-black/40 h-screen w-screen"
+      className=" z-30 fixed top-0 left-0 flex justify-center items-center bg-black/40 h-screen w-screen"
     >
       <div
         ref={modalRef}
