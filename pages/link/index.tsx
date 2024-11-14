@@ -68,11 +68,6 @@ const LinkPage = ({
   const { isOpen, openModal } = useModalStore();
   const { linkCardList, setLinkCardList } = useLinkCardStore();
 
-  useEffect(() => {
-    // 상태 변화 감지 후 바로 UI 업데이트 처리
-    console.log("linkCardList updated:", linkCardList);
-  }, [linkCardList]);
-
   // 클라이언트에서 초기 목록을 설정
   useEffect(() => {
     setLinkCardList(linkList);

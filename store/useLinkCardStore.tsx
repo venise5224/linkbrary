@@ -41,8 +41,8 @@ export const useLinkCardStore = create<LinkCardStore>((set) => ({
       // 프록시 서버에서 수정된 링크 데이터를 받아옴
       const updatedData = await putLinkURL(linkId, body);
 
+      // 수정된 데이터를 사용하여 상태 업데이트
       if (updatedData) {
-        // 수정된 데이터를 사용하여 상태 업데이트
         set((state) => {
           const updatedList = state.linkCardList.map((link) =>
             link.id === linkId ? { ...link, ...updatedData } : link
@@ -59,6 +59,7 @@ export const useLinkCardStore = create<LinkCardStore>((set) => ({
   deleteLink: async (linkId: number) => {
     try {
       await deleteLinkURL(linkId);
+
       // 삭제된 항목을 제외한 나머지 항목으로 상태 업데이트
       set((state) => {
         const updatedList = state.linkCardList.filter(
@@ -74,7 +75,6 @@ export const useLinkCardStore = create<LinkCardStore>((set) => ({
   // 즐겨찾기 상태 업데이트
   updateFavorite: async (linkId: number, favorite: boolean) => {
     try {
-      // API 호출하여 즐겨찾기 상태 업데이트
       await putLinkFavorite(linkId, { favorite });
 
       // 변경된 항목만 상태 업데이트
