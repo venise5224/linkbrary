@@ -2,6 +2,8 @@ import useModalStore from "@/store/useModalStore";
 import SubmitButton from "../SubMitButton";
 import ModalContainer from "./modalComponents/ModalContainer";
 import { deleteFolder } from "@/lib/api/folder";
+import toast from "react-hot-toast";
+import toastMessages from "@/lib/toastMessage";
 
 const DeleteFolderModal = ({
   folderName,
@@ -14,8 +16,10 @@ const DeleteFolderModal = ({
   const handleSubmit = async () => {
     try {
       await deleteFolder(folderId);
+      toast.success(toastMessages.success.deleteFolder);
     } catch (error) {
       console.log(error, "폴더 삭제 에러");
+      toast.error(toastMessages.error.deleteFolder);
     } finally {
       closeModal();
     }
