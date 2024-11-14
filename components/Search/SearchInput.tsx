@@ -18,6 +18,7 @@ export const SearchInput = () => {
       pathname: router.pathname,
       query: { ...router.query, search: value },
     });
+    setValue("");
   };
 
   return (
