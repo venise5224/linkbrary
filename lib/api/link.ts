@@ -67,14 +67,10 @@ export const getFavorites = async () => {
 export const putLinkURL = async (linkId: number, body: putLinkURLProps) => {
   try {
     const res = await proxy.put(`/api/links/${linkId}`, body);
-    if (res.status >= 200 && res.status < 300) {
-      return res.data;
-    } else {
-      throw new Error("Request Failed");
-    }
+    if (res.status >= 200 && res.status < 300) return res.data;
   } catch (err) {
     console.error("에러 메시지: ", err instanceof Error ? err.message : err);
-    throw err;
+    throw err; // 에러를 상위로 전달
   }
 };
 

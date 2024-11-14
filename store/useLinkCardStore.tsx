@@ -35,7 +35,6 @@ export const useLinkCardStore = create<LinkCardStore>((set) => ({
   updateLink: async (linkId: number, body: UpdateLinkBody) => {
     try {
       await putLinkURL(linkId, body);
-
       const res = await getLinks();
       const updatedList = res.list;
 
@@ -43,6 +42,7 @@ export const useLinkCardStore = create<LinkCardStore>((set) => ({
       set({ linkCardList: updatedList, totalCount: updatedList.length });
     } catch (error) {
       console.error("수정 중 오류 발생:", error);
+      throw error; // 에러를 상위로 전달
     }
   },
 

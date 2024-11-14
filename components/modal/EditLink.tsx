@@ -35,9 +35,13 @@ const EditLink = ({
       toast.error(toastMessages.error.inputLink);
     }
     if (value !== "" && value !== link) {
-      await updateLink(linkId, body);
-      closeModal();
-      toast.success(toastMessages.success.editLink);
+      try {
+        await updateLink(linkId, body);
+        closeModal();
+        toast.success(toastMessages.success.editLink);
+      } catch (err) {
+        toast.error(toastMessages.error.editLink);
+      }
     }
   };
   return (
