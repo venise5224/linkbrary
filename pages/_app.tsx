@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://linkbrary-sooty.vercel.app/" />
+        {/* <meta property="og:url" content="https://linkbrary-sooty.vercel.app/" /> */}
         <meta property="og:title" content="Linkbrary" />
         <meta
           property="og:description"
