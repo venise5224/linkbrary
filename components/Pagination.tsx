@@ -1,22 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 interface PaginationProps {
-  page: number;
-  pageSize: number;
   totalCount: number;
 }
 
-const Pagination: React.FC<PaginationProps> = ({
-  page,
-  pageSize,
-  totalCount,
-}) => {
+const Pagination: React.FC<PaginationProps> = ({ totalCount }) => {
+  const router = useRouter();
   const LiStyle = "relative w-12 h-12 rounded-lg bg-gray900";
   const buttonStyle = "flex justify-center items-center h-full text-black400";
+  const { page, pageSize } = router.query;
 
-  const totalPages = Math.ceil(totalCount / pageSize);
+  const currentPage = Number(page);
+  const currentPageSize = Number(pageSize);
+  const totalPages = Math.ceil(totalCount / currentPageSize);
   const [maxPagesToShow, setMaxPagesToShow] = useState(2);
 
   // 화면 크기 변화에 따라 pageSize와 maxPagesToShow를 설정
@@ -45,12 +44,12 @@ const Pagination: React.FC<PaginationProps> = ({
     } else {
       // 첫 페이지와 마지막 페이지는 항상 표시
       pages.push(1);
-      let start = Math.max(2, page - 1);
-      let end = Math.min(totalPages - 1, page + 1);
+      let start = Math.max(2, currentPage - 1);
+      let end = Math.min(totalPages - 1, currentPage + 1);
 
-      if (page > 3) pages.push("...");
+      if (currentPage > 3) pages.push("...");
       for (let i = start; i <= end; i++) pages.push(i);
-      if (page < totalPages - 2) pages.push("...");
+      if (currentPage < totalPages - 2) pages.push("...");
       pages.push(totalPages);
     }
 
@@ -61,12 +60,12 @@ const Pagination: React.FC<PaginationProps> = ({
     <ul className="flex justify-center gap-[10px] my-10">
       <li className={LiStyle}>
         <Link
-          href={`/link?page=${page - 1}&pageSize=${pageSize}`}
-          className={`${buttonStyle} ${page > 1 ? "text-black500" : "pointer-events-none"}`}
+          href={`/link?page=${currentPage - 1}&pageSize=${currentPageSize}`}
+          className={`${buttonStyle} ${currentPage > 1 ? "text-black500" : "pointer-events-none"}`}
         >
           <Image
             src={
-              page > 1
+              currentPage > 1
                 ? "/icons/pagination-left-active.png"
                 : "/icons/pagination-left.png"
             }
@@ -83,7 +82,7 @@ const Pagination: React.FC<PaginationProps> = ({
           <li key={index} className={LiStyle}>
             <Link
               href={`/link?page=${pageNum}&pageSize=${pageSize}`}
-              className={`${buttonStyle} ${pageNum === page ? "text-black500" : "text-black400"}`}
+              className={`${buttonStyle} ${pageNum === currentPage ? "text-black500" : "text-black400"}`}
             >
               {pageNum}
             </Link>
@@ -100,12 +99,12 @@ const Pagination: React.FC<PaginationProps> = ({
 
       <li className={LiStyle}>
         <Link
-          href={`/link?page=${page + 1}&pageSize=${pageSize}`}
-          className={`${buttonStyle} ${page < totalPages ? "text-black500" : "pointer-events-none"}`}
+          href={`/link?page=${currentPage + 1}&pageSize=${pageSize}`}
+          className={`${buttonStyle} ${currentPage < totalPages ? "text-black500" : "pointer-events-none"}`}
         >
           <Image
             src={
-              page < totalPages
+              currentPage < totalPages
                 ? "/icons/pagination-right-active.png"
                 : "/icons/pagination-right.png"
             }

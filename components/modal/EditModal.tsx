@@ -5,12 +5,16 @@ import useModalStore from "@/store/useModalStore";
 import { putFolder } from "@/lib/api/folder";
 import SubmitButton from "../SubMitButton";
 
-const EditModal = ({ folderName }: { folderName: string }) => {
+const EditModal = ({
+  folderName,
+  folderId,
+}: {
+  folderName: string;
+  folderId: number;
+}) => {
   const [value, setValue] = useState("");
 
   const { closeModal } = useModalStore();
-
-  // 폴더 정보를 먼저 가져와야함
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -19,27 +23,27 @@ const EditModal = ({ folderName }: { folderName: string }) => {
     const body = {
       name: value,
     };
-    // if (value !== "") {
-    //   try {
-    //     const res = await putFolder(folderId, body);
-    //     console.log(res);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
+    if (value !== "") {
+      try {
+        await putFolder(folderId, body);
+        console.log("폴더 수정 완료");
+      } catch (error) {
+        console.log(error);
+      }
+    }
     closeModal();
   };
   return (
     <ModalContainer title="폴더 이름 변경">
       <ModalInput
-        placeholder="내용 입력"
+        placeholder={folderName}
         name={folderName}
         value={value}
         onChange={handleChange}
       />
       <SubmitButton
         type="button"
-        // onClick={handleSubmit}
+        onClick={handleSubmit}
         width="w-full"
         height="h-[51px]"
         color="positive"
