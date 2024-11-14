@@ -19,7 +19,7 @@ interface AuthStore {
     provider: "google" | "kakao",
     body: easySignInProps
   ) => Promise<boolean>;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 const useAuthStore = create<AuthStore>()(
@@ -30,9 +30,9 @@ const useAuthStore = create<AuthStore>()(
 
       checkLogin: async () => {
         try {
-          const response = await proxy.get("/api/auth/check");
+          const response = await proxy.get("/api/auth/sign-check");
           if (response.data.isLoggedIn) {
-            const userInfo = await getUserInfo(); // 로그인 되어 있으면 사용자 정보 가져오기
+            const userInfo = await getUserInfo();
             if (userInfo) {
               set({ isLoggedIn: true, user: userInfo });
             }
@@ -78,7 +78,14 @@ const useAuthStore = create<AuthStore>()(
         return false;
       },
 
-      logout: () => set({ user: null, isLoggedIn: false }),
+      logout: async () => {
+        try {
+          await proxy.post("/api/auth/sign-out");
+          set({ user: null, isLoggedIn: false });
+        } catch (error) {
+          console.error("로그아웃 중 에러가 발생했습니다.", error);
+        }
+      },
     }),
     {
       name: "auth-storage",
