@@ -14,6 +14,8 @@ const config: Config = {
         black100: "#000",
         black200: "#111322",
         black300: "#373740",
+        black400: "#c4c4c4",
+        black500: "#1f1f1f",
         red100: "#ff5b56",
         gray100: "#f0f6ff",
         gray200: "#e7effb",
@@ -23,6 +25,7 @@ const config: Config = {
         gray600: "#6b6b6b",
         gray700: "#676767",
         gray800: "#CFCFCF",
+        gray900: "#f7f7f7",
         purple100: "#6d6afe",
       },
       screens: {
