@@ -20,7 +20,12 @@ const Dropdown = ({ items }: DropdownProps) => {
       {items.map((item, index) =>
         // href가 있으면 Link로 렌더링
         item.href ? (
-          <Link key={index} href={item.href} className={buttonStyle}>
+          <Link
+            key={index}
+            href={item.href}
+            onClick={item.onClick}
+            className={`${buttonStyle} text-center `}
+          >
             {item.label}
           </Link>
         ) : (

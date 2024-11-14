@@ -24,6 +24,7 @@ const HeaderMenu = () => {
     },
     {
       label: "로그아웃",
+      href: "/login",
       onClick: logout,
     },
   ];
