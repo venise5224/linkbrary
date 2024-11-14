@@ -54,13 +54,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
       try {
-        await axiosInstance.put(`/links/${linkId}`, updateData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const updatedLink = await axiosInstance.put(
+          `/links/${linkId}`,
+          updateData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-        return res.status(200).json({ message: "링크 업데이트 성공" });
+        return res.status(200).json(updatedLink.data);
       } catch (error) {
         if (isAxiosError(error) && error.response) {
           const status = error.response.status;
