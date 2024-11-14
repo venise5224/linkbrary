@@ -56,6 +56,7 @@ const LinkPage = ({
   const { linkCardList, setLinkCardList } = useLinkCardStore();
   const [folderList, setFolderList] = useState(initialFolderList);
 
+  // 링크페이지의 query가 바뀌면 새로운 리스트로 업데이트 해주는 훅
   useFetchLinks(router.query, setLinkCardList);
 
   // 클라이언트에서 초기 목록을 설정

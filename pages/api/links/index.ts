@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       // 유저의 전체 링크 조회
       try {
         const response = await axiosInstance.get(`/links`, {
-          params: { page, pageSize, search },
+          params: { page, pageSize, search }, // 만약 아무런 값이 없으면 알아서 예외시킴
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         return res.status(201).json(response.data);

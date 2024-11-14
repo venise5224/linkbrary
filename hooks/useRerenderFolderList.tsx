@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { getFolders } from "@/lib/api/folder";
 import { FolderData } from "@/types/folderTypes";
 
-// Folder 관련 드랍다운이 닫혔을 때 화면에 update된 FolderList를 보여주는 커스텀 훅
+// 모달이 닫혔을 때 새로운 FolderList를 보여주는 커스텀 훅
 const useRerenderFolderList = (
   isOpen: boolean,
   setFolderList: React.Dispatch<React.SetStateAction<FolderData[]>>

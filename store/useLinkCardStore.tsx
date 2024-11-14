@@ -1,13 +1,14 @@
 import { deleteLinkURL, getLinks, putLinkURL } from "@/lib/api/link";
 import { create } from "zustand";
+import { LinkData } from "@/types/linkTypes";
 
 interface UpdateLinkBody {
   url: string;
 }
 
 interface LinkCardStore {
-  linkCardList: LinkCardDataType[];
-  setLinkCardList: (list: LinkCardDataType[]) => void;
+  linkCardList: LinkData[];
+  setLinkCardList: (list: LinkData[]) => void;
   updateLink: (linkId: number, body: UpdateLinkBody) => Promise<void>;
   deleteLink: (linkId: number) => Promise<void>;
 }
@@ -15,7 +16,7 @@ interface LinkCardStore {
 export const useLinkCardStore = create<LinkCardStore>((set) => ({
   linkCardList: [],
 
-  setLinkCardList: (list: LinkCardDataType[]) => {
+  setLinkCardList: (list: LinkData[]) => {
     set({ linkCardList: list });
   },
 
