@@ -41,7 +41,7 @@ const EditModal = ({ folderName }: { folderName: string }) => {
         type="button"
         // onClick={handleSubmit}
         width="w-full"
-        height="h-[51px] "
+        height="h-[51px]"
         color="positive"
       >
         변경하기

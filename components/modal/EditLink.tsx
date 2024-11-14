@@ -21,7 +21,6 @@ const EditLink = ({
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
-
   const handleSubmit = async () => {
     const body = {
       url: value,
