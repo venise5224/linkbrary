@@ -1,6 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import toast from "react-hot-toast";
+import toastMessages from "@/lib/toastMessage";
 
 export const SearchInput = () => {
   const router = useRouter();

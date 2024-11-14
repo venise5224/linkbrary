@@ -5,6 +5,8 @@ import SubmitButton from "../SubMitButton";
 import { useState } from "react";
 import { postLink } from "@/lib/api/link";
 import useModalStore from "@/store/useModalStore";
+import toast from "react-hot-toast";
+import toastMessages from "@/lib/toastMessage";
 
 const AddModal = ({ list, link }: { list: FolderItemType[]; link: string }) => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -17,8 +19,9 @@ const AddModal = ({ list, link }: { list: FolderItemType[]; link: string }) => {
     if (link !== "" && selectedId) {
       try {
         await postLink(body);
+        toast.success(toastMessages.success.addLink);
       } catch (error) {
-        console.log(error, "링크 생성 에러");
+        toast.error(toastMessages.error.addLink);
       } finally {
         closeModal();
       }
