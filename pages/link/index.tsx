@@ -105,7 +105,7 @@ const LinkPage = ({
             {linkCardList.map((link) => (
               <LinkCard
                 key={link.id}
-                onEdit={() => openEdit(link.url, link.id)}
+                openEdit={() => openEdit(link.url, link.id)}
                 openDelete={() => openDelete(link.url, link.id)}
                 info={link}
               />
