@@ -7,10 +7,13 @@ import { postLink } from "@/lib/api/link";
 import useModalStore from "@/store/useModalStore";
 import toast from "react-hot-toast";
 import toastMessages from "@/lib/toastMessage";
+import { useRouter } from "next/router";
 
 const AddModal = ({ list, link }: { list: FolderItemType[]; link: string }) => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const { closeModal } = useModalStore();
+  const route = useRouter();
+
   const handleSubmit = async () => {
     const body = {
       folderId: Number(selectedId),
@@ -20,6 +23,7 @@ const AddModal = ({ list, link }: { list: FolderItemType[]; link: string }) => {
       try {
         await postLink(body);
         toast.success(toastMessages.success.addLink);
+        route.push(`/link?folder=${selectedId}`);
       } catch (error) {
         toast.error(toastMessages.error.addLink);
       } finally {
