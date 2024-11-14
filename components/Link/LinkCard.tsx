@@ -58,7 +58,7 @@ const LinkCard = ({ openEdit, openDelete, info }: LinkCardProps) => {
           alt="링크 미리보기"
           fill
         />
-        {/* isFavoritePage일 때만 즐겨찾기 버튼 렌더링 */}
+        {/* 즐겨찾기 페이지가 아닐 때에는 즐겨찾기 버튼 렌더링x */}
         {!isFavoritePage && (
           <div
             onClick={() => setIsSubscribed(!isSubscribed)}
@@ -94,12 +94,10 @@ const LinkCard = ({ openEdit, openDelete, info }: LinkCardProps) => {
             </div>
           )}
         </div>
-        <div className="text-[black100] text-lg ">
+        <div className="text-black100 y-[42px] line-clamp-2">
           {info.description || "설명"}
         </div>
-        <div className="text-sm text-[black200]">
-          {formattedDate || "2024.11.06"}
-        </div>
+        <div className="text-sm">{formattedDate || "2024.11.06"}</div>
       </section>
     </div>
   );
