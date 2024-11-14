@@ -53,7 +53,12 @@ export default function Test() {
       <button type="button" onClick={() => openModal("DeleteLinkModal")}>
         링크 삭제 버튼
       </button>
-      <button type="button" onClick={() => openModal("EditModal")}>
+      <button
+        type="button"
+        onClick={() =>
+          openModal("EditModal", { folderName: "NAME", folderId: 700 })
+        }
+      >
         폴더 이름 수정 버튼
       </button>
       <button type="button" onClick={() => openModal("SNSModal")}>

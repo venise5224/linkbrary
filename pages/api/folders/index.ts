@@ -18,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         console.error(err);
         return res
           .status(500)
-          .json({ message: "모든 폴저 조회에 실패했습니다." });
+          .json({ message: "모든 폴더 조회에 실패했습니다." });
       }
 
     case "POST":
