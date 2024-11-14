@@ -1,4 +1,9 @@
-import { deleteLinkURL, getLinks, putLinkURL } from "@/lib/api/link";
+import {
+  deleteLinkURL,
+  getLinks,
+  putLinkFavorite,
+  putLinkURL,
+} from "@/lib/api/link";
 import { create } from "zustand";
 
 interface LinkCardDataType {
@@ -20,6 +25,7 @@ interface LinkCardStore {
   setLinkCardList: (list: LinkCardDataType[]) => void;
   updateLink: (linkId: number, body: UpdateLinkBody) => Promise<void>;
   deleteLink: (linkId: number) => Promise<void>;
+  updateFavorite: (linkId: number, favorite: boolean) => Promise<void>;
 }
 
 export const useLinkCardStore = create<LinkCardStore>((set) => ({
@@ -55,6 +61,22 @@ export const useLinkCardStore = create<LinkCardStore>((set) => ({
       set({ linkCardList: updatedList });
     } catch (error) {
       console.error("삭제 중 오류 발생:", error);
+    }
+  },
+
+  // 즐겨찾기 상태 업데이트
+  updateFavorite: async (linkId: number, favorite: boolean) => {
+    try {
+      // API 호출하여 즐겨찾기 상태 업데이트
+      await putLinkFavorite(linkId, { favorite });
+
+      // 링크 목록 새로 가져와서 상태 업데이트
+      const res = await getLinks();
+      const updatedList = res.list;
+
+      set({ linkCardList: updatedList });
+    } catch (error) {
+      console.error("즐겨찾기 상태 업데이트 중 오류 발생:", error);
     }
   },
 }));

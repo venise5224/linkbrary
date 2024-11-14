@@ -5,6 +5,7 @@ import timeAgo from "@/util/timAgo";
 import Image from "next/image";
 import Dropdown from "./Dropdown";
 import useModalStore from "@/store/useModalStore";
+import { useLinkCardStore } from "@/store/useLinkCardStore";
 
 interface LinkCardProps {
   info: {
@@ -24,6 +25,7 @@ const LinkCard = ({ openEdit, openDelete, info }: LinkCardProps) => {
   const [isSubscribed, setIsSubscribed] = useState(info.favorite || false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { isOpen: isModalOpen } = useModalStore();
+  const { updateFavorite } = useLinkCardStore();
 
   const formattedDate = info.createdAt?.slice(0, 10).replace(/-/g, ".");
   const createdTime = timeAgo(info.createdAt);
@@ -41,6 +43,7 @@ const LinkCard = ({ openEdit, openDelete, info }: LinkCardProps) => {
     setIsSubscribed((prev) => !prev);
     try {
       await putLinkFavorite(info.id, { favorite: !isSubscribed });
+      updateFavorite(info.id, !isSubscribed);
     } catch (error) {
       console.error("즐겨찾기 설정 중 오류 발생:", error);
     }
