@@ -2,3 +2,14 @@
 export const bindCls = (...cls: string[]) => {
   return cls.join(" ");
 };
+
+export const handleCopyUrl = () => {
+  const currentUrl = window.location.href;
+  navigator.clipboard.writeText(currentUrl);
+};
+
+export const handleShareFacebook = () => {
+  const currentUrl = window.location.href;
+  const sendUrl = encodeURIComponent(currentUrl);
+  window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl);
+};
