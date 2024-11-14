@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { putLinkFavorite } from "@/lib/api/link";
 import timeAgo from "@/util/timAgo";
 import Image from "next/image";
 import Dropdown from "./Dropdown";
@@ -20,7 +21,7 @@ interface LinkCardProps {
 }
 
 const LinkCard = ({ openEdit, openDelete, info }: LinkCardProps) => {
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(info.favorite || false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { isOpen: isModalOpen } = useModalStore();
 
@@ -34,6 +35,16 @@ const LinkCard = ({ openEdit, openDelete, info }: LinkCardProps) => {
   useEffect(() => {
     if (isModalOpen) setIsDropdownOpen(false);
   }, [isModalOpen]);
+
+  // 즐겨찾기 버튼 클릭 시 호출되는 함수
+  const handleFavoriteToggle = async () => {
+    setIsSubscribed((prev) => !prev);
+    try {
+      await putLinkFavorite(info.id, { favorite: !isSubscribed });
+    } catch (error) {
+      console.error("즐겨찾기 설정 중 오류 발생:", error);
+    }
+  };
 
   // dropdown 버튼
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
@@ -61,7 +72,7 @@ const LinkCard = ({ openEdit, openDelete, info }: LinkCardProps) => {
         {/* isFavoritePage일 때만 즐겨찾기 버튼 렌더링 */}
         {!isFavoritePage && (
           <div
-            onClick={() => setIsSubscribed(!isSubscribed)}
+            onClick={handleFavoriteToggle}
             className="absolute top-[15px] right-[15px] z-1"
           >
             <Image

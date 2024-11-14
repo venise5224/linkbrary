@@ -37,6 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
         return res.status(500).json({ message: "서버 오류" });
       }
+
     // 링크 수정
     case "PUT":
       if (!linkId) {
