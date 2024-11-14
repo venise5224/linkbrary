@@ -9,7 +9,7 @@ interface putLinkURLProps {
   url: string;
 }
 
-interface putFolderNameProps {
+interface putLinkFavoriteProps {
   favorite: boolean;
 }
 
@@ -79,9 +79,9 @@ export const deleteLinkURL = async (linkId: number) => {
 };
 
 // 링크의 즐겨찾기 설정(auth)
-export const putFolderName = async (
+export const putLinkFavorite = async (
   linkId: number,
-  body: putFolderNameProps
+  body: putLinkFavoriteProps
 ) => {
   try {
     const res = await proxy.put(`/api/links/${linkId}`, body);
