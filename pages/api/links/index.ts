@@ -1,8 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { parse } from "cookie";
 import axiosInstance from "@/lib/api/axiosInstanceApi";
-import toast from "react-hot-toast";
-import toastMessages from "@/lib/toastMessage";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
@@ -34,7 +32,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(201).json(response.data);
       } catch (err) {
         console.error(err);
-        // toast.error(toastMessages.error.addLink); 작동을 안함
         return res.status(500).json({ message: "링크 생성에 실패했습니다." });
       }
 

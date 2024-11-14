@@ -32,9 +32,14 @@ export const getLink = async (query: any, forderId: number) => {
 export const postLink = async (body: postLinkProps) => {
   try {
     const res = await proxy.post("/api/links", body);
-    if (res.status >= 200 && res.status < 300) return res.data;
+    if (res.status >= 200 && res.status < 300) {
+      return res.data;
+    } else {
+      throw new Error("Request failed");
+    }
   } catch (err) {
-    console.error("에러 메시지: ", err instanceof Error ? err.message : err);
+    // console.error("에러 메시지: ", err instanceof Error ? err.message : err);
+    throw err;
   }
 };
 
