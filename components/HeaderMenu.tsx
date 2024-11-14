@@ -24,7 +24,7 @@ const HeaderMenu = () => {
     },
     {
       label: "로그아웃",
-      href: "/login",
+      href: "/",
       onClick: logout,
     },
   ];
@@ -59,7 +59,7 @@ const HeaderMenu = () => {
             즐겨찾기
           </Link>
           <div
-            className="flex items-center gap-[6px] text-[14px] leading-[16.71px] font-normal"
+            className="flex items-center gap-[6px] text-[14px] leading-[16.71px] font-normal cursor-pointer"
             onClick={() => setIsOpen(!isOpen)}
           >
             <Image src={Profile} width={28} height={28} alt="프로필" />
