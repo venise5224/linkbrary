@@ -5,15 +5,28 @@ import Link from "next/link";
 import SubmitButton from "./SubMitButton";
 import { useRouter } from "next/router";
 import useAuthStore from "@/store/useAuthStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Dropdown from "./Dropdown";
 
 const HeaderMenu = () => {
-  const { user, isLoggedIn, checkLogin } = useAuthStore();
+  const { user, checkLogin, isLoggedIn, logout } = useAuthStore();
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     checkLogin();
   }, [checkLogin]);
+
+  const dropdownItems = [
+    {
+      label: "마이링크",
+      href: "/link",
+    },
+    {
+      label: "로그아웃",
+      onClick: logout,
+    },
+  ];
 
   return (
     <>
@@ -30,7 +43,7 @@ const HeaderMenu = () => {
           로그인
         </SubmitButton>
       ) : (
-        <div className="flex items-center gap-[24px]">
+        <div className="relative flex items-center gap-[24px]">
           <Link
             href={"/favorite"}
             className="flex items-center gap-[6px] bg-gray200 border border-purple100 rounded-[4px] py-[10px] px-[12px] text-[12px] leading-[14.32px] md:text-[14px] md:leading-[16.71px] lg:text-[14px] lg:leading-[16.71px] font-normal"
@@ -44,9 +57,15 @@ const HeaderMenu = () => {
             />
             즐겨찾기
           </Link>
-          <div className="flex items-center gap-[6px] text-[14px] leading-[16.71px] font-normal">
+          <div
+            className="flex items-center gap-[6px] text-[14px] leading-[16.71px] font-normal"
+            onClick={() => setIsOpen(!isOpen)}
+          >
             <Image src={Profile} width={28} height={28} alt="프로필" />
             <span className="hidden md:block lg:block">{user?.name}</span>
+          </div>
+          <div className="absolute top-8 right-0">
+            {isOpen && <Dropdown items={dropdownItems} />}
           </div>
         </div>
       )}

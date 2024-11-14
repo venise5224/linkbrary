@@ -5,6 +5,7 @@ export interface ModalPropType {
   subtitle?: string;
   children?: ReactNode;
   folderName?: string;
+  folderId?: number;
   list?: FolderItemType[];
   link?: string;
   linkId?: number | null;
