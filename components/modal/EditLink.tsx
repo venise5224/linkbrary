@@ -28,11 +28,16 @@ const EditLink = ({
     const body = {
       url: value,
     };
-    if (value !== "") {
+    if (value === link) {
+      toast.error(toastMessages.error.sameLink);
+    }
+    if (value === "") {
+      toast.error(toastMessages.error.inputLink);
+    }
+    if (value !== "" && value !== link) {
       await updateLink(linkId, body);
       closeModal();
-    } else {
-      toast.error(toastMessages.error.inputLink);
+      toast.success(toastMessages.success.editLink);
     }
   };
   return (

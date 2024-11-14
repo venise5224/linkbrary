@@ -22,8 +22,9 @@ const toastMessages = {
     editFolder: "폴더 수정에 실패했습니다",
     copyLink: "링크가 복사되지 않았습니다", // SNS 모달에서 링크 복사 시
     SNSshare: "공유에 실패했습니다",
-    inputLink: "URL을 입력해주세요",
+    inputLink: "링크를 입력해주세요",
     selectFolder: "폴더를 선택해주세요",
+    sameLink: "이미 저장된 링크 주소입니다",
   },
 };
 

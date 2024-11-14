@@ -42,7 +42,7 @@ export const useLinkCardStore = create<LinkCardStore>((set) => ({
       // 상태 업데이트
       set({ linkCardList: updatedList, totalCount: updatedList.length });
     } catch (error) {
-      console.error("삭제 중 오류 발생:", error);
+      console.error("수정 중 오류 발생:", error);
     }
   },
 
