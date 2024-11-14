@@ -7,6 +7,7 @@ import sectionShare from "@/public/images/section_share.png";
 import sectionSearch from "@/public/images/section_search.png";
 import { useRouter } from "next/router";
 import useAuthStore from "@/store/useAuthStore";
+import ModalShare from "@/components/modal/modalComponents/ModalShare";
 
 const sectionStyle =
   "flex flex-col md:flex-row md:items-center md:gap-[51px] lg:flex-row lg:items-center lg:gap-[157px]";
@@ -33,6 +34,7 @@ const HomePage = () => {
   return (
     <main>
       <div className="flex flex-col items-center bg-gray100">
+        <ModalShare />
         <h2 className="mt-[28px] text-[32px] leading-[42px] font-bold md:mt-[40px] lg:mt-[70px] md:text-[64px] md:leading-[80px] lg:text-[64px] lg:leading-[80px] text-center">
           <span className="gradient-text">세상의 모든 정보</span>
           를<br /> 쉽게 저장하고
