@@ -45,7 +45,7 @@ export const Modal = () => {
       return (
         <DeleteFolderModal
           folderName={props.folderName || "폴더이름"}
-          folderId={props.folderId || 1}
+          folderId={Number(props.folderId)}
         />
       );
     case "DeleteLinkModal":
@@ -56,7 +56,12 @@ export const Modal = () => {
         />
       );
     case "EditModal":
-      return <EditModal folderName={props.folderName || "폴더이름"} />;
+      return (
+        <EditModal
+          folderName={props.folderName || "폴더이름"}
+          folderId={Number(props.folderId)}
+        />
+      );
     case "SNSModal":
       return <SNSModal folderName={props.folderName || "폴더이름"} />;
     case "EditLink":
