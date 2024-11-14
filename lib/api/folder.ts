@@ -41,6 +41,8 @@ export const deleteFolder = async (folderId: number) => {
     if (res.status >= 200 && res.status < 300) return res.data;
   } catch (err) {
     console.error("에러 메시지: ", err instanceof Error ? err.message : err);
+    console.log("deleteFolder folderId", folderId);
+    throw err;
   }
 };
 

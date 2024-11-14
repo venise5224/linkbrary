@@ -44,7 +44,7 @@ export default function Test() {
         onClick={() =>
           openModal("DeleteFolderModal", {
             folderName: "NAME",
-            folderId: 700,
+            folderId: 687,
           })
         }
       >

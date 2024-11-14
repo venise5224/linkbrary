@@ -15,7 +15,8 @@ const DeleteFolderModal = ({
     try {
       await deleteFolder(folderId);
     } catch (error) {
-      console.log(error, "폴더 삭제 에러");
+      console.log(error, "DeleteFolderModal 폴더 삭제 에러");
+      console.log("모달 folderId", folderId);
     } finally {
       closeModal();
     }

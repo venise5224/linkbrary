@@ -8,7 +8,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const id = Number(folderId);
 
   console.log("Token:", token);
-  console.log("folderId:", folderId);
 
   if (!token) {
     return res.status(401).json({ error: "사용자 정보를 찾을 수 없습니다." });
@@ -21,20 +20,28 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "DELETE":
       try {
+        console.log("folderId:", folderId);
+        console.log("id", id);
+
         await axiosInstance.delete(`/folders/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-
         return res.status(204).json({ message: "폴더 삭제 성공" });
       } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-          const status = error.response.status;
-          const message =
-            error.response.data?.message || "알 수 없는 오류 발생";
-          return res.status(status).json({ message });
+        if (axios.isAxiosError(error)) {
+          console.error("Axios Error:", error); // 여기서 error 객체 전체를 확인
+          if (error.response) {
+            const status = error.response.status;
+            const message =
+              error.response.data?.message || "알 수 없는 오류 발생";
+            return res.status(status).json({ message });
+          }
+          console.error("Unknown Error:", error); // Axios 오류가 아닌 경우
+          // throw error;
         }
+        return res.status(500).json({ message: "서버 오류 발생" });
       }
 
     case "PUT":
