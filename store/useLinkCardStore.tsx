@@ -17,7 +17,6 @@ interface UpdateLinkBody {
 
 interface LinkCardStore {
   linkCardList: LinkCardDataType[];
-  totalCount: number;
   setLinkCardList: (list: LinkCardDataType[]) => void;
   updateLink: (linkId: number, body: UpdateLinkBody) => Promise<void>;
   deleteLink: (linkId: number) => Promise<void>;
@@ -25,10 +24,9 @@ interface LinkCardStore {
 
 export const useLinkCardStore = create<LinkCardStore>((set) => ({
   linkCardList: [],
-  totalCount: 0,
 
   setLinkCardList: (list: LinkCardDataType[]) => {
-    set({ linkCardList: list, totalCount: list.length });
+    set({ linkCardList: list });
   },
 
   // 수정 요청 보낸 후 목록 가져오기
@@ -39,7 +37,7 @@ export const useLinkCardStore = create<LinkCardStore>((set) => ({
       const updatedList = res.list;
 
       // 상태 업데이트
-      set({ linkCardList: updatedList, totalCount: updatedList.length });
+      set({ linkCardList: updatedList });
     } catch (error) {
       console.error("수정 중 오류 발생:", error);
       throw error;
@@ -54,7 +52,7 @@ export const useLinkCardStore = create<LinkCardStore>((set) => ({
       const updatedList = res.list;
 
       // 상태 업데이트
-      set({ linkCardList: updatedList, totalCount: updatedList.length });
+      set({ linkCardList: updatedList });
     } catch (error) {
       console.error("삭제 중 오류 발생:", error);
       throw error;

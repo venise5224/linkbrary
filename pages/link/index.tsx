@@ -1,31 +1,36 @@
-import { useEffect } from "react";
 import { GetServerSidePropsContext } from "next";
-import { useRouter } from "next/router";
 import { proxy } from "@/lib/api/axiosInstanceApi";
 import { LinkData } from "@/types/linkTypes";
 import { FolderData } from "@/types/folderTypes";
+import { SearchInput } from "../../components/Search/SearchInput";
 import { Modal } from "@/components/modal/modalManager/ModalManager";
 import { useLinkCardStore } from "@/store/useLinkCardStore";
-import { SearchInput } from "../../components/Search/SearchInput";
-import CardsLayout from "@/components/Layout/CardsLayout";
+import { useEffect } from "react";
 import Container from "@/components/Layout/Container";
-import SearchResultMessage from "@/components/Search/SearchResultMessage";
-import useModalStore from "@/store/useModalStore";
-import FolderTag from "../../components/FolderTag";
-import LinkCard from "../../components/LinkCard";
+import CardsLayout from "@/components/Layout/CardsLayout";
 import ActionButtons from "@/components/Link/ActionButtons";
 import AddLinkInput from "@/components/Link/AddLinkInput";
+import FolderTag from "../../components/FolderTag";
+import LinkCard from "../../components/LinkCard";
+import useModalStore from "@/store/useModalStore";
+import Pagination from "@/components/Pagination";
 
 interface LinkPageProps {
   linkList: LinkData[];
   folderList: FolderData[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
 }
 
-// /link 페이지 접속시에 초기렌더링 데이터(전체 폴더, 전체링크리스트)만 fetch해서 client로 전달.
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const { req } = context;
+  const { req, query } = context;
+
+  // 쿼리로부터 page와 pageSize를 읽고 기본값 설정
+  const page = parseInt((query.page as string) || "1", 10);
+  const pageSize = parseInt((query.pageSize as string) || "6", 10);
 
   const fetchData = async (endpoint: string) => {
     const response = await proxy.get(endpoint, {
@@ -37,40 +42,36 @@ export const getServerSideProps = async (
   };
 
   const [links, folders] = await Promise.all([
-    fetchData("/api/links"),
+    fetchData(`/api/links?page=${page}&pageSize=${pageSize}`),
     fetchData("/api/folders"),
   ]);
 
   return {
     props: {
+      link: links || [],
       linkList: links.list || [],
       folderList: folders || [],
+      totalCount: links.totalCount || 0,
+      page,
+      pageSize,
     },
   };
 };
 
-const LinkPage = ({ linkList: initialLinkList, folderList }: LinkPageProps) => {
-  const router = useRouter();
-  const { search } = router.query;
+const LinkPage = ({
+  linkList,
+  folderList,
+  totalCount,
+  page,
+  pageSize,
+}: LinkPageProps) => {
   const { isOpen, openModal } = useModalStore();
   const { linkCardList, setLinkCardList } = useLinkCardStore();
 
-  // 검색어 입력시 관련된 목록으로 setLinkCardList
-  useEffect(() => {
-    const fetchNewList = async () => {
-      const res = await proxy.get("/api/links", {
-        params: { search },
-      });
-      console.log(res.data);
-      setLinkCardList(res.data.list);
-    };
-    if (search !== undefined) fetchNewList();
-  }, [setLinkCardList, search]);
-
   // 클라이언트에서 초기 목록을 설정
   useEffect(() => {
-    setLinkCardList(initialLinkList);
-  }, [initialLinkList, setLinkCardList]);
+    setLinkCardList(linkList);
+  }, [linkList, setLinkCardList]);
 
   // EditLink 호출
   const openEdit = (link: string, linkId: number) => {
@@ -90,7 +91,6 @@ const LinkPage = ({ linkList: initialLinkList, folderList }: LinkPageProps) => {
       <main className="mt-[40px]">
         <Container>
           <SearchInput />
-          {search && <SearchResultMessage message={search} />}
           <div className="flex justify-between mt-[40px]">
             {folderList && <FolderTag folderList={folderList} />}
             <button className="w-[79px] h-[19px] text-purple100">
@@ -111,6 +111,7 @@ const LinkPage = ({ linkList: initialLinkList, folderList }: LinkPageProps) => {
               />
             ))}
           </CardsLayout>
+          <Pagination page={page} pageSize={pageSize} totalCount={totalCount} />
         </Container>
         {isOpen && <Modal />}
       </main>
