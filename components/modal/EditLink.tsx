@@ -4,6 +4,8 @@ import ModalContainer from "./modalComponents/ModalContainer";
 import ModalInput from "./modalComponents/ModalInput";
 import useModalStore from "@/store/useModalStore";
 import SubmitButton from "../SubMitButton";
+import toast from "react-hot-toast";
+import toastMessages from "@/lib/toastMessage";
 
 const EditLink = ({
   folderName,
@@ -28,8 +30,10 @@ const EditLink = ({
     };
     if (value !== "") {
       await updateLink(linkId, body);
+      closeModal();
+    } else {
+      toast.error(toastMessages.error.inputLink);
     }
-    closeModal();
   };
   return (
     <ModalContainer title="링크 주소 변경">

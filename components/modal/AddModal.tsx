@@ -26,6 +26,13 @@ const AddModal = ({ list, link }: { list: FolderItemType[]; link: string }) => {
         closeModal();
       }
     }
+    if (!selectedId) {
+      toast.error(toastMessages.error.selectFolder);
+    }
+    if (link === "") {
+      toast.error(toastMessages.error.inputLink);
+      closeModal();
+    }
   };
 
   const handleClickFolderItem = (id: number) => {

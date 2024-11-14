@@ -18,6 +18,8 @@ const toastMessages = {
     deleteFolder: "폴더 삭제에 실패했습니다",
     editLink: "링크 수정에 실패했습니다",
     editFolder: "폴더 수정에 실패했습니다",
+    inputLink: "URL을 입력해주세요",
+    selectFolder: "폴더를 선택해주세요",
   },
 };
 
