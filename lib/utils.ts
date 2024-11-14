@@ -11,6 +11,7 @@ export const handleCopyUrl = () => {
 export const handleShareFacebook = () => {
   const currentUrl = window.location.href;
   const sendUrl = encodeURIComponent(currentUrl);
-  const shareUrl = `http://www.facebook.com/sharer/sharer.php?u=${sendUrl}&quote=${sendUrl}`;
+  const message = `Check this out: ${currentUrl}`;
+  const shareUrl = `http://www.facebook.com/sharer/sharer.php?u=${sendUrl}&quote=${encodeURIComponent(message)}`;
   window.open(shareUrl);
 };
