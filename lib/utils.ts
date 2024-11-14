@@ -23,7 +23,7 @@ export const handleShareKakao = () => {
       content: {
         title: "나만의 링크 모음",
         description: "나에게 필요한 링크만 모아 두었어요!",
-        imageUrl: "/images/home_main.png",
+        imageUrl: "https://linkbrary-sooty.vercel.app/images/home_main.png",
         link: {
           webUrl: location.href,
         },
