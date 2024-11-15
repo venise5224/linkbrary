@@ -17,8 +17,8 @@ const useFetchLinks = (
     const fetchLinks = async () => {
       const res = await proxy.get("/api/links", {
         params: {
-          page: query.page,
-          pageSize: isTablet ? 6 : 10,
+          page: query.page || 1,
+          pageSize: 6,
           search: query.search,
         },
       });

@@ -8,13 +8,14 @@ interface PaginationProps {
 }
 
 const Pagination: React.FC<PaginationProps> = ({ totalCount }) => {
+  console.log(totalCount);
   const router = useRouter();
   const LiStyle = "relative w-12 h-12 rounded-lg bg-gray900";
   const buttonStyle = "flex justify-center items-center h-full text-black400";
   const { page, pageSize } = router.query;
 
-  const currentPage = Number(page);
-  const currentPageSize = Number(pageSize);
+  const currentPage = Number(page) || 1;
+  const currentPageSize = Number(pageSize) || 6;
   const totalPages = Math.ceil(totalCount / currentPageSize);
   const [maxPagesToShow, setMaxPagesToShow] = useState(2);
 
@@ -81,7 +82,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalCount }) => {
         typeof pageNum === "number" ? (
           <li key={index} className={LiStyle}>
             <Link
-              href={`/link?page=${pageNum}&pageSize=${pageSize}`}
+              href={`/link?page=${pageNum}&pageSize=${currentPageSize}`}
               className={`${buttonStyle} ${pageNum === currentPage ? "text-black500" : "text-black400"}`}
             >
               {pageNum}
@@ -99,7 +100,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalCount }) => {
 
       <li className={LiStyle}>
         <Link
-          href={`/link?page=${currentPage + 1}&pageSize=${pageSize}`}
+          href={`/link?page=${currentPage + 1}&pageSize=${currentPageSize}`}
           className={`${buttonStyle} ${currentPage < totalPages ? "text-black500" : "pointer-events-none"}`}
         >
           <Image
