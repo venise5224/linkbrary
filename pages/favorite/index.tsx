@@ -1,8 +1,13 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { proxy } from "@/lib/api/axiosInstanceApi";
+import axiosInstance from "@/lib/api/axiosInstanceApi";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import Container from "@/components/Layout/Container";
 import LinkCard from "@/components/Link/LinkCard";
+import Pagination from "@/components/Pagination";
+import useFetchLinks from "@/hooks/useFetchLinks";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { parse } from "cookie";
 
 interface FavoriteDataType {
   id: number;
@@ -24,13 +29,11 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   // 클라이언트의 쿠키 가져오기
   const { req } = context;
-  const cookies = req.headers.cookie || "";
-
+  const cookies = parse(req.headers.cookie || "");
+  const accessToken = cookies.accessToken;
   try {
-    const res = await proxy.get("/api/favorites", {
-      headers: {
-        Cookie: cookies,
-      },
+    const res = await axiosInstance.get("/favorites?page=1&pageSize=10", {
+      headers: { Authorization: `Bearer ${accessToken}` },
     });
 
     const { list, totalCount } = res.data || { list: [], totalCount: 0 };
@@ -42,6 +45,12 @@ export const getServerSideProps: GetServerSideProps = async (
 };
 
 const FavoritePage = ({ favoriteList, totalCount }: FavoriteProps) => {
+  const router = useRouter();
+
+  const [linkCardList, setLinkCardList] =
+    useState<FavoriteDataType[]>(favoriteList);
+
+  useFetchLinks(router.query, setLinkCardList);
   return (
     <>
       <div className="page-title pt-[10px] md:pt-5 pb-10 md:pb-[60px] bg-gray100 text-center">
@@ -51,8 +60,8 @@ const FavoritePage = ({ favoriteList, totalCount }: FavoriteProps) => {
       </div>
       <Container>
         <CardsLayout>
-          {favoriteList.length > 0
-            ? favoriteList.map((favorite) => (
+          {linkCardList.length > 0
+            ? linkCardList.map((favorite) => (
                 <LinkCard key={favorite.id} info={favorite} />
               ))
             : null}
@@ -70,6 +79,7 @@ const FavoritePage = ({ favoriteList, totalCount }: FavoriteProps) => {
             </div>
           </div>
         )}
+        <Pagination totalCount={totalCount} />
       </Container>
     </>
   );
