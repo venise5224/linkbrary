@@ -4,6 +4,8 @@ import ModalInput from "./modalComponents/ModalInput";
 import useModalStore from "@/store/useModalStore";
 import { putFolder } from "@/lib/api/folder";
 import SubmitButton from "../SubMitButton";
+import toast from "react-hot-toast";
+import toastMessages from "@/lib/toastMessage";
 
 const EditModal = ({
   folderName,
@@ -23,12 +25,16 @@ const EditModal = ({
     const body = {
       name: value,
     };
-    if (value !== "") {
+    if (value === folderName) {
+      toast.error(toastMessages.error.sameFolderName);
+    } else if (value === "") {
+      toast.error(toastMessages.error.inputFolderName);
+    } else {
       try {
         await putFolder(folderId, body);
-        console.log("폴더 수정 완료");
+        toast.success(toastMessages.success.editFolder);
       } catch (error) {
-        console.log(error);
+        toast.error(toastMessages.error.editFolder);
       }
     }
     closeModal();

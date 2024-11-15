@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { postSignIn, postSignUp } from "@/lib/api/auth";
 import useAuthStore from "@/store/useAuthStore";
 import { TbWashDryP } from "react-icons/tb";
+import toast from "react-hot-toast";
+import toastMessages from "@/lib/toastMessage";
 
 interface FormValues {
   email: string;
@@ -90,16 +92,18 @@ const useForm = (isSignUp = false) => {
 
       if (data) {
         router.push("/login");
+        toast.success(toastMessages.success.signup);
       } else {
-        alert("회원가입 실패: 이메일 또는 비밀번호를 확인해주세요.");
+        toast.error(toastMessages.error.signup);
       }
     } else {
       const data = await login({ email, password });
 
       if (data) {
         router.push("/");
+        toast.success(toastMessages.success.login);
       } else {
-        alert("로그인 실패: 이메일 또는 비밀번호를 확인해주세요.");
+        toast.error(toastMessages.error.login);
       }
     }
 
