@@ -28,6 +28,7 @@ const toastMessages = {
     selectFolder: "폴더를 선택해주세요",
     sameLink: "이미 저장된 링크 주소입니다",
     sameFolderName: "같은 이름으로는 수정할 수 없습니다",
+    invalidLink: "잘못된 링크 형식입니다",
   },
 };
 

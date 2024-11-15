@@ -6,6 +6,8 @@ import useModalStore from "@/store/useModalStore";
 import SubmitButton from "../SubMitButton";
 import toast from "react-hot-toast";
 import toastMessages from "@/lib/toastMessage";
+import { urlRegex } from "@/util/regex";
+import { error } from "console";
 
 const EditLink = ({
   folderName,
@@ -29,11 +31,11 @@ const EditLink = ({
     };
     if (value === link) {
       toast.error(toastMessages.error.sameLink);
-    }
-    if (value === "") {
+    } else if (value === "") {
       toast.error(toastMessages.error.inputLink);
-    }
-    if (value !== "" && value !== link) {
+    } else if (!urlRegex.test(value)) {
+      toast.error(toastMessages.error.invalidLink);
+    } else {
       try {
         await updateLink(linkId, body);
         closeModal();

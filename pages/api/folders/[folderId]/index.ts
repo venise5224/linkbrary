@@ -53,6 +53,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           const status = error.response.status;
           const message =
             error.response.data?.message || "알 수 없는 오류 발생";
+          throw error;
           return res.status(status).json({ message });
         }
       }

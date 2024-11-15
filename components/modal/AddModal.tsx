@@ -19,7 +19,9 @@ const AddModal = ({ list, link }: { list: FolderItemType[]; link: string }) => {
       folderId: Number(selectedId),
       url: link,
     };
-    if (link !== "" && selectedId) {
+    if (!selectedId) {
+      toast.error(toastMessages.error.selectFolder);
+    } else {
       try {
         await postLink(body);
         toast.success(toastMessages.success.addLink);
@@ -29,9 +31,6 @@ const AddModal = ({ list, link }: { list: FolderItemType[]; link: string }) => {
       } finally {
         closeModal();
       }
-    }
-    if (!selectedId) {
-      toast.error(toastMessages.error.selectFolder);
     }
   };
 
