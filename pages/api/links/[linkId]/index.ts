@@ -37,6 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
         return res.status(500).json({ message: "서버 오류" });
       }
+
     // 링크 수정
     case "PUT":
       if (!linkId) {
@@ -53,13 +54,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
       try {
-        await axiosInstance.put(`/links/${linkId}`, updateData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const updatedLink = await axiosInstance.put(
+          `/links/${linkId}`,
+          updateData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-        return res.status(200).json({ message: "링크 업데이트 성공" });
+        return res.status(200).json(updatedLink.data);
       } catch (error) {
         if (isAxiosError(error) && error.response) {
           const status = error.response.status;
