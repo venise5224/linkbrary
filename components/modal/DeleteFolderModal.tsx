@@ -27,6 +27,7 @@ const DeleteFolderModal = ({
       }
     } else {
       toast.error(toastMessages.error.deleteNonEmptyFolder);
+      closeModal();
     }
   };
 
