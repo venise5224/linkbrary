@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { putLinkFavorite } from "@/lib/api/link";
+import { useLinkCardStore } from "@/store/useLinkCardStore";
 import timeAgo from "@/util/timAgo";
 import Image from "next/image";
 import Dropdown from "../Dropdown";
@@ -15,14 +17,13 @@ interface LinkCardProps {
     url: string;
     createdAt: string;
   };
-  openEdit?: () => void;
-  openDelete?: () => void;
 }
 
-const LinkCard = ({ openEdit, openDelete, info }: LinkCardProps) => {
-  const [isSubscribed, setIsSubscribed] = useState(false);
+const LinkCard = ({ info }: LinkCardProps) => {
+  const [isSubscribed, setIsSubscribed] = useState(info.favorite || false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { isOpen: isModalOpen } = useModalStore();
+  const { isOpen, openModal } = useModalStore();
+  const { updateFavorite } = useLinkCardStore();
 
   const formattedDate = info.createdAt?.slice(0, 10).replace(/-/g, ".");
   const createdTime = timeAgo(info.createdAt);
@@ -32,20 +33,39 @@ const LinkCard = ({ openEdit, openDelete, info }: LinkCardProps) => {
 
   // 모달이 열릴 때 드롭다운 닫기
   useEffect(() => {
-    if (isModalOpen) setIsDropdownOpen(false);
-  }, [isModalOpen]);
+    if (isOpen) setIsDropdownOpen(false);
+  }, [isOpen]);
+
+  // 즐겨찾기 버튼 클릭 시 호출되는 함수
+  const handleFavoriteToggle = async () => {
+    setIsSubscribed((prev) => !prev);
+    try {
+      await putLinkFavorite(info.id, { favorite: !isSubscribed });
+      updateFavorite(info.id, !isSubscribed);
+    } catch (error) {
+      console.error("즐겨찾기 설정 중 오류 발생:", error);
+    }
+  };
 
   // dropdown 버튼
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
+  const handleModalOpen = (
+    type: "EditLink" | "DeleteLinkModal",
+    link: string,
+    linkId: number
+  ) => {
+    openModal(type, { link, linkId });
+  };
+
   const dropdownItems = [
     {
       label: "수정하기",
-      onClick: openEdit,
+      onClick: () => handleModalOpen("EditLink", info.url, info.id),
     },
     {
       label: "삭제하기",
-      onClick: openDelete,
+      onClick: () => handleModalOpen("DeleteLinkModal", info.url, info.id),
     },
   ];
 
@@ -61,7 +81,7 @@ const LinkCard = ({ openEdit, openDelete, info }: LinkCardProps) => {
         {/* 즐겨찾기 페이지가 아닐 때에는 즐겨찾기 버튼 렌더링x */}
         {!isFavoritePage && (
           <div
-            onClick={() => setIsSubscribed(!isSubscribed)}
+            onClick={handleFavoriteToggle}
             className="absolute top-[15px] right-[15px] z-1"
           >
             <Image
