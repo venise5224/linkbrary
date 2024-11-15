@@ -8,22 +8,28 @@ interface PaginationProps {
 }
 
 const Pagination: React.FC<PaginationProps> = ({ totalCount }) => {
-  const router = useRouter();
   const LiStyle = "relative w-12 h-12 rounded-lg bg-gray900";
   const buttonStyle =
     "flex justify-center items-center w-full h-full text-black400";
-  const { page, pageSize } = router.query;
 
+  const router = useRouter();
+
+  const { page, pageSize } = router.query;
   const currentPage = Number(page) || 1;
   const currentPageSize = Number(pageSize) || 6;
   const totalPages = Math.ceil(totalCount / currentPageSize);
+
   const [maxPagesToShow, setMaxPagesToShow] = useState(2);
   const { isPC } = useViewport();
 
   const handlePageChange = (newPage: number) => {
     if (newPage !== currentPage) {
+      const path = router.pathname;
       router.push(
-        `/link?page=${newPage}&pageSize=${currentPageSize}`,
+        {
+          pathname: path,
+          query: { page: newPage, pageSize: currentPageSize },
+        },
         undefined,
         { shallow: true }
       );
