@@ -18,6 +18,7 @@ import FolderActionsMenu from "@/components/Folder/FolderActionsMenu";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import LinkCard from "@/components/Link/LinkCard";
 import fetchProxy from "@/lib/api/fetchProxy";
+import useFetchFolderList from "@/hooks/useFetchFolderList";
 
 interface LinkPageProps {
   linkList: LinkData[];

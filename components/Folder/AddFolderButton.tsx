@@ -13,7 +13,7 @@ export const AddFolderButton = ({ setFolderList }: AddFolderButtonProps) => {
 
   return (
     <button
-      className="w-[79px] h-[19px] text-purple100"
+      className="w-[200px] mt-auto text-purple100"
       onClick={() => openModal("AddFolderModal")}
     >
       폴더 추가 +

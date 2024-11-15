@@ -2,6 +2,7 @@ import { FolderData } from "@/types/folderTypes";
 import Image from "next/image";
 import useModalStore from "@/store/useModalStore";
 import useRerenderFolderList from "../../hooks/useRerenderFolderList";
+import useGetFolderInfo from "@/hooks/useGetFolderInfo";
 
 interface FolderActionsMenuProps {
   setFolderList: React.Dispatch<React.SetStateAction<FolderData[]>>;
@@ -9,6 +10,7 @@ interface FolderActionsMenuProps {
 
 const FolderActionsMenu = ({ setFolderList }: FolderActionsMenuProps) => {
   const { isOpen, openModal } = useModalStore();
+  const { folderName, folderId } = useGetFolderInfo();
 
   const handleModalOpen = (text: string) => {
     switch (text) {
@@ -19,7 +21,10 @@ const FolderActionsMenu = ({ setFolderList }: FolderActionsMenuProps) => {
         openModal("EditModal");
         break;
       case "삭제":
-        openModal("DeleteFolderModal");
+        openModal("DeleteFolderModal", {
+          folderName: folderName,
+          folderId: Number(folderId),
+        });
         break;
       default:
         break;

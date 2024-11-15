@@ -25,8 +25,10 @@ export const postFolders = async (body: folderApiProps) => {
 };
 
 // 폴더 조회
-export const getFolder = async (folderId: number) => {
+export const getFolder = async (folderId: string | string[] | undefined) => {
   try {
+    console.log("getFolder 함수에서 받은 folderId", folderId);
+
     const res = await axiosInstance.get(`/folders/${folderId}`);
     if (res.status >= 200 && res.status < 300) return res.data;
   } catch (err) {
