@@ -4,7 +4,6 @@ import ModalContainer from "./modalComponents/ModalContainer";
 import { deleteFolder } from "@/lib/api/folder";
 import toast from "react-hot-toast";
 import toastMessages from "@/lib/toastMessage";
-// import useLinkListByFolderId from "@/hooks/useLinkListByFolderId";
 
 const DeleteFolderModal = ({
   folderName,
@@ -15,7 +14,6 @@ const DeleteFolderModal = ({
 }) => {
   // folderId = 741; // 테스트를 위한 하드코딩
   const { closeModal } = useModalStore();
-  // const { linkCount } = useLinkListByFolderId(folderId);
   let linkCount = 1; // 테스트를 위한 하드코딩
   const handleSubmit = async () => {
     // 폴더 내에 링크 개수 0 일때만 폴더 삭제 가능 -> 링크 1개 이상이면 error toast 띄우고 있음 or 전체 링크 삭제 후 폴더 삭제
