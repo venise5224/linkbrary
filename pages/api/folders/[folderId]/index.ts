@@ -7,8 +7,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { folderId } = req.query;
   const id = Number(folderId);
 
-  console.log("Token:", token);
-
   if (!token) {
     return res.status(401).json({ error: "사용자 정보를 찾을 수 없습니다." });
   }
