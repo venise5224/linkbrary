@@ -27,11 +27,9 @@ const EditModal = ({
     };
     if (value === folderName) {
       toast.error(toastMessages.error.sameFolderName);
-    }
-    if (value === "") {
+    } else if (value === "") {
       toast.error(toastMessages.error.inputFolderName);
-    }
-    if (value !== "" && value !== folderName) {
+    } else {
       try {
         await putFolder(folderId, body);
         toast.success(toastMessages.success.editFolder);
