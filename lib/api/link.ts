@@ -9,7 +9,7 @@ interface putLinkURLProps {
   url: string;
 }
 
-interface putFolderNameProps {
+interface putLinkFavoriteProps {
   favorite: boolean;
 }
 
@@ -32,9 +32,14 @@ export const getLink = async (query: any, forderId: number) => {
 export const postLink = async (body: postLinkProps) => {
   try {
     const res = await proxy.post("/api/links", body);
-    if (res.status >= 200 && res.status < 300) return res.data;
+    if (res.status >= 200 && res.status < 300) {
+      return res.data;
+    } else {
+      throw new Error("Request failed");
+    }
   } catch (err) {
-    console.error("에러 메시지: ", err instanceof Error ? err.message : err);
+    // console.error("에러 메시지: ", err instanceof Error ? err.message : err);
+    throw err;
   }
 };
 
@@ -65,6 +70,7 @@ export const putLinkURL = async (linkId: number, body: putLinkURLProps) => {
     if (res.status >= 200 && res.status < 300) return res.data;
   } catch (err) {
     console.error("에러 메시지: ", err instanceof Error ? err.message : err);
+    throw err;
   }
 };
 
@@ -75,16 +81,17 @@ export const deleteLinkURL = async (linkId: number) => {
     if (res.status >= 200 && res.status < 300) return res.data;
   } catch (err) {
     console.error("에러 메시지: ", err instanceof Error ? err.message : err);
+    throw err;
   }
 };
 
 // 링크의 즐겨찾기 설정(auth)
-export const putFolderName = async (
+export const putLinkFavorite = async (
   linkId: number,
-  body: putFolderNameProps
+  body: putLinkFavoriteProps
 ) => {
   try {
-    const res = await proxy.put(`/api/links/${linkId}`, body);
+    const res = await proxy.put(`/api/links/${linkId}/favorite`, body);
     if (res.status >= 200 && res.status < 300) return res.data;
   } catch (err) {
     console.error("에러 메시지: ", err instanceof Error ? err.message : err);

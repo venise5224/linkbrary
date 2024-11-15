@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { Toaster } from "react-hot-toast";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -29,6 +30,9 @@ export default function App({ Component, pageProps }: AppProps) {
       ></script>
 
       <div className="min-h-screen flex flex-col">
+        <div>
+          <Toaster />
+        </div>
         {!hidePaths.includes(router.pathname) && <Header />}
         <div className="flex-grow">
           <Component {...pageProps} />

@@ -52,8 +52,8 @@ const LinkPage = ({
 }: LinkPageProps) => {
   const router = useRouter();
   const { search } = router.query;
-  const { isOpen, openModal } = useModalStore();
   const { linkCardList, setLinkCardList } = useLinkCardStore();
+  const { isOpen } = useModalStore();
   const [folderList, setFolderList] = useState(initialFolderList);
 
   // 링크페이지의 query가 바뀌면 새로운 리스트로 업데이트 해주는 훅
@@ -63,14 +63,6 @@ const LinkPage = ({
   useEffect(() => {
     setLinkCardList(initialLinkList);
   }, [initialLinkList, setLinkCardList]);
-
-  const handleModalOpen = (
-    type: "EditLink" | "DeleteLinkModal",
-    link: string,
-    linkId: number
-  ) => {
-    openModal(type, { link, linkId });
-  };
 
   return (
     <>
@@ -91,14 +83,7 @@ const LinkPage = ({
           </div>
           <CardsLayout>
             {linkCardList.map((link) => (
-              <LinkCard
-                key={link.id}
-                openEdit={() => handleModalOpen("EditLink", link.url, link.id)}
-                openDelete={() =>
-                  handleModalOpen("DeleteLinkModal", link.url, link.id)
-                }
-                info={link}
-              />
+              <LinkCard key={link.id} info={link} />
             ))}
           </CardsLayout>
           <Pagination totalCount={totalCount} />
