@@ -25,6 +25,7 @@ const toastMessages = {
     SNSshare: "공유에 실패했습니다",
     inputLink: "링크를 입력해주세요",
     inputFolderName: "폴더 이름을 입력해주세요",
+    limitFolderNameLength: "6자 이하로 입력해주세요",
     selectFolder: "폴더를 선택해주세요",
     sameLink: "이미 저장된 링크 주소입니다",
     sameFolderName: "같은 이름으로는 수정할 수 없습니다",
