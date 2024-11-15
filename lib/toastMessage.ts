@@ -18,6 +18,7 @@ const toastMessages = {
     addFolder: "폴더 추가에 실패했습니다",
     deleteLink: "링크 삭제에 실패했습니다",
     deleteFolder: "폴더 삭제에 실패했습니다",
+    deleteNonEmptyFolder: "빈 폴더만 삭제할 수 있습니다",
     editLink: "링크 수정에 실패했습니다",
     editFolder: "폴더 수정에 실패했습니다",
     copyLink: "링크가 복사되지 않았습니다", // SNS 모달에서 링크 복사 시
