@@ -42,7 +42,7 @@ const HomePage = () => {
           링크 추가하기
         </SubmitButton>
         <Image
-          src="/images/_aehimmno.png"
+          src="/images/home_main.png"
           width={1118}
           height={540}
           alt="배너"
@@ -63,7 +63,7 @@ const HomePage = () => {
             </em>
           </div>
           <Image
-            src="/images/_ceiiklnnost.png"
+            src="/images/section_folder.png"
             width={550}
             height={450}
             alt="링크"
@@ -84,7 +84,7 @@ const HomePage = () => {
             </em>
           </div>
           <Image
-            src="/images/_cdeefilnoorst.png"
+            src="/images/section_link.png"
             width={550}
             height={450}
             alt="폴더"
@@ -104,7 +104,7 @@ const HomePage = () => {
             </em>
           </div>
           <Image
-            src="/images/_aceehinorsst.png"
+            src="/images/section_search.png"
             width={550}
             height={450}
             alt="공유"
@@ -124,7 +124,7 @@ const HomePage = () => {
             </em>
           </div>
           <Image
-            src="/images/_acceehinorsst.png"
+            src="/images/section_share.png"
             width={550}
             height={450}
             alt="검색"
