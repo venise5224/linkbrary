@@ -1,13 +1,8 @@
 import Image from "next/image";
 import SubmitButton from "@/components/SubMitButton";
-import HomeMain from "@/public/images/home_main.png";
-import sectionLink from "@/public/images/section_link.png";
-import sectionFolder from "@/public/images/section_folder.png";
-import sectionShare from "@/public/images/section_share.png";
 import sectionSearch from "@/public/images/section_search.png";
 import { useRouter } from "next/router";
 import useAuthStore from "@/store/useAuthStore";
-import ModalShare from "@/components/modal/modalComponents/ModalShare";
 
 const sectionStyle =
   "flex flex-col md:flex-row md:items-center md:gap-[51px] lg:flex-row lg:items-center lg:gap-[157px]";
@@ -34,8 +29,6 @@ const HomePage = () => {
   return (
     <main>
       <div className="flex flex-col items-center bg-gray100">
-        <ModalShare />
-
         <h2 className="mt-[28px] text-[32px] leading-[42px] font-bold md:mt-[40px] lg:mt-[70px] md:text-[64px] md:leading-[80px] lg:text-[64px] lg:leading-[80px] text-center">
           <span className="gradient-text">세상의 모든 정보</span>
           를<br /> 쉽게 저장하고
@@ -49,7 +42,7 @@ const HomePage = () => {
           링크 추가하기
         </SubmitButton>
         <Image
-          src={HomeMain}
+          src="/images/_aehimmno.png"
           width={1118}
           height={540}
           alt="배너"
@@ -70,7 +63,7 @@ const HomePage = () => {
             </em>
           </div>
           <Image
-            src={sectionLink}
+            src="/images/_ceiiklnnost.png"
             width={550}
             height={450}
             alt="링크"
@@ -91,7 +84,7 @@ const HomePage = () => {
             </em>
           </div>
           <Image
-            src={sectionFolder}
+            src="/images/_cdeefilnoorst.png"
             width={550}
             height={450}
             alt="폴더"
@@ -111,7 +104,7 @@ const HomePage = () => {
             </em>
           </div>
           <Image
-            src={sectionShare}
+            src="/images/_aceehinorsst.png"
             width={550}
             height={450}
             alt="공유"
@@ -131,7 +124,7 @@ const HomePage = () => {
             </em>
           </div>
           <Image
-            src={sectionSearch}
+            src="/images/_acceehinorsst.png"
             width={550}
             height={450}
             alt="검색"
