@@ -1,5 +1,5 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { proxy } from "@/lib/api/axiosInstanceApi";
+import axiosInstance from "@/lib/api/axiosInstanceApi";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import Container from "@/components/Layout/Container";
 import LinkCard from "@/components/Link/LinkCard";
@@ -7,6 +7,7 @@ import Pagination from "@/components/Pagination";
 import useFetchLinks from "@/hooks/useFetchLinks";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { parse } from "cookie";
 
 interface FavoriteDataType {
   id: number;
@@ -28,13 +29,11 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   // 클라이언트의 쿠키 가져오기
   const { req } = context;
-  const cookies = req.headers.cookie || "";
-
+  const cookies = parse(req.headers.cookie || "");
+  const accessToken = cookies.accessToken;
   try {
-    const res = await proxy.get("/api/favorites", {
-      headers: {
-        Cookie: cookies,
-      },
+    const res = await axiosInstance.get("/favorites?page=1&pageSize=10", {
+      headers: { Authorization: `Bearer ${accessToken}` },
     });
 
     const { list, totalCount } = res.data || { list: [], totalCount: 0 };
