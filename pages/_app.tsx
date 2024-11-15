@@ -21,12 +21,12 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta property="og:image" content="/images/home_main.png" />
         <title>Linkbrary</title>
-
-        <script
-          defer
-          src="https://developers.kakao.com/sdk/js/kakao.min.js"
-        ></script>
       </Head>
+
+      <script
+        defer
+        src="https://developers.kakao.com/sdk/js/kakao.min.js"
+      ></script>
 
       <div className="min-h-screen flex flex-col">
         {!hidePaths.includes(router.pathname) && <Header />}

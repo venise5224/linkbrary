@@ -7,11 +7,11 @@ import ModalShareItem from "./ModalShareItem";
 import { useEffect } from "react";
 
 const ModalShare = () => {
-  useEffect(() => {
-    if (!window.Kakao.isInitialized()) {
-      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!window.Kakao.isInitialized()) {
+  //     window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
+  //   }
+  // }, []);
 
   return (
     <div className="flex gap-8">
