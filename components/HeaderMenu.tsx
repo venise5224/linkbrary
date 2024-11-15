@@ -14,7 +14,9 @@ const HeaderMenu = () => {
   const router = useRouter();
 
   useEffect(() => {
-    checkLogin();
+    if (window.location.href !== "/link") {
+      checkLogin();
+    }
   }, [checkLogin]);
 
   const dropdownItems = [
