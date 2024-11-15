@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://linkbrary-sooty.vercel.app/" />
+        {/* <meta property="og:url" content="https://linkbrary-sooty.vercel.app/" /> */}
         <meta property="og:title" content="Linkbrary" />
         <meta
           property="og:description"
@@ -22,6 +22,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta property="og:image" content="/images/home_main.png" />
         <title>Linkbrary</title>
       </Head>
+
+      <script
+        defer
+        src="https://developers.kakao.com/sdk/js/kakao.min.js"
+      ></script>
 
       <div className="min-h-screen flex flex-col">
         {!hidePaths.includes(router.pathname) && <Header />}

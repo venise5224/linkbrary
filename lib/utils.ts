@@ -17,7 +17,7 @@ export const handleShareFacebook = () => {
 
 export const handleShareKakao = () => {
   const { Kakao, location } = window;
-  if (window.Kakao && window.Kakao.isInitialized()) {
+  if (window.Kakao.isInitialized()) {
     Kakao.Share.sendDefault({
       objectType: "feed",
       content: {
@@ -25,6 +25,7 @@ export const handleShareKakao = () => {
         description: "나에게 필요한 링크만 모아 두었어요!",
         imageUrl: "https://linkbrary-sooty.vercel.app/images/home_main.png",
         link: {
+          mobileWebUrl: location.href,
           webUrl: location.href,
         },
       },
