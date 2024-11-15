@@ -9,11 +9,10 @@ const useGetFolderInfo = () => {
 
   useEffect(() => {
     if (!folderId) return;
-    console.log("데이터 패칭 이전 folderId", folderId);
 
     const fetchFolderData = async () => {
       const res = await getFolder(folderId);
-      console.log("getFolder에서 받아온 데이터:", res);
+      if (res) setFolderName(res.data?.name);
     };
     fetchFolderData();
   }, [folderId]);

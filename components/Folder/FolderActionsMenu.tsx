@@ -12,13 +12,17 @@ const FolderActionsMenu = ({ setFolderList }: FolderActionsMenuProps) => {
   const { isOpen, openModal } = useModalStore();
   const { folderName, folderId } = useGetFolderInfo();
 
+  console.log(folderName);
   const handleModalOpen = (text: string) => {
     switch (text) {
       case "공유":
         openModal("SNSModal");
         break;
       case "이름 변경":
-        openModal("EditModal");
+        openModal("EditModal", {
+          folderName: folderName,
+          folderId: Number(folderId),
+        });
         break;
       case "삭제":
         openModal("DeleteFolderModal", {

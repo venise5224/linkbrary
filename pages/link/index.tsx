@@ -18,7 +18,7 @@ import FolderActionsMenu from "@/components/Folder/FolderActionsMenu";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import LinkCard from "@/components/Link/LinkCard";
 import fetchProxy from "@/lib/api/fetchProxy";
-import useFetchFolderList from "@/hooks/useFetchFolderList";
+import RenderEmptyLinkMessage from "@/components/Link/RenderEmptyLinkMessage";
 
 interface LinkPageProps {
   linkList: LinkData[];
@@ -90,19 +90,25 @@ const LinkPage = ({
             <h1 className="text-2xl ">유용한 글</h1>
             <FolderActionsMenu setFolderList={setFolderList} />
           </div>
-          <CardsLayout>
-            {linkCardList.map((link) => (
-              <LinkCard
-                key={link.id}
-                openEdit={() => handleModalOpen("EditLink", link.url, link.id)}
-                openDelete={() =>
-                  handleModalOpen("DeleteLinkModal", link.url, link.id)
-                }
-                info={link}
-              />
-            ))}
-          </CardsLayout>
-          <Pagination totalCount={totalCount} />
+          {linkCardList ? (
+            <CardsLayout>
+              {linkCardList.map((link) => (
+                <LinkCard
+                  key={link.id}
+                  openEdit={() =>
+                    handleModalOpen("EditLink", link.url, link.id)
+                  }
+                  openDelete={() =>
+                    handleModalOpen("DeleteLinkModal", link.url, link.id)
+                  }
+                  info={link}
+                />
+              ))}
+            </CardsLayout>
+          ) : (
+            <RenderEmptyLinkMessage />
+          )}
+          {linkCardList && <Pagination totalCount={totalCount} />}
         </Container>
         {isOpen && <Modal />}
       </main>

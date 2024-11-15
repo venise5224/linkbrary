@@ -18,7 +18,7 @@ const useFetchLinks = (
     const fetchLinks = async () => {
       // params에 folder가 있다 = 폴더를 선택했다. = 해당하는 폴더의 링크들을 보여주어야 한다.
       const endpoint = query.folder
-        ? `/api/folders/${query.folder}`
+        ? `/api/folders/${query.folder}/links`
         : "/api/links";
       const res = await proxy.get(endpoint, {
         params: {
