@@ -3,36 +3,6 @@ export const bindCls = (...cls: string[]) => {
   return cls.join(" ");
 };
 
-export const handleCopyUrl = () => {
-  const currentUrl = window.location.href;
-  navigator.clipboard.writeText(currentUrl);
-  //토스트 연결 필요
-};
-
-export const handleShareFacebook = () => {
-  const currentUrl = window.location.href;
-  const sendUrl = encodeURIComponent(currentUrl);
-  window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl);
-};
-
-export const handleShareKakao = () => {
-  const { Kakao, location } = window;
-  if (window.Kakao.isInitialized()) {
-    Kakao.Share.sendDefault({
-      objectType: "feed",
-      content: {
-        title: "나만의 링크 모음",
-        description: "나에게 필요한 링크만 모아 두었어요!",
-        imageUrl: "https://linkbrary-sooty.vercel.app/images/home_main.png", //배포 후 실제 도메인으로 변경 필요
-        link: {
-          mobileWebUrl: location.href,
-          webUrl: location.href,
-        },
-      },
-    });
-  }
-};
-
 // 데이터나 API에서 이미지 URL이 //로 오는 경우 자동으로 프로토콜 추가
 export const ensureAbsoluteUrl = (url: string) => {
   return url.startsWith("//") ? `https:${url}` : url;

@@ -1,8 +1,5 @@
-import {
-  handleCopyUrl,
-  handleShareFacebook,
-  handleShareKakao,
-} from "@/lib/utils";
+import { handleCopyUrl } from "@/util/copyUrl";
+import { handleShareFacebook, handleShareKakao } from "@/util/shareSNS";
 import ModalShareItem from "./ModalShareItem";
 import { useEffect } from "react";
 
