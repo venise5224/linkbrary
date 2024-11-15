@@ -13,9 +13,10 @@ const DeleteFolderModal = ({
   folderName: string;
   folderId: number;
 }) => {
+  folderId = 741;
   const { closeModal } = useModalStore();
-  const { linkCount } = useLinkListByFolderId(folderId);
-
+  // const { linkCount } = useLinkListByFolderId(folderId);
+  let linkCount = 1;
   const handleSubmit = async () => {
     // 폴더 내에 링크 개수 0 일때만 폴더 삭제 가능 -> 링크 1개 이상이면 error toast 띄우겠습니다. or 전체 링크 삭제 후 폴더 삭제
     if (linkCount === 0) {
