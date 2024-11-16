@@ -2,17 +2,18 @@ import { FolderData } from "@/types/folderTypes";
 import Image from "next/image";
 import useModalStore from "@/store/useModalStore";
 import useRerenderFolderList from "../../hooks/useRerenderFolderList";
-import useGetFolderInfo from "@/hooks/useGetFolderInfo";
 
 interface FolderActionsMenuProps {
   setFolderList: React.Dispatch<React.SetStateAction<FolderData[]>>;
+  folderId: string | string[] | undefined;
 }
 
-const FolderActionsMenu = ({ setFolderList }: FolderActionsMenuProps) => {
+const FolderActionsMenu = ({
+  setFolderList,
+  folderId,
+}: FolderActionsMenuProps) => {
   const { isOpen, openModal } = useModalStore();
-  const { folderName, folderId } = useGetFolderInfo();
 
-  console.log(folderName);
   const handleModalOpen = (text: string) => {
     switch (text) {
       case "공유":
@@ -20,13 +21,11 @@ const FolderActionsMenu = ({ setFolderList }: FolderActionsMenuProps) => {
         break;
       case "이름 변경":
         openModal("EditModal", {
-          folderName: folderName,
           folderId: Number(folderId),
         });
         break;
       case "삭제":
         openModal("DeleteFolderModal", {
-          folderName: folderName,
           folderId: Number(folderId),
         });
         break;

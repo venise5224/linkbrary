@@ -65,7 +65,7 @@ const LinkPage = ({
   totalCount,
 }: LinkPageProps) => {
   const router = useRouter();
-  const { search } = router.query;
+  const { query } = router;
   const { linkCardList, setLinkCardList } = useLinkCardStore.getState();
   const { isOpen } = useModalStore();
   const { isMobile } = useViewport();
@@ -87,14 +87,19 @@ const LinkPage = ({
       <main className="mt-[40px]">
         <Container>
           <SearchInput />
-          {search && <SearchResultMessage message={search} />}
+          {query.search && <SearchResultMessage message={query.search} />}
           <div className="flex justify-between mt-[40px]">
             {folderList && <FolderTag folderList={folderList} />}
             {!isMobile && <AddFolderButton setFolderList={setFolderList} />}
           </div>
           <div className="flex justify-between items-center my-[24px]">
             <h1 className="text-2xl ">유용한 글</h1>
-            <FolderActionsMenu setFolderList={setFolderList} />
+            {query.folder && (
+              <FolderActionsMenu
+                setFolderList={setFolderList}
+                folderId={query.folder}
+              />
+            )}
           </div>
           {linkCardList ? (
             <>
