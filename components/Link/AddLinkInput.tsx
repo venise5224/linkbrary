@@ -4,6 +4,9 @@ import { Modal } from "../modal/modalManager/ModalManager";
 import Image from "next/image";
 import SubmitButton from "../SubMitButton";
 import useModalStore from "@/store/useModalStore";
+import toast from "react-hot-toast";
+import toastMessages from "@/lib/toastMessage";
+import { urlRegex } from "@/util/regex";
 
 const AddLinkInput = ({ folderList }: FolderListData) => {
   const { isOpen, openModal } = useModalStore();
@@ -14,8 +17,14 @@ const AddLinkInput = ({ folderList }: FolderListData) => {
   };
 
   const handleClick = () => {
-    openModal("AddModal", { list: folderList, link: link });
-    setLink("");
+    if (link === "") {
+      toast.error(toastMessages.error.inputLink);
+    } else if (!urlRegex.test(link.trim())) {
+      toast.error(toastMessages.error.invalidLink);
+    } else {
+      openModal("AddModal", { list: folderList, link: link });
+      setLink("");
+    }
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
