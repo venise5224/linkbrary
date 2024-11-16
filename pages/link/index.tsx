@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
+import { parse } from "cookie";
 import { LinkData } from "@/types/linkTypes";
 import { FolderData } from "@/types/folderTypes";
 import { Modal } from "@/components/modal/modalManager/ModalManager";
-import { useLinkCardStore } from "@/store/useLinkCardStore";
 import { SearchInput } from "../../components/Search/SearchInput";
+import axiosInstance from "@/lib/api/axiosInstanceApi";
 import useModalStore from "@/store/useModalStore";
 import Pagination from "@/components/Pagination";
-import useFetchLinks from "@/hooks/useFetchLinks";
 import AddLinkInput from "@/components/Link/AddLinkInput";
 import Container from "@/components/Layout/Container";
 import SearchResultMessage from "@/components/Search/SearchResultMessage";
@@ -17,7 +17,9 @@ import AddFolderButton from "@/components/Folder/AddFolderButton";
 import FolderActionsMenu from "@/components/Folder/FolderActionsMenu";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import LinkCard from "@/components/Link/LinkCard";
-import fetchProxy from "@/lib/api/fetchProxy";
+import RenderEmptyLinkMessage from "@/components/Link/RenderEmptyLinkMessage";
+import useFetchLinks from "@/hooks/useFetchLinks";
+import useViewport from "@/hooks/useViewport";
 
 interface LinkPageProps {
   linkList: LinkData[];
@@ -30,10 +32,21 @@ export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const { req } = context;
+  const cookies = parse(req.headers.cookie || "");
+  const accessToken = cookies.accessToken;
+
+  const fetchData = async (endpoint: string) => {
+    const res = await axiosInstance.get(endpoint, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return res.data;
+  };
 
   const [links, folders] = await Promise.all([
-    fetchProxy("/api/links", req),
-    fetchProxy("/api/folders", req),
+    fetchData("/links"),
+    fetchData("/folders"),
   ]);
 
   return {
@@ -48,21 +61,20 @@ export const getServerSideProps = async (
 const LinkPage = ({
   linkList: initialLinkList,
   folderList: initialFolderList,
-  totalCount,
+  totalCount: initialTotalCount,
 }: LinkPageProps) => {
   const router = useRouter();
-  const { search } = router.query;
-  const { linkCardList, setLinkCardList } = useLinkCardStore();
+  const { search, folder } = router.query;
   const { isOpen } = useModalStore();
+  const { isMobile } = useViewport();
+  const [linkCardList, setLinkCardList] = useState(initialLinkList);
   const [folderList, setFolderList] = useState(initialFolderList);
+  const [totalCount, setTotalCount] = useState(initialTotalCount);
 
   // 링크페이지의 query가 바뀌면 새로운 리스트로 업데이트 해주는 훅
-  useFetchLinks(setLinkCardList);
+  useFetchLinks(setLinkCardList, setTotalCount, router.query, router.pathname);
 
-  // 클라이언트에서 초기 목록을 설정
-  useEffect(() => {
-    setLinkCardList(initialLinkList, totalCount);
-  }, [initialLinkList, setLinkCardList]);
+  console.log(linkCardList);
 
   return (
     <>
@@ -75,22 +87,36 @@ const LinkPage = ({
           {search && <SearchResultMessage message={search} />}
           <div className="flex justify-between mt-[40px]">
             {folderList && <FolderTag folderList={folderList} />}
-            <AddFolderButton setFolderList={setFolderList} />
+            {!isMobile && <AddFolderButton setFolderList={setFolderList} />}
           </div>
           <div className="flex justify-between items-center my-[24px]">
             <h1 className="text-2xl ">유용한 글</h1>
-            <FolderActionsMenu setFolderList={setFolderList} />
+            {folder && (
+              <FolderActionsMenu
+                setFolderList={setFolderList}
+                folderId={folder}
+                linkCount={totalCount}
+              />
+            )}
           </div>
-          <CardsLayout>
-            {linkCardList.map((link) => (
-              <LinkCard key={link.id} info={link} />
-            ))}
-          </CardsLayout>
-          <Pagination totalCount={totalCount} />
-
-          {isOpen && <Modal />}
+          {linkCardList ? (
+            <>
+              <CardsLayout>
+                {linkCardList.map((link) => (
+                  <LinkCard key={link.id} info={link} />
+                ))}
+              </CardsLayout>
+              <Pagination totalCount={totalCount} />
+            </>
+          ) : (
+            <RenderEmptyLinkMessage />
+          )}
         </main>
       </Container>
+      {isOpen && <Modal />}
+      {isMobile && (
+        <AddFolderButton setFolderList={setFolderList} isModal={true} />
+      )}
     </>
   );
 };
