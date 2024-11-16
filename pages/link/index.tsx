@@ -18,7 +18,6 @@ import FolderActionsMenu from "@/components/Folder/FolderActionsMenu";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import LinkCard from "@/components/Link/LinkCard";
 import fetchProxy from "@/lib/api/fetchProxy";
-import ToTopBtn from "@/components/toTopBtn/ToTopBtn";
 
 interface LinkPageProps {
   linkList: LinkData[];
@@ -70,7 +69,7 @@ const LinkPage = ({
       <div className="bg-gray100 w-full h-[219px] flex justify-center items-center">
         <AddLinkInput folderList={folderList} />
       </div>
-      <main className="mt-[40px]">
+      <main className="mt-[40px] relative">
         <Container>
           <SearchInput />
           {search && <SearchResultMessage message={search} />}
@@ -90,7 +89,6 @@ const LinkPage = ({
           <Pagination totalCount={totalCount} />
         </Container>
         {isOpen && <Modal />}
-        <ToTopBtn />
       </main>
     </>
   );
