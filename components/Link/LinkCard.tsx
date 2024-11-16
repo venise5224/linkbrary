@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { putLinkFavorite } from "@/lib/api/link";
 import { useLinkCardStore } from "@/store/useLinkCardStore";
 import { ensureAbsoluteUrl } from "@/lib/utils";
-import timeAgo from "@/util/timAgo";
+import timeAgo from "@/util/timeAgo";
 import Image from "next/image";
 import Dropdown from "../Dropdown";
 import useModalStore from "@/store/useModalStore";
