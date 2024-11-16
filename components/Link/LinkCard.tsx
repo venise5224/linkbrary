@@ -41,8 +41,8 @@ const LinkCard = ({ info }: LinkCardProps) => {
   const handleFavoriteToggle = async () => {
     setIsSubscribed((prev) => !prev);
     try {
-      await putLinkFavorite(info.id, { favorite: !isSubscribed });
-      updateFavorite(info.id, !isSubscribed);
+      const res = await putLinkFavorite(info.id, { favorite: !isSubscribed });
+      //updateFavorite(info.id, !isSubscribed);
     } catch (error) {
       console.error("즐겨찾기 설정 중 오류 발생:", error);
     }
