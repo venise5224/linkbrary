@@ -15,8 +15,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "PUT":
       const { favorite } = req.body;
-      if (favorite === undefined) {
-        return res.status(400).json({ message: "즐겨찾기 상태가 필요합니다." });
+
+      if (favorite === undefined || typeof favorite !== "boolean") {
+        return res
+          .status(400)
+          .json({ message: "즐겨찾기 상태는 boolean이어야 합니다." });
       }
 
       try {

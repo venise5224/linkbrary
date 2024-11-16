@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { proxy } from "@/lib/api/axiosInstanceApi";
 import { LinkData } from "@/types/linkTypes";
-import useViewport from "./useViewport";
 import { ParsedUrlQuery } from "querystring";
+import useViewport from "./useViewport";
 
 // 링크페이지의 query가 바뀌면 그에 맞는 링크들을 보여주는 훅
 const useFetchLinks = (
-  setLinkCardList: (list: LinkData[]) => void,
+  setLinkCardList: React.Dispatch<React.SetStateAction<LinkData[]>>,
+  setTotalCount: React.Dispatch<React.SetStateAction<number>>,
   query: ParsedUrlQuery,
   pathname: string
 ) => {
@@ -29,8 +30,9 @@ const useFetchLinks = (
           search: query.search,
         },
       });
-      console.log("폴더 눌렀을 때 다시 받아온 리스트:", res.data.list);
+      console.log("query가 바뀌었을 때 다시 받아온 리스트:", res.data.list);
       setLinkCardList(res.data.list);
+      setTotalCount(res.data.totalCount);
     };
     if (query) fetchLinks();
   }, [setLinkCardList, query, isTablet]);

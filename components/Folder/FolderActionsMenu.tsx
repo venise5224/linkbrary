@@ -6,11 +6,13 @@ import useRerenderFolderList from "../../hooks/useRerenderFolderList";
 interface FolderActionsMenuProps {
   setFolderList: React.Dispatch<React.SetStateAction<FolderData[]>>;
   folderId: string | string[] | undefined;
+  linkCount: number;
 }
 
 const FolderActionsMenu = ({
   setFolderList,
   folderId,
+  linkCount,
 }: FolderActionsMenuProps) => {
   const { isOpen, openModal } = useModalStore();
 
@@ -27,6 +29,7 @@ const FolderActionsMenu = ({
       case "삭제":
         openModal("DeleteFolderModal", {
           folderId: Number(folderId),
+          linkCount: linkCount,
         });
         break;
       default:

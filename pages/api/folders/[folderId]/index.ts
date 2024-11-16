@@ -51,6 +51,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
     case "DELETE":
+      console.log("너 왔니?");
       try {
         await axiosInstance.delete(`/folders/${folderId}`, {
           headers: {

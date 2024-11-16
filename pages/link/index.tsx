@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { parse } from "cookie";
 import { LinkData } from "@/types/linkTypes";
 import { FolderData } from "@/types/folderTypes";
 import { Modal } from "@/components/modal/modalManager/ModalManager";
-import { useLinkCardStore } from "@/store/useLinkCardStore";
 import { SearchInput } from "../../components/Search/SearchInput";
 import axiosInstance from "@/lib/api/axiosInstanceApi";
 import useModalStore from "@/store/useModalStore";
 import Pagination from "@/components/Pagination";
-import useFetchLinks from "@/hooks/useFetchLinks";
 import AddLinkInput from "@/components/Link/AddLinkInput";
 import Container from "@/components/Layout/Container";
 import SearchResultMessage from "@/components/Search/SearchResultMessage";
@@ -20,6 +18,7 @@ import FolderActionsMenu from "@/components/Folder/FolderActionsMenu";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import LinkCard from "@/components/Link/LinkCard";
 import RenderEmptyLinkMessage from "@/components/Link/RenderEmptyLinkMessage";
+import useFetchLinks from "@/hooks/useFetchLinks";
 import useViewport from "@/hooks/useViewport";
 
 interface LinkPageProps {
@@ -62,22 +61,18 @@ export const getServerSideProps = async (
 const LinkPage = ({
   linkList: initialLinkList,
   folderList: initialFolderList,
-  totalCount,
+  totalCount: initialTotalCount,
 }: LinkPageProps) => {
   const router = useRouter();
   const { search, folder } = router.query;
-  const { linkCardList, setLinkCardList } = useLinkCardStore.getState();
   const { isOpen } = useModalStore();
   const { isMobile } = useViewport();
+  const [linkCardList, setLinkCardList] = useState(initialLinkList);
   const [folderList, setFolderList] = useState(initialFolderList);
-
-  // 클라이언트에서 초기 목록을 설정
-  useEffect(() => {
-    setLinkCardList(initialLinkList);
-  }, [initialLinkList, setLinkCardList]);
+  const [totalCount, setTotalCount] = useState(initialTotalCount);
 
   // 링크페이지의 query가 바뀌면 새로운 리스트로 업데이트 해주는 훅
-  useFetchLinks(setLinkCardList, router.query, router.pathname);
+  useFetchLinks(setLinkCardList, setTotalCount, router.query, router.pathname);
 
   console.log(linkCardList);
 
@@ -100,6 +95,7 @@ const LinkPage = ({
               <FolderActionsMenu
                 setFolderList={setFolderList}
                 folderId={folder}
+                linkCount={totalCount}
               />
             )}
           </div>
