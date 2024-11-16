@@ -27,6 +27,7 @@ const EditModal = ({
     };
     if (!folderId) {
       toast.error(toastMessages.error.invalidLinkCount);
+      closeModal();
     } else if (value === "") {
       toast.error(toastMessages.error.inputFolderName);
     } else {
