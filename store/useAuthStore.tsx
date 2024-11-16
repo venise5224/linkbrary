@@ -65,8 +65,7 @@ const useAuthStore = create<AuthStore>()(
       logout: async () => {
         try {
           await proxy.post("/api/auth/sign-out");
-          set({ user: null });
-          localStorage.removeItem("token"); // 토큰 삭제
+          localStorage.removeItem("auth-storage");
         } catch (error) {
           console.error("로그아웃 중 에러가 발생했습니다.", error);
         }
