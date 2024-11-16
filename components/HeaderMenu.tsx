@@ -5,12 +5,12 @@ import Link from "next/link";
 import SubmitButton from "./SubMitButton";
 import { useRouter } from "next/router";
 import useAuthStore from "@/store/useAuthStore";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Dropdown from "./Dropdown";
 import useOutsideClick from "@/hooks/useOutsideClick";
 
 const HeaderMenu = () => {
-  const { user, checkLogin, isLoggedIn, logout } = useAuthStore();
+  const { user, logout } = useAuthStore();
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -18,10 +18,6 @@ const HeaderMenu = () => {
   useOutsideClick(dropdownRef, () => {
     setIsOpen(false);
   });
-
-  useEffect(() => {
-    checkLogin();
-  }, [checkLogin]);
 
   const dropdownItems = [
     {
@@ -37,7 +33,7 @@ const HeaderMenu = () => {
 
   return (
     <>
-      {!isLoggedIn ? (
+      {!user ? (
         <SubmitButton
           onClick={() => {
             router.push("/login");

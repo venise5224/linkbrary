@@ -20,10 +20,10 @@ const sectionImageStyle =
 
 const HomePage = () => {
   const router = useRouter();
-  const { isLoggedIn } = useAuthStore();
+  const { user } = useAuthStore();
 
   const handleClick = () => {
-    if (isLoggedIn) {
+    if (user) {
       router.push("/link");
     } else {
       router.push("/login");

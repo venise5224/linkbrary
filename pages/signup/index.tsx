@@ -66,7 +66,12 @@ const SignupPage = () => {
             onBlur={handleBlur}
             error={errors.passwordConfirm}
           />
-          <SubmitButton width="w-full" height="h-[53px]" className="mt-[30px]">
+          <SubmitButton
+            type="submit"
+            width="w-full"
+            height="h-[53px]"
+            className="mt-[30px]"
+          >
             회원가입
           </SubmitButton>
           <SnsPassword />
