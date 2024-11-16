@@ -51,14 +51,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
     case "DELETE":
-      console.log("너 왔니?");
       try {
         await axiosInstance.delete(`/folders/${folderId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        return res.status(204).json({ message: "폴더 삭제 성공" });
+        return res.status(204).end(); // 본문 제거
       } catch (error) {
         if (axios.isAxiosError(error)) {
           console.error("Axios Error:", error); // 여기서 error 객체 전체를 확인
@@ -67,12 +66,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             const message =
               error.response.data?.message || "알 수 없는 오류 발생";
             console.error("Error Response Data:", error.response.data);
-            return res.status(status).json({ message: message });
+            res.status(status).json({ message: message });
+            return;
           }
           console.error("Unknown Error:", error); // Axios 오류가 아닌 경우
           throw error;
         }
-        return res.status(500).json({ message: "서버 오류 발생" });
+        res.status(500).json({ message: "서버 오류 발생" });
       }
   }
 };
