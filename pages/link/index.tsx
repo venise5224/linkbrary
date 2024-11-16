@@ -18,7 +18,6 @@ import FolderActionsMenu from "@/components/Folder/FolderActionsMenu";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import LinkCard from "@/components/Link/LinkCard";
 import fetchProxy from "@/lib/api/fetchProxy";
-import ToTopBtn from "@/components/toTopBtn/ToTopBtn";
 
 interface LinkPageProps {
   linkList: LinkData[];
@@ -90,7 +89,6 @@ const LinkPage = ({
           <Pagination totalCount={totalCount} />
         </Container>
         {isOpen && <Modal />}
-        <ToTopBtn />
       </main>
     </>
   );

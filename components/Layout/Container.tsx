@@ -22,6 +22,7 @@ const Container = ({ children }: ContainerProps) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
   return (
     <div className="w-full max-w-[1125px] mx-auto p-[10px] md:p-10 lg:p-10 px-[32.5px]">
       {children}
