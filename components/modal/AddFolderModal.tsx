@@ -37,7 +37,7 @@ const AddFolderModal = ({ folderName }: { folderName: string }) => {
   return (
     <ModalContainer title="폴더 추가">
       <ModalInput
-        placeholder="내용 입력"
+        placeholder="이름을 입력해주세요"
         name={folderName}
         value={value}
         onChange={handleChange}

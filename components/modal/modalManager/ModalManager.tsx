@@ -52,7 +52,11 @@ export const Modal = () => {
         />
       );
     case "SNSModal":
-      return <SNSModal folderName={props.folderName || "폴더이름"} />;
+      return (
+        <SNSModal
+        // folderName={props.folderName || "폴더이름"}
+        />
+      );
     case "EditLink":
       return (
         <EditLink

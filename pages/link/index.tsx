@@ -69,7 +69,7 @@ const LinkPage = ({
       <div className="bg-gray100 w-full h-[219px] flex justify-center items-center">
         <AddLinkInput folderList={folderList} />
       </div>
-      <main className="mt-[40px]">
+      <main className="mt-[40px] relative">
         <Container>
           <SearchInput />
           {search && <SearchResultMessage message={search} />}
