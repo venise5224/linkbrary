@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import { putLinkFavorite } from "@/lib/api/link";
 import { useLinkCardStore } from "@/store/useLinkCardStore";
 import { ensureAbsoluteUrl } from "@/lib/utils";
 import timeAgo from "@/util/timAgo";
 import Image from "next/image";
 import Dropdown from "../Dropdown";
 import useModalStore from "@/store/useModalStore";
+import useOutsideClick from "@/hooks/useOutsideClick";
 
 interface LinkCardProps {
   info: {
@@ -24,6 +24,7 @@ const LinkCard = ({ info }: LinkCardProps) => {
   const [isSubscribed, setIsSubscribed] = useState(info.favorite || false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { isOpen, openModal } = useModalStore();
+
   const { updateFavorite } = useLinkCardStore();
 
   const formattedDate = info.createdAt?.slice(0, 10).replace(/-/g, ".");
@@ -31,11 +32,16 @@ const LinkCard = ({ info }: LinkCardProps) => {
 
   const router = useRouter();
   const isFavoritePage = router.pathname === "/favorite";
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   // 모달이 열릴 때 드롭다운 닫기
   useEffect(() => {
     if (isOpen) setIsDropdownOpen(false);
   }, [isOpen]);
+
+  useOutsideClick(dropdownRef, () => {
+    setIsDropdownOpen(false);
+  });
 
   // 즐겨찾기 버튼 클릭 시 호출되는 함수
   const handleFavoriteToggle = async () => {
@@ -103,7 +109,7 @@ const LinkCard = ({ info }: LinkCardProps) => {
           </span>
           {/* isFavoritePage일 때만 케밥 버튼 렌더링 */}
           {!isFavoritePage && (
-            <div className="relative">
+            <div className="relative" ref={dropdownRef}>
               <button
                 className="relative w-[21px] h-[17px]"
                 onClick={toggleDropdown}
