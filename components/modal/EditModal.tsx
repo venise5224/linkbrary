@@ -31,11 +31,12 @@ const EditModal = ({
       try {
         await putFolder(folderId, body);
         toast.success(toastMessages.success.editFolder);
+        closeModal();
       } catch (error) {
         toast.error(toastMessages.error.editFolder);
+        closeModal();
       }
     }
-    closeModal();
   };
   return (
     <ModalContainer title="폴더 이름 변경">
