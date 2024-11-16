@@ -1,5 +1,8 @@
+import toast from "react-hot-toast";
+import toastMessages from "@/lib/toastMessage";
+
 export const handleCopyUrl = () => {
   const currentUrl = window.location.href;
   navigator.clipboard.writeText(currentUrl);
-  //토스트 연결 필요
+  toast.success(toastMessages.success.copyLink);
 };
