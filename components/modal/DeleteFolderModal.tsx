@@ -4,11 +4,13 @@ import ModalContainer from "./modalComponents/ModalContainer";
 import { deleteFolder } from "@/lib/api/folder";
 
 const DeleteFolderModal = ({
-  folderName,
+  // folderName,
   folderId,
+  linkCount,
 }: {
-  folderName: string;
+  // folderName: string;
   folderId: number;
+  linkCount: number;
 }) => {
   const { closeModal } = useModalStore();
   const handleSubmit = async () => {

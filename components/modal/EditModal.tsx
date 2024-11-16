@@ -6,10 +6,10 @@ import { putFolder } from "@/lib/api/folder";
 import SubmitButton from "../SubMitButton";
 
 const EditModal = ({
-  folderName,
+  // folderName,
   folderId,
 }: {
-  folderName: string;
+  // folderName: string;
   folderId: number;
 }) => {
   const [value, setValue] = useState("");
@@ -36,8 +36,8 @@ const EditModal = ({
   return (
     <ModalContainer title="폴더 이름 변경">
       <ModalInput
-        placeholder={folderName}
-        name={folderName}
+        placeholder="수정할 이름을 입력해 주세요"
+        name="folderName"
         value={value}
         onChange={handleChange}
       />
