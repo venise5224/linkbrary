@@ -5,9 +5,15 @@ import useRerenderFolderList from "../../hooks/useRerenderFolderList";
 
 interface FolderActionsMenuProps {
   setFolderList: React.Dispatch<React.SetStateAction<FolderData[]>>;
+  folderId: string | string[] | undefined;
+  linkCount: number;
 }
 
-const FolderActionsMenu = ({ setFolderList }: FolderActionsMenuProps) => {
+const FolderActionsMenu = ({
+  setFolderList,
+  folderId,
+  linkCount,
+}: FolderActionsMenuProps) => {
   const { isOpen, openModal } = useModalStore();
 
   const handleModalOpen = (text: string) => {
@@ -16,10 +22,15 @@ const FolderActionsMenu = ({ setFolderList }: FolderActionsMenuProps) => {
         openModal("SNSModal");
         break;
       case "이름 변경":
-        openModal("EditModal");
+        openModal("EditModal", {
+          folderId: Number(folderId),
+        });
         break;
       case "삭제":
-        openModal("DeleteFolderModal");
+        openModal("DeleteFolderModal", {
+          folderId: Number(folderId),
+          linkCount: linkCount,
+        });
         break;
       default:
         break;

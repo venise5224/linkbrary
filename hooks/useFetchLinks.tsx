@@ -1,38 +1,43 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { proxy } from "@/lib/api/axiosInstanceApi";
 import { LinkData } from "@/types/linkTypes";
-import { useRouter } from "next/router";
+import { ParsedUrlQuery } from "querystring";
+import useViewport from "./useViewport";
 
-// 링크페이지의 query가 바뀌면 새로운 리스트로 업데이트 해주는 훅
+// 링크페이지의 query가 바뀌면 그에 맞는 링크들을 보여주는 훅
 const useFetchLinks = (
-  setLinkCardList: (list: LinkData[], totalCount: number) => void
+  setLinkCardList: React.Dispatch<React.SetStateAction<LinkData[]>>,
+  setTotalCount?: React.Dispatch<React.SetStateAction<number>>,
+  query?: ParsedUrlQuery,
+  pathname?: string
 ) => {
-  const router = useRouter();
+  const { isTablet } = useViewport();
 
   useEffect(() => {
     const fetchLinks = async () => {
       // 경로에 따라 API 엔드포인트 분기
-      let endpoint = "/api/links";
-      const params: any = {
-        page: router.query.page,
-        pageSize: 6,
-        search: router.query.search,
-      };
+      let endpoint =
+        pathname === "/favorite"
+          ? "/api/favorites"
+          : query?.folder
+            ? `/api/folders/${query.folder}/links`
+            : "/api/links";
 
-      if (router.pathname === "/favorite") {
-        endpoint = "/api/favorites";
-      }
-
-      try {
-        const res = await proxy.get(endpoint, { params });
-        setLinkCardList(res.data.list, res.data.totalCount);
-      } catch (error) {
-        console.error("Error fetching links:", error);
+      const res = await proxy.get(endpoint, {
+        params: {
+          page: query?.page,
+          pageSize: isTablet ? 6 : 10,
+          search: query?.search,
+        },
+      });
+      console.log("query가 바뀌었을 때 다시 받아온 리스트:", res.data.list);
+      setLinkCardList(res.data.list);
+      {
+        setTotalCount && setTotalCount(res.data.totalCount);
       }
     };
-
-    if (router.query) fetchLinks();
-  }, [router.query, setLinkCardList, router.pathname]);
+    if (query) fetchLinks();
+  }, [setLinkCardList, query, isTablet]);
 };
 
 export default useFetchLinks;
