@@ -25,9 +25,7 @@ const EditModal = ({
     const body = {
       name: value,
     };
-    if (value === folderName) {
-      toast.error(toastMessages.error.sameFolderName);
-    } else if (value === "") {
+    if (value === "") {
       toast.error(toastMessages.error.inputFolderName);
     } else {
       try {
