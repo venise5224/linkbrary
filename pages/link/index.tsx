@@ -65,7 +65,7 @@ const LinkPage = ({
   totalCount,
 }: LinkPageProps) => {
   const router = useRouter();
-  const { query } = router;
+  const { search, folder } = router.query;
   const { linkCardList, setLinkCardList } = useLinkCardStore.getState();
   const { isOpen } = useModalStore();
   const { isMobile } = useViewport();
@@ -77,7 +77,9 @@ const LinkPage = ({
   }, [initialLinkList, setLinkCardList]);
 
   // 링크페이지의 query가 바뀌면 새로운 리스트로 업데이트 해주는 훅
-  useFetchLinks(setLinkCardList);
+  useFetchLinks(setLinkCardList, router.query, router.pathname);
+
+  console.log(linkCardList);
 
   return (
     <>
@@ -87,17 +89,17 @@ const LinkPage = ({
       <main className="mt-[40px]">
         <Container>
           <SearchInput />
-          {query.search && <SearchResultMessage message={query.search} />}
+          {search && <SearchResultMessage message={search} />}
           <div className="flex justify-between mt-[40px]">
             {folderList && <FolderTag folderList={folderList} />}
             {!isMobile && <AddFolderButton setFolderList={setFolderList} />}
           </div>
           <div className="flex justify-between items-center my-[24px]">
             <h1 className="text-2xl ">유용한 글</h1>
-            {query.folder && (
+            {folder && (
               <FolderActionsMenu
                 setFolderList={setFolderList}
-                folderId={query.folder}
+                folderId={folder}
               />
             )}
           </div>

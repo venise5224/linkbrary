@@ -17,12 +17,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "GET":
       try {
-        await axiosInstance.get(`/folders/${folderId}`, {
+        const response = await axiosInstance.get(`/folders/${folderId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        return res.status(204).json({ message: "폴더에 대한 정보 조회 성공" });
+        return res
+          .status(200)
+          .json({ message: "데이터 조회 성공", data: response.data });
       } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
           const status = error.response.status;
@@ -31,7 +33,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           return res.status(status).json({ message });
         }
       }
-
     case "PUT":
       try {
         await axiosInstance.put(`/folders/${folderId}`, req.body, {

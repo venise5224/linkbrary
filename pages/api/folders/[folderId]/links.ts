@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "GET":
       try {
-        await axiosInstance.get(`/folders/${folderId}/links`, {
+        const response = await axiosInstance.get(`/folders/${folderId}/links`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -26,9 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             pageSize: pageSize,
           },
         });
-        return res
-          .status(200)
-          .json({ message: "폴더에 해당하는 링크 조회 성공" });
+        return res.status(200).json(response.data);
       } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
           const status = error.response.status;

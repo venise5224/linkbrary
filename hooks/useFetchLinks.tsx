@@ -1,35 +1,39 @@
 import { useEffect } from "react";
-import { useRouter } from "next/router";
 import { proxy } from "@/lib/api/axiosInstanceApi";
 import { LinkData } from "@/types/linkTypes";
 import useViewport from "./useViewport";
+import { ParsedUrlQuery } from "querystring";
 
 // 링크페이지의 query가 바뀌면 그에 맞는 링크들을 보여주는 훅
-const useFetchLinks = (setLinkCardList: (list: LinkData[]) => void) => {
-  const router = useRouter();
+const useFetchLinks = (
+  setLinkCardList: (list: LinkData[]) => void,
+  query: ParsedUrlQuery,
+  pathname: string
+) => {
   const { isTablet } = useViewport();
 
   useEffect(() => {
     const fetchLinks = async () => {
       // 경로에 따라 API 엔드포인트 분기
       let endpoint =
-        router.pathname === "/favorite"
+        pathname === "/favorite"
           ? "/api/favorites"
-          : router.query.folder
-            ? `/api/folders/${router.query.folder}/links`
+          : query.folder
+            ? `/api/folders/${query.folder}/links`
             : "/api/links";
 
       const res = await proxy.get(endpoint, {
         params: {
-          page: router.query.page,
+          page: query.page,
           pageSize: isTablet ? 6 : 10,
-          search: router.query.search,
+          search: query.search,
         },
       });
+      console.log("폴더 눌렀을 때 다시 받아온 리스트:", res.data.list);
       setLinkCardList(res.data.list);
     };
-    if (router.query) fetchLinks();
-  }, [setLinkCardList, router.pathname, router.query, isTablet]);
+    if (query) fetchLinks();
+  }, [setLinkCardList, query, isTablet]);
 };
 
 export default useFetchLinks;
