@@ -69,8 +69,8 @@ const LinkPage = ({
       <div className="bg-gray100 w-full h-[219px] flex justify-center items-center">
         <AddLinkInput folderList={folderList} />
       </div>
-      <main className="mt-[40px] relative">
-        <Container>
+      <Container>
+        <main className="mt-[40px] relative">
           <SearchInput />
           {search && <SearchResultMessage message={search} />}
           <div className="flex justify-between mt-[40px]">
@@ -87,9 +87,10 @@ const LinkPage = ({
             ))}
           </CardsLayout>
           <Pagination totalCount={totalCount} />
-        </Container>
-        {isOpen && <Modal />}
-      </main>
+
+          {isOpen && <Modal />}
+        </main>
+      </Container>
     </>
   );
 };

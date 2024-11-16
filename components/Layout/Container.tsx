@@ -24,7 +24,7 @@ const Container = ({ children }: ContainerProps) => {
   }, []);
 
   return (
-    <div className="w-full max-w-[1125px] mx-auto p-[10px] md:p-10 lg:p-10 px-[32.5px]">
+    <div className="w-full lg:max-w-[1060px] md:max-w-[704px] sm:max-w-[325px] mx-auto">
       {children}
       {showBtn && <ToTopBtn />}
     </div>
