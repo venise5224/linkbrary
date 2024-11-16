@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { putLinkFavorite } from "@/lib/api/link";
 import { useLinkCardStore } from "@/store/useLinkCardStore";
+import { ensureAbsoluteUrl } from "@/lib/utils";
 import timeAgo from "@/util/timeAgo";
 import Image from "next/image";
 import Dropdown from "../Dropdown";
@@ -73,7 +74,7 @@ const LinkCard = ({ info }: LinkCardProps) => {
     <div className="w-[340px] h-[344px] rounded-[12px] shadow-lg overflow-hidden cursor-pointer hover:scale-105 hover:duration-300">
       <section className="relative w-full h-[60%]">
         <Image
-          src={info.imageSource || `/images/no-content.svg`}
+          src={ensureAbsoluteUrl(info.imageSource) || `/images/no-content.svg`}
           className="object-cover"
           alt="링크 미리보기"
           fill

@@ -1,7 +1,7 @@
 import { IoIosClose } from "react-icons/io";
 import { ModalPropType } from "@/types/modalTypes";
 import useModalStore from "@/store/useModalStore";
-import { MouseEvent, useRef } from "react";
+import { MouseEvent, useEffect, useRef } from "react";
 
 const ModalContainer = ({ title, subtitle, children }: ModalPropType) => {
   const { isOpen, closeModal } = useModalStore();
@@ -10,11 +10,18 @@ const ModalContainer = ({ title, subtitle, children }: ModalPropType) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node))
       closeModal();
   };
-  if (isOpen) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
-  }
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
   return (
     <div
       onClick={onClickBackDrop}

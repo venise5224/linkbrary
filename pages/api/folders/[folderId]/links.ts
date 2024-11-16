@@ -27,7 +27,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           },
         });
         return res
-          .status(204)
+          .status(200)
           .json({ message: "폴더에 해당하는 링크 조회 성공" });
       } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
