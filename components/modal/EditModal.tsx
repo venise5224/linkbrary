@@ -25,7 +25,9 @@ const EditModal = ({
     const body = {
       name: value,
     };
-    if (value === "") {
+    if (!folderId) {
+      toast.error(toastMessages.error.invalidLinkCount);
+    } else if (value === "") {
       toast.error(toastMessages.error.inputFolderName);
     } else {
       try {
