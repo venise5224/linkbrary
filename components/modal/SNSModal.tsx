@@ -1,9 +1,9 @@
 import ModalContainer from "./modalComponents/ModalContainer";
 import ModalShare from "./modalComponents/ModalShare";
 
-const SNSModal = ({ folderName }: { folderName: string }) => {
+const SNSModal = () => {
   return (
-    <ModalContainer title="폴더 공유" subtitle={folderName}>
+    <ModalContainer title="폴더 공유">
       <ModalShare />
     </ModalContainer>
   );
