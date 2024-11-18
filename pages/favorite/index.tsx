@@ -46,13 +46,21 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 };
 
-const FavoritePage = ({ favoriteList, totalCount }: FavoriteProps) => {
+const FavoritePage = ({
+  favoriteList,
+  totalCount: initialTotalCount,
+}: FavoriteProps) => {
   const router = useRouter();
-
   const [linkCardList, setLinkCardList] =
     useState<FavoriteDataType[]>(favoriteList);
+  const [totalCount, setTotalCount] = useState(initialTotalCount);
 
-  const loading = useFetchLinks(setLinkCardList);
+  const loading = useFetchLinks(
+    setLinkCardList,
+    setTotalCount,
+    router.query,
+    router.pathname
+  );
 
   // 마이링크 페이지로 돌아감
   const returnButton = () => {
@@ -67,12 +75,11 @@ const FavoritePage = ({ favoriteList, totalCount }: FavoriteProps) => {
         </h2>
       </div>
       <Container>
-        <button
-          onClick={returnButton}
-          className="float-right mb-5 text-purple100"
-        >
-          👈 마이링크로 돌아가기
-        </button>
+        <div className="flex justify-end">
+          <button onClick={returnButton} className="mb-5 text-purple100">
+            👈 마이링크로 돌아가기
+          </button>
+        </div>
 
         {/* 로딩 중일 때 */}
         {loading ? (

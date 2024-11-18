@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { useLinkCardStore } from "@/store/useLinkCardStore";
-import { ensureAbsoluteUrl } from "@/lib/utils";
+import { ensureAbsoluteUrl } from "@/util/ensureAbsoluteUrl";
 import timeAgo from "@/util/timeAgo";
 import Image from "next/image";
 import Dropdown from "../Dropdown";
