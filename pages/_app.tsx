@@ -22,6 +22,10 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta property="og:image" content="/images/home_main.png" />
         <title>Linkbrary</title>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        ></meta>
       </Head>
 
       <script
