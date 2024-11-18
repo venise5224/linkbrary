@@ -18,8 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
     const clientSecret = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET;
     const redirectUri =
-      process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI_SIGN_UP ||
-      "http://localhost:3000/";
+      process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI_SIGN_UP || "/";
 
     if (!clientId || !clientSecret) {
       return res
@@ -51,7 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const signUpResponse = await axiosInstance.post("/auth/sign-up/google", {
         name: name || "사용자",
         token: id_token,
-        redirectUri: "http://localhost:3000",
+        redirectUri: "/",
       });
 
       const accessToken = signUpResponse.data.access_token;
