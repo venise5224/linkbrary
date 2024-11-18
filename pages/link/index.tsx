@@ -107,7 +107,7 @@ const LinkPage = ({
               />
             )}
           </div>
-          {linkCardList ? (
+          {linkCardList.length !== 0 ? (
             <>
               <CardsLayout>
                 {linkCardList.map((link) => (

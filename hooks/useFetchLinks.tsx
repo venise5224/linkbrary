@@ -11,7 +11,7 @@ const useFetchLinks = (
   query?: ParsedUrlQuery,
   pathname?: string
 ) => {
-  const { isTablet } = useViewport();
+  const { isMobile, isTablet } = useViewport();
 
   useEffect(() => {
     const fetchLinks = async () => {
@@ -26,7 +26,7 @@ const useFetchLinks = (
       const res = await proxy.get(endpoint, {
         params: {
           page: query?.page,
-          pageSize: isTablet ? 6 : 10,
+          pageSize: isMobile ? 10 : isTablet ? 6 : 9,
           search: query?.search,
         },
       });
@@ -37,7 +37,7 @@ const useFetchLinks = (
       }
     };
     if (query) fetchLinks();
-  }, [setLinkCardList, query, isTablet]);
+  }, [setLinkCardList, query, isTablet, isMobile]);
 };
 
 export default useFetchLinks;
