@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { parse } from "cookie";
@@ -21,6 +21,7 @@ import RenderEmptyLinkMessage from "@/components/Link/RenderEmptyLinkMessage";
 import useFetchLinks from "@/hooks/useFetchLinks";
 import useViewport from "@/hooks/useViewport";
 import { useLinkCardStore } from "@/store/useLinkCardStore";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface LinkPageProps {
   linkList: LinkData[];
@@ -78,12 +79,16 @@ const LinkPage = ({
   const { search, folder } = router.query;
   const { isOpen } = useModalStore();
   const { isMobile } = useViewport();
+  const [isLoading, setIsLoading] = useState(false);
   const [folderList, setFolderList] = useState(initialFolderList);
-  const [totalCount, setTotalCount] = useState(initialTotalCount);
-  const { linkCardList, setLinkCardList } = useLinkCardStore();
+  const { totalCount, linkCardList, setLinkCardList } =
+    useLinkCardStore.getState();
+
+  // 링크리스트 초기값 설정
+  setLinkCardList(initialLinkList, initialTotalCount);
 
   // 링크페이지의 query가 바뀌면 새로운 리스트로 업데이트 해주는 훅
-  useFetchLinks(setLinkCardList, setTotalCount, router.query, router.pathname);
+  useFetchLinks(setLinkCardList, setIsLoading, router.query, router.pathname);
 
   console.log(linkCardList);
 
@@ -106,18 +111,20 @@ const LinkPage = ({
               <FolderActionsMenu
                 setFolderList={setFolderList}
                 folderId={folder}
-                linkCount={totalCount}
+                linkCount={totalCount as number}
               />
             )}
           </div>
-          {linkCardList.length !== 0 ? (
+          {isLoading ? (
+            <LoadingSpinner /> // 로딩 상태일 때 로딩 스피너 표시
+          ) : linkCardList.length !== 0 ? (
             <>
               <CardsLayout>
                 {linkCardList.map((link) => (
                   <LinkCard key={link.id} info={link} />
                 ))}
               </CardsLayout>
-              <Pagination totalCount={totalCount} />
+              <Pagination totalCount={totalCount as number} />
             </>
           ) : (
             <RenderEmptyLinkMessage />

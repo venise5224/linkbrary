@@ -7,7 +7,7 @@ import useViewport from "./useViewport";
 // 링크페이지의 query가 바뀌면 그에 맞는 링크들을 보여주는 훅
 const useFetchLinks = (
   setLinkCardList: (list: LinkData[], totalCount: number) => void,
-  setTotalCount?: React.Dispatch<React.SetStateAction<number>>,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   query?: ParsedUrlQuery,
   pathname?: string
 ) => {
@@ -15,6 +15,7 @@ const useFetchLinks = (
 
   useEffect(() => {
     const fetchLinks = async () => {
+      setIsLoading(true);
       // 경로에 따라 API 엔드포인트 분기
       let endpoint =
         pathname === "/favorite"
@@ -32,9 +33,7 @@ const useFetchLinks = (
       });
       console.log("useFetchLinks 함수에서 다시 받아온 리스트:", res.data.list);
       setLinkCardList(res.data.list, res.data.totalCount);
-      {
-        setTotalCount && setTotalCount(res.data.totalCount);
-      }
+      setIsLoading(false);
     };
     if (query) fetchLinks();
   }, [setLinkCardList, query, isTablet, isMobile]);
