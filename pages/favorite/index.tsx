@@ -64,12 +64,7 @@ const FavoritePage = ({
     useState<FavoriteDataType[]>(favoriteList);
   const [totalCount, setTotalCount] = useState(initialTotalCount);
 
-  const loading = useFetchLinks(
-    setLinkCardList,
-    setTotalCount,
-    router.query,
-    router.pathname
-  );
+  const loading = useFetchLinks(setLinkCardList, setTotalCount, router.query);
 
   // 마이링크 페이지로 돌아감
   const returnButton = () => {

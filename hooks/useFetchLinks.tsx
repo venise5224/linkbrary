@@ -36,7 +36,6 @@ const useFetchLinks = (
             search: query?.search,
           },
         });
-        console.log("query가 바뀌었을 때 다시 받아온 리스트:", res.data.list);
         setLinkCardList(res.data.list);
         if (setTotalCount) {
           setTotalCount(res.data.totalCount);
@@ -49,7 +48,7 @@ const useFetchLinks = (
     };
 
     if (query) fetchLinks();
-  }, [setLinkCardList, setTotalCount, query, isTablet, pathname]);
+  }, [setLinkCardList, query, isTablet]);
 
   return loading; // 로딩 상태 반환
 };
