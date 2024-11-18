@@ -35,6 +35,15 @@ export const getServerSideProps: GetServerSideProps = async (
   const accessToken = cookies.accessToken;
 
   try {
+    if (!accessToken) {
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false,
+        },
+      };
+    }
+
     const res = await axiosInstance.get("/favorites", {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
