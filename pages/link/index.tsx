@@ -20,6 +20,7 @@ import LinkCard from "@/components/Link/LinkCard";
 import RenderEmptyLinkMessage from "@/components/Link/RenderEmptyLinkMessage";
 import useFetchLinks from "@/hooks/useFetchLinks";
 import useViewport from "@/hooks/useViewport";
+import { useLinkCardStore } from "@/store/useLinkCardStore";
 
 interface LinkPageProps {
   linkList: LinkData[];
@@ -77,12 +78,14 @@ const LinkPage = ({
   const { search, folder } = router.query;
   const { isOpen } = useModalStore();
   const { isMobile } = useViewport();
-  const [linkCardList, setLinkCardList] = useState(initialLinkList);
   const [folderList, setFolderList] = useState(initialFolderList);
   const [totalCount, setTotalCount] = useState(initialTotalCount);
+  const { linkCardList, setLinkCardList } = useLinkCardStore();
 
   // 링크페이지의 query가 바뀌면 새로운 리스트로 업데이트 해주는 훅
   useFetchLinks(setLinkCardList, setTotalCount, router.query, router.pathname);
+
+  console.log(linkCardList);
 
   return (
     <>
