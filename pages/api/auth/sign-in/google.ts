@@ -13,8 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
     const clientSecret = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET;
     const redirectUri =
-      process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI_SIGN_IN ||
-      "http://localhost:3000/";
+      process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI_SIGN_IN || "/";
 
     if (!clientId || !clientSecret) {
       return res
@@ -59,7 +58,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             path: "/",
           })
         );
-        return res.redirect("http://localhost:3000");
+        return res.redirect("/");
       }
     } catch (loginError: any) {
       return res.redirect("/signup");
