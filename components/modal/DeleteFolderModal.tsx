@@ -16,7 +16,7 @@ const DeleteFolderModal = ({
   linkCount: number;
 }) => {
   const { closeModal } = useModalStore();
-  const route = useRouter();
+  const router = useRouter();
   const handleSubmit = async () => {
     // 폴더 내에 링크 개수 0 일때만 폴더 삭제 가능 -> 링크 1개 이상이면 error toast 띄우고 있음 or 전체 링크 삭제 후 폴더 삭제
     if (linkCount !== 0) {
@@ -26,7 +26,7 @@ const DeleteFolderModal = ({
       try {
         await deleteFolder(folderId);
         toast.success(toastMessages.success.deleteFolder);
-        route.push("/link");
+        router.push("/link");
       } catch (error) {
         toast.error(toastMessages.error.deleteFolder);
       } finally {
