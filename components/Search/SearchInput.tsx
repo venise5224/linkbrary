@@ -7,23 +7,16 @@ export const SearchInput = () => {
   const [value, setValue] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setValue(e.target.value);
     router.push({
       pathname: router.pathname,
       query: { ...router.query, search: value },
     });
-    setValue("");
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex gap-[8px] w-full h-[54px] items-center px-[16px] py-[15px] bg-gray-100 rounded-[10px] md:h-[54px] sm:h-[43px] transition-all"
-    >
+    <form className="flex gap-[8px] w-full h-[54px] items-center px-[16px] py-[15px] bg-gray-100 rounded-[10px] md:h-[54px] sm:h-[43px] transition-all">
       <Image
         src="/icons/search.svg"
         width={16}
