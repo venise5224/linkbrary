@@ -8,7 +8,8 @@ import useFetchLinks from "@/hooks/useFetchLinks";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { parse } from "cookie";
-import Image from "next/image";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import EmptyFavoriteList from "@/components/Favorite/EmptyFavoriteList";
 
 interface FavoriteDataType {
   id: number;
@@ -32,11 +33,11 @@ export const getServerSideProps: GetServerSideProps = async (
   const { req } = context;
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
+
   try {
-    const res = await axiosInstance.get("/favorites?page=1&pageSize=10", {
+    const res = await axiosInstance.get("/favorites", {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
-
     const { list, totalCount } = res.data || { list: [], totalCount: 0 };
     return { props: { favoriteList: list, totalCount } };
   } catch (error) {
@@ -51,7 +52,7 @@ const FavoritePage = ({ favoriteList, totalCount }: FavoriteProps) => {
   const [linkCardList, setLinkCardList] =
     useState<FavoriteDataType[]>(favoriteList);
 
-  useFetchLinks(setLinkCardList);
+  const loading = useFetchLinks(setLinkCardList);
 
   // 마이링크 페이지로 돌아감
   const returnButton = () => {
@@ -72,27 +73,26 @@ const FavoritePage = ({ favoriteList, totalCount }: FavoriteProps) => {
         >
           👈 마이링크로 돌아가기
         </button>
-        <CardsLayout>
-          {linkCardList.length > 0
-            ? linkCardList.map((favorite) => (
-                <LinkCard key={favorite.id} info={favorite} />
-              ))
-            : null}
-        </CardsLayout>
 
-        {/* 즐겨찾기 항목이 없을 때 보여줄 메시지 (공통 컴포넌트로 사용할 건지 논의 필요) */}
-        {favoriteList.length === 0 && (
-          <div className="flex flex-col justify-center items-center h-full p-10 bg-gray100 text-center text-gray600">
-            <div className="text-2xl md:text-3xl font-semibold text-gray600">
-              <span className="block mb-4">⭐️</span>
-              즐겨찾기 항목이 없습니다.
-            </div>
-            <div className="text-sm text-purple100 mt-2">
-              저장한 즐겨찾기 항목을 추가해보세요.
-            </div>
+        {/* 로딩 중일 때 */}
+        {loading ? (
+          <div className="text-center">
+            <LoadingSpinner />
           </div>
+        ) : linkCardList.length > 0 ? (
+          <>
+            <CardsLayout>
+              {linkCardList.length > 0
+                ? linkCardList.map((favorite) => (
+                    <LinkCard key={favorite.id} info={favorite} />
+                  ))
+                : null}
+            </CardsLayout>
+            <Pagination totalCount={totalCount} />
+          </>
+        ) : (
+          <EmptyFavoriteList />
         )}
-        <Pagination totalCount={totalCount} />
       </Container>
     </>
   );
