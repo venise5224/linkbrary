@@ -104,13 +104,15 @@ const LinkPage = ({
             {!isMobile && <AddFolderButton setFolderList={setFolderList} />}
           </div>
           <div className="flex justify-between items-center my-[24px]">
-            <h1 className="text-2xl ">{folderName as string}</h1>
             {folder && (
-              <FolderActionsMenu
-                setFolderList={setFolderList}
-                folderId={folder}
-                linkCount={totalCount as number}
-              />
+              <>
+                <h1 className="text-2xl ">{folderName as string}</h1>
+                <FolderActionsMenu
+                  setFolderList={setFolderList}
+                  folderId={folder}
+                  linkCount={totalCount as number}
+                />
+              </>
             )}
           </div>
           {isLoading ? (
