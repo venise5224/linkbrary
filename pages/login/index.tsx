@@ -6,15 +6,8 @@ import AuthLayout from "@/components/Layout/AuthLayout";
 import Link from "next/link";
 
 const LoginPage = () => {
-  const {
-    values,
-    errors,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    isFormInvalid,
-    isLoading,
-  } = useForm(false);
+  const { values, errors, handleChange, handleBlur, handleSubmit } =
+    useForm(false);
 
   return (
     <div className="bg-gray100 min-h-screen">
@@ -31,7 +24,6 @@ const LoginPage = () => {
         <form
           className="w-full sm:max-w-[325px] md:max-w-[400px] lg:max-w-[400px] mt-[30px]"
           aria-labelledby="login-form"
-          onSubmit={handleSubmit}
         >
           <AuthInput
             text="이메일"
@@ -58,6 +50,7 @@ const LoginPage = () => {
             width="w-full"
             height="h-[53px]"
             className="mt-[30px]"
+            onClick={handleSubmit}
           >
             로그인
           </SubmitButton>
