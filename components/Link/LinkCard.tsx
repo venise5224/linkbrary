@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { useLinkCardStore } from "@/store/useLinkCardStore";
 import { ensureAbsoluteUrl } from "@/lib/utils";
+import Link from "next/link";
 import timeAgo from "@/util/timeAgo";
 import Image from "next/image";
 import Dropdown from "../Dropdown";
@@ -64,6 +65,10 @@ const LinkCard = ({ info }: LinkCardProps) => {
     openModal(type, { link, linkId });
   };
 
+  const handleNavigate = (url: string) => {
+    window.location.href = url.slice(0, 4) === "http" ? url : `https://${url}`;
+  };
+
   const dropdownItems = [
     {
       label: "수정하기",
@@ -76,7 +81,10 @@ const LinkCard = ({ info }: LinkCardProps) => {
   ];
 
   return (
-    <div className="w-[340px] h-[344px] rounded-[12px] shadow-lg overflow-hidden cursor-pointer hover:scale-105 hover:duration-300">
+    <div
+      className="w-[340px] h-[344px] rounded-[12px] shadow-lg overflow-hidden cursor-pointer hover:scale-105 hover:duration-300"
+      onClick={() => handleNavigate(info.url)}
+    >
       <section className="relative w-full h-[60%]">
         <Image
           src={ensureAbsoluteUrl(info.imageSource) || `/images/no-content.svg`}
