@@ -8,6 +8,7 @@ import useFetchLinks from "@/hooks/useFetchLinks";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { parse } from "cookie";
+import Image from "next/image";
 
 interface FavoriteDataType {
   id: number;
@@ -51,14 +52,26 @@ const FavoritePage = ({ favoriteList, totalCount }: FavoriteProps) => {
     useState<FavoriteDataType[]>(favoriteList);
 
   useFetchLinks(setLinkCardList);
+
+  // 마이링크 페이지로 돌아감
+  const returnButton = () => {
+    router.push(`/link`);
+  };
+
   return (
     <>
-      <div className="page-title pt-[10px] md:pt-5 pb-10 md:pb-[60px] bg-gray100 text-center">
+      <div className="flex justify-center items-center sm:h-[117px] h-[219px] sm:mb-5 mb-10 bg-gray100 text-center">
         <h2 className="text-[32px] md:text-[40px] font-semibold">
           ⭐️ 즐겨찾기
         </h2>
       </div>
       <Container>
+        <button
+          onClick={returnButton}
+          className="float-right mb-5 text-purple100"
+        >
+          👈 마이링크로 돌아가기
+        </button>
         <CardsLayout>
           {linkCardList.length > 0
             ? linkCardList.map((favorite) => (
