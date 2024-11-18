@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { useLinkCardStore } from "@/store/useLinkCardStore";
 import { ensureAbsoluteUrl } from "@/lib/utils";
-import Link from "next/link";
 import timeAgo from "@/util/timeAgo";
 import Image from "next/image";
 import Dropdown from "../Dropdown";
@@ -45,7 +44,8 @@ const LinkCard = ({ info }: LinkCardProps) => {
   });
 
   // 즐겨찾기 버튼 클릭 시 호출되는 함수
-  const handleFavoriteToggle = async () => {
+  const handleFavoriteToggle = async (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     setIsSubscribed((prev) => !prev);
     try {
       updateFavorite(info.id, !isSubscribed);
@@ -55,7 +55,10 @@ const LinkCard = ({ info }: LinkCardProps) => {
   };
 
   // dropdown 버튼
-  const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
+  const toggleDropdown = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setIsDropdownOpen((prev) => !prev);
+  };
 
   const handleModalOpen = (
     type: "EditLink" | "DeleteLinkModal",
@@ -66,7 +69,9 @@ const LinkCard = ({ info }: LinkCardProps) => {
   };
 
   const handleNavigate = (url: string) => {
-    window.location.href = url.slice(0, 4) === "http" ? url : `https://${url}`;
+    if (!isDropdownOpen)
+      window.location.href =
+        url.slice(0, 4) === "http" ? url : `https://${url}`;
   };
 
   const dropdownItems = [
@@ -128,7 +133,10 @@ const LinkCard = ({ info }: LinkCardProps) => {
             </div>
           )}
         </div>
-        <div className="text-black100 y-[42px] line-clamp-2">
+        <div
+          className="text-black100 y-[42px] line-clamp-2"
+          onClick={() => handleNavigate(info.url)}
+        >
           {info.description || "설명"}
         </div>
         <div className="text-sm">{formattedDate || "2024.11.06"}</div>
