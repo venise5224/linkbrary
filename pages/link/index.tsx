@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { parse } from "cookie";
@@ -6,6 +6,7 @@ import { LinkData } from "@/types/linkTypes";
 import { FolderData } from "@/types/folderTypes";
 import { Modal } from "@/components/modal/modalManager/ModalManager";
 import { SearchInput } from "../../components/Search/SearchInput";
+import { useLinkCardStore } from "@/store/useLinkCardStore";
 import axiosInstance from "@/lib/api/axiosInstanceApi";
 import useModalStore from "@/store/useModalStore";
 import Pagination from "@/components/Pagination";
@@ -20,7 +21,7 @@ import LinkCard from "@/components/Link/LinkCard";
 import RenderEmptyLinkMessage from "@/components/Link/RenderEmptyLinkMessage";
 import useFetchLinks from "@/hooks/useFetchLinks";
 import useViewport from "@/hooks/useViewport";
-import { useLinkCardStore } from "@/store/useLinkCardStore";
+import useFolderName from "@/hooks/useFolderName";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface LinkPageProps {
@@ -79,17 +80,14 @@ const LinkPage = ({
   const { search, folder } = router.query;
   const { isOpen } = useModalStore();
   const { isMobile } = useViewport();
-  const [isLoading, setIsLoading] = useState(false);
-  const [folderList, setFolderList] = useState(initialFolderList);
   const { totalCount, linkCardList, setLinkCardList } =
     useLinkCardStore.getState();
-
-  // 링크리스트 초기값 설정
-  setLinkCardList(initialLinkList, initialTotalCount);
+  const [isLoading, setIsLoading] = useState(false);
+  const [folderName] = useFolderName(folder);
+  const [folderList, setFolderList] = useState(initialFolderList);
 
   // 링크페이지의 query가 바뀌면 새로운 리스트로 업데이트 해주는 훅
   useFetchLinks(setLinkCardList, setIsLoading, router.query, router.pathname);
-
   console.log(linkCardList);
 
   return (
@@ -106,7 +104,7 @@ const LinkPage = ({
             {!isMobile && <AddFolderButton setFolderList={setFolderList} />}
           </div>
           <div className="flex justify-between items-center my-[24px]">
-            <h1 className="text-2xl ">유용한 글</h1>
+            <h1 className="text-2xl ">{folderName as string}</h1>
             {folder && (
               <FolderActionsMenu
                 setFolderList={setFolderList}
