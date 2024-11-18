@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <meta property="og:type" content="website" />
-        {/* <meta property="og:url" content="https://linkbrary.app" /> 배포 후 실제 도메인으로 변경 필요 */}
+        <meta property="og:url" content="https://linkbrary-9-99.vercel.app" />
         <meta property="og:title" content="Linkbrary" />
         <meta
           property="og:description"
