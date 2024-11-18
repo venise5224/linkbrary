@@ -35,6 +35,16 @@ export const getServerSideProps = async (
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
 
+  // accessToken이 없으면 클라이언트에서 실행될 때 /login 페이지로 이동시킴.
+  if (!accessToken) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
   const fetchData = async (endpoint: string) => {
     const res = await axiosInstance.get(endpoint, {
       headers: {
@@ -73,8 +83,6 @@ const LinkPage = ({
 
   // 링크페이지의 query가 바뀌면 새로운 리스트로 업데이트 해주는 훅
   useFetchLinks(setLinkCardList, setTotalCount, router.query, router.pathname);
-
-  console.log(linkCardList);
 
   return (
     <>

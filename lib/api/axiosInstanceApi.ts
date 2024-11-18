@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
 
 export const proxy = axios.create({
   // 배포 이후에는 배포된 URL로 변경해야 함.gi
-  baseURL: "https://linkbrary-9-99.vercel.app",
+  baseURL: "http://localhost:3000",
 });
 
 proxy.interceptors.response.use(
