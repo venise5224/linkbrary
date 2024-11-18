@@ -12,11 +12,8 @@ import { persist } from "zustand/middleware";
 
 interface AuthStore {
   user: User | null;
+  fetchUserInfo: () => Promise<boolean>;
   login: (body: signInProps) => Promise<boolean>;
-  SNSLogin: (
-    provider: "google" | "kakao",
-    body: easySignInProps
-  ) => Promise<boolean>;
   logout: () => Promise<void>;
 }
 
@@ -38,6 +35,24 @@ const useAuthStore = create<AuthStore>()(
     (set) => ({
       user: null,
 
+      // 사용자 정보 가져오기 함수
+      fetchUserInfo: async () => {
+        try {
+          const userInfo = await getUserInfo();
+          if (userInfo) {
+            set({ user: userInfo });
+            return true;
+          } else {
+            set({ user: null });
+            return false;
+          }
+        } catch (error) {
+          console.error("사용자 정보 가져오기 에러", error);
+        }
+        return false;
+      },
+
+      // 로그인 함수
       login: async (body) => {
         try {
           const response = await postSignIn(body);
@@ -50,20 +65,10 @@ const useAuthStore = create<AuthStore>()(
         return false;
       },
 
-      SNSLogin: async (provider, body) => {
-        try {
-          const response = await postEasySignIn(provider, body);
-          if (response) {
-            return await fetchUserInfo(set);
-          }
-        } catch (error) {
-          console.error("소셜 로그인 중 에러가 발생했습니다.", error);
-        }
-        return false;
-      },
-
+      // 로그아웃 함수
       logout: async () => {
         try {
+          set({ user: null });
           await proxy.post("/api/auth/sign-out");
           localStorage.removeItem("auth-storage");
         } catch (error) {
