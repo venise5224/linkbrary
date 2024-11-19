@@ -4,6 +4,9 @@ import SnsLogin from "@/components/Auth/SnsLogin";
 import SubmitButton from "@/components/SubMitButton";
 import AuthLayout from "@/components/Layout/AuthLayout";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import useAuthStore from "@/store/useAuthStore";
+import { useEffect } from "react";
 
 const LoginPage = () => {
   const {
@@ -15,6 +18,14 @@ const LoginPage = () => {
     isFormInvalid,
     isLoading,
   } = useForm(false);
+  const router = useRouter();
+  const { user } = useAuthStore();
+
+  useEffect(() => {
+    if (user) {
+      router.replace("/");
+    }
+  }, [user, router]);
 
   return (
     <div className="bg-gray100 min-h-screen">
