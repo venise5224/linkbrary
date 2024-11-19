@@ -17,7 +17,7 @@ export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const { page, pageSize } = context.query;
-  const { folderId } = context.params;
+  const { folderId } = context.params!;
 
   const folderListData = await getLink(
     { page: page, pageSize: pageSize },
