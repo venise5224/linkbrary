@@ -46,12 +46,14 @@ const AddLinkInput = ({ folderList }: FolderListData) => {
           className="sm:w-[190px] md:w-[530px] lg:w-[630px] overflow-hidden lg:ml-3 md:ml-3 sm:ml-[8px]"
         />
       </div>
-      <SubmitButton
-        onClick={handleClick}
-        className="w-[80px] h-[37px] text-[14px]"
-      >
-        추가하기
-      </SubmitButton>
+      <div className="w-[80px] h-[37px]">
+        <SubmitButton
+          className="w-full h-full text-[14px]"
+          onClick={handleClick}
+        >
+          추가하기
+        </SubmitButton>
+      </div>
 
       {isOpen && <Modal />}
     </div>
