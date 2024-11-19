@@ -88,7 +88,6 @@ const LinkPage = ({
 
   // 링크페이지의 query가 바뀌면 새로운 리스트로 업데이트 해주는 훅
   useFetchLinks(setLinkCardList, setIsLoading, router.query, router.pathname);
-  console.log(linkCardList);
 
   return (
     <>
