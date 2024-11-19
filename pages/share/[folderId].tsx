@@ -18,17 +18,19 @@ export const getServerSideProps = async (
 ) => {
   const { page, pageSize } = context.query;
   const { folderId } = context.params!;
+
   const folderListData = await getLink(
     { page: page, pageSize: pageSize },
     folderId
   );
+
   const folderNameData = await getFolder(folderId);
 
   return {
     props: {
-      folderName: folderNameData.data.name,
-      linkList: folderListData.data.list,
-      totalCount: folderListData.data.totalCount,
+      folderName: folderNameData.name,
+      linkList: folderListData.list,
+      totalCount: folderListData.totalCount,
     },
   };
 };
@@ -42,7 +44,6 @@ const SharePage = ({ folderName, linkList, totalCount }: SharePageprops) => {
         </h2>
       </div>
       <Container>
-        {/* 로딩 중일 때 */}
         {linkList.length > 0 && (
           <>
             <CardsLayout>
