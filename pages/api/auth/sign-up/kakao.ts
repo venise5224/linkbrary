@@ -5,14 +5,13 @@ import { serialize } from "cookie";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { code } = req.query;
-    console.log(code);
+
     if (!code) {
       return res.status(400).json({ message: "인증 코드가 없습니다." });
     }
 
     const redirectUri =
-      process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_SIGN_UP ||
-      "http://localhost:3000/";
+      process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI_SIGN_UP || "/";
 
     // 회원가입 시도
     try {
@@ -34,7 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             path: "/",
           })
         );
-        return res.redirect("http://localhost:3000");
+        return res.redirect("/");
       }
     } catch (signUpError: any) {
       console.error(
