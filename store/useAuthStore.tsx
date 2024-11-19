@@ -7,9 +7,9 @@ import { persist } from "zustand/middleware";
 
 interface AuthStore {
   user: User | null;
+  fetchUserInfo: () => Promise<boolean>;
   login: (body: signInProps) => Promise<boolean>;
   logout: () => Promise<void>;
-  fetchUserInfo: () => Promise<boolean>;
 }
 
 const useAuthStore = create<AuthStore>()(
@@ -24,6 +24,9 @@ const useAuthStore = create<AuthStore>()(
           if (userInfo) {
             set({ user: userInfo });
             return true;
+          } else {
+            set({ user: null });
+            return false;
           }
         } catch (error) {
           console.error("사용자 정보 가져오기 에러", error);
@@ -47,6 +50,7 @@ const useAuthStore = create<AuthStore>()(
       // 로그아웃 함수
       logout: async () => {
         try {
+          set({ user: null });
           await proxy.post("/api/auth/sign-out");
           localStorage.removeItem("auth-storage");
           set({ user: null });
