@@ -14,8 +14,8 @@ export const handleShareKakao = () => {
         description: "나에게 필요한 링크만 모아 두었어요!",
         imageUrl: "https://linkbrary-9-99.vercel.app/images/home_main.png", //배포 후 실제 도메인으로 변경 필요
         link: {
-          mobileWebUrl: location.href,
-          webUrl: location.href,
+          mobileWebUrl: location.href.replace("link?", "share?"),
+          webUrl: location.href.replace("link?", "share?"),
         },
       },
     });
