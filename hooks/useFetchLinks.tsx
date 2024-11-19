@@ -30,7 +30,6 @@ const useFetchLinks = (
           search: query?.search,
         },
       });
-      console.log("query가 바뀌었을 때 다시 받아온 리스트:", res.data.list);
       setLinkCardList(res.data.list);
       {
         setTotalCount && setTotalCount(res.data.totalCount);

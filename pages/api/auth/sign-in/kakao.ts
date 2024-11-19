@@ -5,7 +5,7 @@ import { serialize } from "cookie";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { code } = req.query;
-    console.log(code);
+
     if (!code) {
       return res.status(400).json({ message: "인증 코드가 없습니다." });
     }
