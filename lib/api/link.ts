@@ -14,7 +14,10 @@ interface putLinkFavoriteProps {
 }
 
 // 폴더에 속한 링크 조회
-export const getLink = async (query: any, forderId: number) => {
+export const getLink = async (
+  query: any,
+  forderId: string | string[] | undefined
+) => {
   let queryString;
   query ? (queryString = `?page=${query.page}&pageSize=${query.pageSize}`) : "";
 
