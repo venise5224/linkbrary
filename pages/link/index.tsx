@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { parse } from "cookie";
@@ -6,6 +6,7 @@ import { LinkData } from "@/types/linkTypes";
 import { FolderData } from "@/types/folderTypes";
 import { Modal } from "@/components/modal/modalManager/ModalManager";
 import { SearchInput } from "../../components/Search/SearchInput";
+import { useLinkCardStore } from "@/store/useLinkCardStore";
 import axiosInstance from "@/lib/api/axiosInstanceApi";
 import useModalStore from "@/store/useModalStore";
 import Pagination from "@/components/Pagination";
@@ -20,6 +21,8 @@ import LinkCard from "@/components/Link/LinkCard";
 import RenderEmptyLinkMessage from "@/components/Link/RenderEmptyLinkMessage";
 import useFetchLinks from "@/hooks/useFetchLinks";
 import useViewport from "@/hooks/useViewport";
+import useFolderName from "@/hooks/useFolderName";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface LinkPageProps {
   linkList: LinkData[];
@@ -34,6 +37,16 @@ export const getServerSideProps = async (
   const { req } = context;
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
+
+  // accessToken이 없으면 클라이언트에서 실행될 때 /login 페이지로 이동시킴.
+  if (!accessToken) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
 
   const fetchData = async (endpoint: string) => {
     const res = await axiosInstance.get(endpoint, {
@@ -67,12 +80,18 @@ const LinkPage = ({
   const { search, folder } = router.query;
   const { isOpen } = useModalStore();
   const { isMobile } = useViewport();
-  const [linkCardList, setLinkCardList] = useState(initialLinkList);
+  const { totalCount, linkCardList, setLinkCardList } =
+    useLinkCardStore.getState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [folderName] = useFolderName(folder);
   const [folderList, setFolderList] = useState(initialFolderList);
-  const [totalCount, setTotalCount] = useState(initialTotalCount);
+
+  useEffect(() => {
+    setLinkCardList(initialLinkList, initialTotalCount);
+  }, [initialLinkList, initialTotalCount, setLinkCardList]);
 
   // 링크페이지의 query가 바뀌면 새로운 리스트로 업데이트 해주는 훅
-  useFetchLinks(setLinkCardList, setTotalCount, router.query, router.pathname);
+  useFetchLinks(setLinkCardList, setIsLoading);
 
   return (
     <>
@@ -88,23 +107,27 @@ const LinkPage = ({
             {!isMobile && <AddFolderButton setFolderList={setFolderList} />}
           </div>
           <div className="flex justify-between items-center my-[24px]">
-            <h1 className="text-2xl ">유용한 글</h1>
             {folder && (
-              <FolderActionsMenu
-                setFolderList={setFolderList}
-                folderId={folder}
-                linkCount={totalCount}
-              />
+              <>
+                <h1 className="text-2xl ">{folderName as string}</h1>
+                <FolderActionsMenu
+                  setFolderList={setFolderList}
+                  folderId={folder}
+                  linkCount={totalCount as number}
+                />
+              </>
             )}
           </div>
-          {linkCardList ? (
+          {isLoading ? (
+            <LoadingSpinner /> // 로딩 상태일 때 로딩 스피너 표시
+          ) : linkCardList.length !== 0 ? (
             <>
               <CardsLayout>
                 {linkCardList.map((link) => (
                   <LinkCard key={link.id} info={link} />
                 ))}
               </CardsLayout>
-              <Pagination totalCount={totalCount} />
+              <Pagination totalCount={totalCount as number} />
             </>
           ) : (
             <RenderEmptyLinkMessage />
