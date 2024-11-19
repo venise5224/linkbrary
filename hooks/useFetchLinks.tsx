@@ -1,16 +1,16 @@
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 import { proxy } from "@/lib/api/axiosInstanceApi";
 import { LinkData } from "@/types/linkTypes";
-import { ParsedUrlQuery } from "querystring";
 import useViewport from "./useViewport";
 
 // 링크 페이지의 query가 바뀌면 그에 맞는 링크들을 보여주는 훅
 const useFetchLinks = (
   setLinkCardList: (list: LinkData[], totalCount: number) => void,
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  query?: ParsedUrlQuery,
-  pathname?: string
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
+  const router = useRouter();
+  const { query, pathname } = router;
   const { isTablet } = useViewport();
 
   useEffect(() => {
