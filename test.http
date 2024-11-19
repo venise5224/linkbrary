@@ -1,8 +1,0 @@
-POST http://localhost:3000/api/auth/sign-in/
-
-Content-Type: application/json
-
-{
-    "email": "123@naver.com",
-    "password": "1234qwer"
-}
