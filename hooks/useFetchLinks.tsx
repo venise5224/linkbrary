@@ -6,15 +6,16 @@ import useViewport from "./useViewport";
 
 // 링크페이지의 query가 바뀌면 그에 맞는 링크들을 보여주는 훅
 const useFetchLinks = (
-  setLinkCardList: React.Dispatch<React.SetStateAction<LinkData[]>>,
-  setTotalCount?: React.Dispatch<React.SetStateAction<number>>,
+  setLinkCardList: (list: LinkData[], totalCount: number) => void,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   query?: ParsedUrlQuery,
   pathname?: string
 ) => {
-  const { isTablet } = useViewport();
+  const { isMobile, isTablet } = useViewport();
 
   useEffect(() => {
     const fetchLinks = async () => {
+      setIsLoading(true);
       // 경로에 따라 API 엔드포인트 분기
       let endpoint =
         pathname === "/favorite"
@@ -26,17 +27,16 @@ const useFetchLinks = (
       const res = await proxy.get(endpoint, {
         params: {
           page: query?.page,
-          pageSize: isTablet ? 6 : 10,
+          pageSize: isMobile ? 10 : isTablet ? 6 : 9,
           search: query?.search,
         },
       });
-      setLinkCardList(res.data.list);
-      {
-        setTotalCount && setTotalCount(res.data.totalCount);
-      }
+      console.log("useFetchLinks 함수에서 다시 받아온 리스트:", res.data.list);
+      setLinkCardList(res.data.list, res.data.totalCount);
+      setIsLoading(false);
     };
     if (query) fetchLinks();
-  }, [setLinkCardList, query, isTablet]);
+  }, [setLinkCardList, query, isTablet, isMobile]);
 };
 
 export default useFetchLinks;
