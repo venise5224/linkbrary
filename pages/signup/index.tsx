@@ -57,16 +57,21 @@ const SignupPage = () => {
             error={errors.password}
           />
           <AuthInput
-            text="비밀번호"
+            text="비밀번호 확인"
             type="password"
             name="passwordConfirm"
-            placeholder="비밀번호를 입력해주세요."
+            placeholder="비밀번호를 한번 더 입력해주세요."
             value={values.passwordConfirm}
             onChange={handleChange}
             onBlur={handleBlur}
             error={errors.passwordConfirm}
           />
-          <SubmitButton width="w-full" height="h-[53px]" className="mt-[30px]">
+          <SubmitButton
+            type="submit"
+            width="w-full"
+            height="h-[53px]"
+            className="mt-[30px]"
+          >
             회원가입
           </SubmitButton>
           <SnsPassword />

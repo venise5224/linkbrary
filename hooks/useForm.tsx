@@ -1,8 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/router";
-import { postSignIn, postSignUp } from "@/lib/api/auth";
+import { postSignUp } from "@/lib/api/auth";
 import useAuthStore from "@/store/useAuthStore";
-import { TbWashDryP } from "react-icons/tb";
 import toast from "react-hot-toast";
 import toastMessages from "@/lib/toastMessage";
 
@@ -23,6 +22,7 @@ const INITIAL_VALUES: FormValues = {
 const useForm = (isSignUp = false) => {
   const [values, setValues] = useState<FormValues>(INITIAL_VALUES);
   const [errors, setErrors] = useState<FormValues>(INITIAL_VALUES);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const { login } = useAuthStore();
 
@@ -84,30 +84,42 @@ const useForm = (isSignUp = false) => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (isFormInvalid()) return;
+    if (isFormInvalid() || isLoading) return;
+
+    setIsLoading(true);
+
     const { email, password, nickname } = values;
 
-    if (isSignUp) {
-      const data = await postSignUp({ email, password, name: nickname || "" });
+    try {
+      if (isSignUp) {
+        const data = await postSignUp({
+          email,
+          password,
+          name: nickname || "",
+        });
 
-      if (data) {
-        router.push("/login");
-        toast.success(toastMessages.success.signup);
+        if (data) {
+          router.push("/login");
+          toast.success(toastMessages.success.signup);
+        } else {
+          toast.error(toastMessages.error.signup);
+        }
       } else {
-        toast.error(toastMessages.error.signup);
-      }
-    } else {
-      const data = await login({ email, password });
+        const data = await login({ email, password });
 
-      if (data) {
-        router.push("/");
-        toast.success(toastMessages.success.login);
-      } else {
-        toast.error(toastMessages.error.login);
+        if (data) {
+          router.push("/");
+          toast.success(toastMessages.success.login);
+        } else {
+          toast.error(toastMessages.error.login);
+        }
       }
+    } catch (error) {
+      toast.error("요청 중 오류가 발생했습니다.");
+    } finally {
+      setIsLoading(false);
+      setValues(INITIAL_VALUES);
     }
-
-    setValues(INITIAL_VALUES);
   };
 
   const validateEmail = (email: string) => {
@@ -133,6 +145,7 @@ const useForm = (isSignUp = false) => {
     handleBlur,
     handleSubmit,
     isFormInvalid,
+    isLoading,
   };
 };
 

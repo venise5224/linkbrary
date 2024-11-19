@@ -13,6 +13,7 @@ const LoginPage = () => {
     handleBlur,
     handleSubmit,
     isFormInvalid,
+    isLoading,
   } = useForm(false);
 
   return (
@@ -57,7 +58,6 @@ const LoginPage = () => {
             width="w-full"
             height="h-[53px]"
             className="mt-[30px]"
-            disabled={isFormInvalid()}
           >
             로그인
           </SubmitButton>

@@ -21,7 +21,6 @@ export type ModalKeysType = keyof typeof ModalType;
 
 export const Modal = () => {
   const { modalType, isOpen, props } = useModalStore();
-
   if (!modalType || !isOpen) return null;
 
   switch (modalType) {
@@ -32,8 +31,9 @@ export const Modal = () => {
     case "DeleteFolderModal":
       return (
         <DeleteFolderModal
-          folderName={props.folderName || "폴더이름"}
+          // folderName={props.folderName || "폴더이름"}
           folderId={Number(props.folderId)}
+          linkCount={Number(props.linkCount)}
         />
       );
     case "DeleteLinkModal":
@@ -46,12 +46,16 @@ export const Modal = () => {
     case "EditModal":
       return (
         <EditModal
-          folderName={props.folderName || "폴더이름"}
+          // folderName={props.folderName || "폴더이름"}
           folderId={Number(props.folderId)}
         />
       );
     case "SNSModal":
-      return <SNSModal folderName={props.folderName || "폴더이름"} />;
+      return (
+        <SNSModal
+        // folderName={props.folderName || "폴더이름"}
+        />
+      );
     case "EditLink":
       return (
         <EditLink

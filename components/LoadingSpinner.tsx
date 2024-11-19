@@ -1,10 +1,16 @@
-import { FadeLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 
-const LoadingSpinner = ({ text }: { text?: string }) => {
+const LoadingSpinner = ({
+  text,
+  size = 35,
+}: {
+  text?: string;
+  size?: number;
+}) => {
   return (
-    <div className="flex flex-col items-center justify-center h-full">
+    <div className="flex flex-col items-center justify-center">
       <p className="md:text-2xl mb-4 sm:text-lg">{text}</p>
-      <FadeLoader color="#6d6afe" />
+      <ClipLoader color="#6d6afe" size={size} />
     </div>
   );
 };

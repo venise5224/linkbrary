@@ -1,8 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import toast from "react-hot-toast";
-import toastMessages from "@/lib/toastMessage";
 
 export const SearchInput = () => {
   const router = useRouter();
@@ -24,7 +22,7 @@ export const SearchInput = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex gap-[8px] w-[1024px] h-[54px] items-center px-[16px] py-[15px] bg-gray-100 rounded-[10px] md:w-[704px] md:h-[54px] sm:w-[325px] sm:h-[43px] transition-all"
+      className="flex gap-[8px] w-full h-[54px] items-center px-[16px] py-[15px] bg-gray-100 rounded-[10px] md:h-[54px] sm:h-[43px] transition-all"
     >
       <Image
         src="/icons/search.svg"
