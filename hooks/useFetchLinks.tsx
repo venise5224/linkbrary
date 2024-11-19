@@ -31,7 +31,7 @@ const useFetchLinks = (
       const res = await proxy.get(endpoint, {
         params: {
           page: query?.page,
-          pageSize: isTablet ? 6 : 10,
+          pageSize: isTablet ? 6 : 9,
           search: query?.search,
         },
       });
