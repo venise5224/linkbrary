@@ -28,22 +28,16 @@ const useFetchLinks = (
             ? `/api/folders/${query.folder}/links`
             : "/api/links";
 
-      try {
-        const res = await proxy.get(endpoint, {
-          params: {
-            page: query?.page,
-            pageSize: isTablet ? 6 : 9,
-            search: query?.search,
-          },
-        });
-        setLinkCardList(res.data.list);
-        if (setTotalCount) {
-          setTotalCount(res.data.totalCount);
-        }
-      } catch (error) {
-        console.error("Error fetching links:", error);
-      } finally {
-        setLoading(false); // API 호출 종료 후 로딩 상태 false
+      const res = await proxy.get(endpoint, {
+        params: {
+          page: query?.page,
+          pageSize: isTablet ? 6 : 10,
+          search: query?.search,
+        },
+      });
+      setLinkCardList(res.data.list);
+      {
+        setTotalCount && setTotalCount(res.data.totalCount);
       }
     };
 
