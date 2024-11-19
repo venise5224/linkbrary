@@ -1,13 +1,13 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { parse } from "cookie";
 import axiosInstance from "@/lib/api/axiosInstanceApi";
 import CardsLayout from "@/components/Layout/CardsLayout";
 import Container from "@/components/Layout/Container";
 import LinkCard from "@/components/Link/LinkCard";
 import Pagination from "@/components/Pagination";
 import useFetchLinks from "@/hooks/useFetchLinks";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { parse } from "cookie";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import EmptyFavoriteList from "@/components/Favorite/EmptyFavoriteList";
 
@@ -62,9 +62,11 @@ const FavoritePage = ({
   const router = useRouter();
   const [linkCardList, setLinkCardList] =
     useState<FavoriteDataType[]>(favoriteList);
+  const [isLoading, setIsLoading] = useState(false);
   const [totalCount, setTotalCount] = useState(initialTotalCount);
 
-  const loading = useFetchLinks(setLinkCardList, setTotalCount, router.query);
+  useFetchLinks(setLinkCardList, setIsLoading);
+  //
 
   // 마이링크 페이지로 돌아감
   const returnButton = () => {
@@ -86,7 +88,7 @@ const FavoritePage = ({
         </div>
 
         {/* 로딩 중일 때 */}
-        {loading ? (
+        {isLoading ? (
           <div className="text-center">
             <LoadingSpinner />
           </div>
