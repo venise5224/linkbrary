@@ -8,8 +8,8 @@ import Container from "@/components/Layout/Container";
 import LinkCard from "@/components/Link/LinkCard";
 import Pagination from "@/components/Pagination";
 import useFetchLinks from "@/hooks/useFetchLinks";
-import LoadingSpinner from "@/components/LoadingSpinner";
 import EmptyFavoriteList from "@/components/Favorite/EmptyFavoriteList";
+import LinkCardSkeleton from "@/components/skeleton/LinkCardSkeleton";
 
 interface FavoriteDataType {
   id: number;
@@ -87,8 +87,10 @@ const FavoritePage = ({
         </div>
         {/* 로딩 중일 때 */}
         {isLoading ? (
-          <div className="min-h-[100px] h-full pt-20 pb-20">
-            <LoadingSpinner />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[...Array(3)].map((_, index) => (
+              <LinkCardSkeleton key={index} />
+            ))}
           </div>
         ) : linkCardList.length > 0 ? (
           <>

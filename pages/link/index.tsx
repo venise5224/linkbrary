@@ -23,6 +23,7 @@ import useFetchLinks from "@/hooks/useFetchLinks";
 import useViewport from "@/hooks/useViewport";
 import useFolderName from "@/hooks/useFolderName";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import LinkCardSkeleton from "@/components/skeleton/LinkCardSkeleton";
 
 interface LinkPageProps {
   linkList: LinkData[];
@@ -119,8 +120,10 @@ const LinkPage = ({
             )}
           </div>
           {isLoading ? (
-            <div className="min-h-[100px] h-full pt-20 pb-20">
-              <LoadingSpinner />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[...Array(3)].map((_, index) => (
+                <LinkCardSkeleton key={index} />
+              ))}
             </div>
           ) : linkCardList.length !== 0 ? (
             <>
