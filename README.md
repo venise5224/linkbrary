@@ -15,7 +15,7 @@
 
 |            | <img src="https://github.com/user-attachments/assets/5c4fd2d8-ce67-4f0a-9ce8-d6a928a4752d" alt="박문균" width="150" height="200"/> <br> **박문균 (👑 PM)** | <img src="https://avatars.githubusercontent.com/u/174448906?v=4" alt="전상민" width="150" height="200" /> <br> **전상민** | <img src="https://github.com/user-attachments/assets/c507e53d-ac12-4c2c-83f2-4ab4bc018f56" alt="구민지" width="150" height="200"/> <br> **구민지** | <img src="https://github.com/user-attachments/assets/acffe020-b376-4493-97cc-cadfc74d0eef" alt="정준영" width="150" height="200"/> <br> **정준영** | <img src="https://github.com/user-attachments/assets/fe813d8b-9ba2-4480-a4cc-7d48fc239db7" alt="홍예림" width="150" height="200" /> <br> **홍예림** |
 |------------|----------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
-| 역할       | 팀장으로 프로젝트 참여<br>로그인 / 회원가입 기능<br>간편 로그인 / 회원가입                         | 랜딩 페이지 구현<br>유저 정보 관리<br>소셜 공유                                 | 즐겨찾기 페이지<br>즐겨찾기 기능<br>링크 수정 / 삭제 기능                        | -                                                                               | 폴더 / 링크 관리 모달 구현<br>자유롭게 소개                                        |
+| 역할       | 팀장으로 프로젝트 참여<br>로그인 / 회원가입 기능<br>간편 로그인 / 회원가입                         | 랜딩 페이지 구현<br>유저 정보 관리<br>소셜 공유                                 | 즐겨찾기 페이지<br>즐겨찾기 기능<br>링크 수정 / 삭제 기능                        | 링크 페이지 구현                                                                              | 폴더 / 링크 관리 모달 구현                                   |
 | 이메일     | mungyun1234@naver.com                                                                              | venise5224@gmail.com                                                           | rnalswl96@naver.com                                                            | wn8624@naver.com                                                               | hongggy@gmail.com                                                                |
 | GitHub     | [mungyun](https://github.com/mungyun/)                                                              | [venise5224](https://github.com/venise5224)                                        | [99minji](https://github.com/99minji/99minji.git)                               | [junjeeong](https://github.com/junjeeong)                                          | [hongggyelim](https://github.com/hongggyelim)                                         |
 
@@ -54,11 +54,9 @@ npm run dev
 ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
 ![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)
 
-Zustand
+**Zustand**
 
-react-hot-toast
-react-icons
-react-spinners
+**react-hot-toast** / **react-icons** / **react-spinners**
 
 
 ## 유저 플로우
@@ -135,4 +133,37 @@ react-spinners
     - 수정 후 main과 develop 브랜치에 병합됩니다.
 
 ## **📝 시연 영상**
+#### 랜딩페이지
+<img src="https://github.com/user-attachments/assets/422c8c2c-a6d9-4601-bdd0-b543a0139ff6" width="600px" alt="랜딩 페이지" />
+
+#### 로그인
+
+<img src="https://github.com/user-attachments/assets/21ee384e-5898-4a47-ae33-98a8d9169310" width="600px" alt="일반 로그인" />
+
+#### 폴더 추가 및 이동
+
+<img src="https://github.com/user-attachments/assets/88455130-9e07-43c5-9017-9e79c74a99a5" width="600px" alt="폴더 추가 및 이동" />
+
+#### 링크 추가
+
+<img src="https://github.com/user-attachments/assets/dbe7cef3-4bf4-4271-9608-ba44b7528345" width="600px" alt="링크 추가" />
+
+#### 링크 수정 및 삭제
+
+<img src="https://github.com/user-attachments/assets/b3ca0a34-4e02-4e11-bbc7-f61309b204af" width="600px" alt="링크 수정 삭제" />
+
+#### 폴더 공유
+
+<img src="https://github.com/user-attachments/assets/b052ff88-6f9d-4639-a7f4-dc9b13f3122e" width="600px" alt="폴더 공유" />
+
+#### 폴더 삭제
+
+<img src="https://github.com/user-attachments/assets/382a9ebf-3a6f-496e-906f-bea21d357e38" width="600px" alt="폴더 삭제" />
+
+#### 즐겨찾기 추가 및 조회
+
+
+<img src="https://github.com/user-attachments/assets/96b43e58-6685-4597-8f96-6aa981004ce4" width="600px" alt="즐겨찾기 추가 조회" />
+
+
 
