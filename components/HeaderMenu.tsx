@@ -58,9 +58,8 @@ const HeaderMenu = () => {
             <Image
               src={Star}
               width={14}
-              height={17}
-              alt=""
-              className="align-top"
+              alt="별"
+              className="h-auto align-top"
             />
             즐겨찾기
           </Link>
