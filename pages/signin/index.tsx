@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import useAuthStore from "@/store/useAuthStore";
 import { useEffect } from "react";
 
-const LoginPage = () => {
+const SigninPage = () => {
   const { values, errors, handleChange, handleBlur, handleSubmit } =
     useForm(false);
   const router = useRouter();
@@ -27,7 +27,7 @@ const LoginPage = () => {
           회원이 아니신가요?{" "}
           <Link
             href="/signup"
-            className="cursor-pointer text-purple100 underline font-semibold"
+            className="text-purple100 underline font-semibold"
           >
             회원가입하기
           </Link>
@@ -72,4 +72,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SigninPage;
