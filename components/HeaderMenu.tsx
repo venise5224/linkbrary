@@ -40,7 +40,7 @@ const HeaderMenu = () => {
       {!user ? (
         <SubmitButton
           onClick={() => {
-            router.push("/login");
+            router.push("/signin");
           }}
           width="w-[80px] md:w-[128px] lg:w-[128px]"
           height="h-[37px] md:h-[53px] lg:h-[53px]"
