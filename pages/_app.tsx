@@ -8,7 +8,7 @@ import { Toaster } from "react-hot-toast";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const hidePaths = ["/login", "/signup", "/404"];
+  const hidePaths = ["/signin", "/signup", "/404"];
 
   return (
     <>
