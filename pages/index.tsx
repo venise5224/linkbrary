@@ -26,7 +26,7 @@ const HomePage = () => {
     if (user) {
       await router.push("/link");
     } else {
-      await router.push("/login");
+      await router.push("/signin");
     }
   };
 
