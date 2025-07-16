@@ -24,6 +24,7 @@ import useViewport from "@/hooks/useViewport";
 import useFolderName from "@/hooks/useFolderName";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import LinkCardSkeleton from "@/components/skeleton/LinkCardSkeleton";
+import Head from "next/head";
 
 interface LinkPageProps {
   linkList: LinkData[];
@@ -96,6 +97,13 @@ const LinkPage = ({
 
   return (
     <>
+      <Head>
+        <title>Linkbrary - 나만의 링크 모음집</title>
+        <meta
+          name="description"
+          content="Linkbrary에서 나만의 링크들을 한 곳에 모아 관리하세요. 즐겨찾기 추가, 링크 수정, 삭제 등 모든 기능을 제공합니다."
+        />
+      </Head>
       <div className="bg-gray100 w-full h-[219px] flex justify-center items-center">
         <AddLinkInput folderList={folderList} />
       </div>
