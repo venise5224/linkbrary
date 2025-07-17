@@ -5,8 +5,7 @@ const axiosInstance = axios.create({
 });
 
 export const proxy = axios.create({
-  //baseURL: "https://linkbrary-sooty.vercel.app",
-  baseURL: "http://localhost:3000",
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
 });
 
 proxy.interceptors.response.use(
