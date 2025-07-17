@@ -8,6 +8,8 @@ import sectionSearch from "@/public/images/section_search.png";
 import { useRouter } from "next/router";
 import useAuthStore from "@/store/useAuthStore";
 import Head from "next/head";
+import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 const sectionStyle =
   "flex flex-col md:flex-row md:items-center md:gap-[51px] lg:flex-row lg:items-center lg:gap-[157px]";
@@ -21,6 +23,7 @@ const sectionImageStyle =
 
 const HomePage = () => {
   const router = useRouter();
+  const { message } = router.query;
   const { user } = useAuthStore();
 
   const handleClick = async () => {
@@ -30,6 +33,12 @@ const HomePage = () => {
       await router.push("/signin");
     }
   };
+
+  useEffect(() => {
+    if (message) {
+      toast.success(message as string); // 로그인 성공 메시지
+    }
+  }, [message]);
 
   return (
     <>
