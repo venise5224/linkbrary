@@ -8,18 +8,24 @@ import { useRouter } from "next/router";
 import useAuthStore from "@/store/useAuthStore";
 import { useEffect } from "react";
 import Head from "next/head";
+import toast from "react-hot-toast";
 
 const SigninPage = () => {
   const { values, errors, handleChange, handleBlur, handleSubmit } =
     useForm(false);
   const router = useRouter();
+  const { message } = router.query;
   const { user } = useAuthStore();
 
   useEffect(() => {
     if (user) {
       router.replace("/");
     }
-  }, [user, router]);
+
+    if (message) {
+      toast.error(message as string);
+    }
+  }, [user, message, router]);
 
   return (
     <>

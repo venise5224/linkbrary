@@ -31,14 +31,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             path: "/",
           })
         );
-        return res.redirect("/");
+        return res.redirect(`/?message=${encodeURIComponent("로그인 성공")}`);
       }
     } catch (loginError: any) {
       console.error(
-        "로그인 실패:",
+        "간편 로그인 실패:",
         loginError.response?.data || loginError.message
       );
-      return res.redirect("/signup");
+      return res.redirect(
+        `/signin?message=${encodeURIComponent("회원가입이 필요합니다")}`
+      );
     }
   } catch (error: any) {
     console.error("Error:", error.response?.data || error.message);

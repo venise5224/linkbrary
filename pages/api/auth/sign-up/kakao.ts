@@ -16,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     // 회원가입 시도
     try {
       const signUpResponse = await axiosInstance.post("/auth/sign-up/kakao", {
-        name: "사용자",
+        name: "카카오 사용자",
         token: code,
         redirectUri,
       });
@@ -33,14 +33,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             path: "/",
           })
         );
-        return res.redirect("/");
+        return res.redirect("/?message=" + encodeURIComponent("회원가입 성공"));
       }
     } catch (signUpError: any) {
       console.error(
         "회원가입 실패:",
         signUpError.response?.data || signUpError.message
       );
-      return res.redirect("/login");
+      return res.redirect(
+        "/signin?message=" + encodeURIComponent("이미 가입된 계정입니다.")
+      );
     }
   } catch (error: any) {
     console.error("Error:", error.response?.data || error.message);

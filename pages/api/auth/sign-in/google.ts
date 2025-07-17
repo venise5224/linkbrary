@@ -67,7 +67,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           })
         );
 
-        return res.redirect("/");
+        return res.redirect(`/?message=${encodeURIComponent("로그인 성공")}`);
       }
     } catch (loginError: any) {
       // 간편 로그인 실패 후, 간편 회원가입 시도
@@ -93,12 +93,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               path: "/",
             })
           );
-          return res
-            .status(200)
-            .json({ message: "회원가입 성공", redirectUrl: "/" });
+          return res.status(200).json({
+            message: "회원가입 성공",
+            redirectUrl: "/?message=" + encodeURIComponent("회원가입 성공"),
+          });
         }
       } catch (signUpError: any) {
-        return res.redirect("/signin");
+        return res.redirect(
+          "/signin?message=" + encodeURIComponent("간편 로그인 실패")
+        );
       }
     }
   } catch (error: any) {
