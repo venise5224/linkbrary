@@ -5,15 +5,19 @@ import Link from "next/link";
 import SubmitButton from "./SubMitButton";
 import { useRouter } from "next/router";
 import useAuthStore from "@/store/useAuthStore";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Dropdown from "./Dropdown";
 import useOutsideClick from "@/hooks/useOutsideClick";
 
 const HeaderMenu = () => {
-  const { user, logout } = useAuthStore();
+  const { user, logout, fetchUserInfo } = useAuthStore();
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, [fetchUserInfo]);
 
   useOutsideClick(dropdownRef, () => {
     setIsOpen(false);

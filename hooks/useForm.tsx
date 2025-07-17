@@ -101,7 +101,7 @@ const useForm = (isSignUp = false) => {
         });
 
         if (data) {
-          router.push("/login");
+          router.push("/signin");
           toast.success(toastMessages.success.signup);
         } else {
           toast.error(toastMessages.error.signup);
