@@ -6,6 +6,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cookies = parse(req.headers.cookie || "");
   const accessToken = cookies.accessToken;
 
+  if (!accessToken) return;
+
   switch (req.method) {
     case "GET":
       // 현재 유저 조회
