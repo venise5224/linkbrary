@@ -8,13 +8,13 @@ import { Toaster } from "react-hot-toast";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const hidePaths = ["/login", "/signup", "/404"];
+  const hidePaths = ["/signin", "/signup", "/404"];
 
   return (
     <>
       <Head>
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://linkbrary-9-99.vercel.app" />
+        <meta property="og:url" content="https://linkbrary-sooty.vercel.app" />
         <meta property="og:title" content="Linkbrary" />
         <meta
           property="og:description"
@@ -26,10 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
         <title>Linkbrary</title>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        ></meta>
+        <meta name="description" content="나만의 링크를 관리하는 Linkbrary" />
       </Head>
 
       <script

@@ -10,6 +10,7 @@ import Pagination from "@/components/Pagination";
 import useFetchLinks from "@/hooks/useFetchLinks";
 import EmptyFavoriteList from "@/components/Favorite/EmptyFavoriteList";
 import LinkCardSkeleton from "@/components/skeleton/LinkCardSkeleton";
+import Head from "next/head";
 
 interface FavoriteDataType {
   id: number;
@@ -38,7 +39,7 @@ export const getServerSideProps: GetServerSideProps = async (
     if (!accessToken) {
       return {
         redirect: {
-          destination: "/login",
+          destination: "/signin",
           permanent: false,
         },
       };
@@ -74,6 +75,13 @@ const FavoritePage = ({
 
   return (
     <>
+      <Head>
+        <title>Linkbrary - 즐겨찾기 링크 모음</title>
+        <meta
+          name="description"
+          content="Linkbrary에서 즐겨찾기한 링크들을 한 곳에서 간편하게 관리하세요. 자주 사용하는 링크를 빠르게 접근할 수 있습니다."
+        />
+      </Head>
       <div className="flex justify-center items-center sm:h-[117px] h-[219px] sm:mb-5 mb-10 bg-gray100 text-center">
         <h2 className="text-[32px] md:text-[40px] font-semibold">
           ⭐️ 즐겨찾기

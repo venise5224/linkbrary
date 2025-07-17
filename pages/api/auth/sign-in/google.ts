@@ -2,6 +2,11 @@ import axios from "axios";
 import axiosInstance from "@/lib/api/axiosInstanceApi";
 import { NextApiRequest, NextApiResponse } from "next";
 import { serialize } from "cookie";
+import { jwtDecode } from "jwt-decode";
+
+interface GoogleUserInfo {
+  name: string;
+}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -39,7 +44,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         .json({ message: "ID 토큰을 가져오지 못했습니다." });
     }
 
-    // 이미 회원인지 체크
+    const userInfo: GoogleUserInfo = jwtDecode(id_token);
+    const { name } = userInfo;
+
+    // 간편 로그인 시도, 실패 시 간편 회원가입 시도
     try {
       const loginResponse = await axiosInstance.post("/auth/sign-in/google", {
         token: id_token,
@@ -58,10 +66,43 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             path: "/",
           })
         );
-        return res.redirect("/");
+
+        return res.redirect(`/?message=${encodeURIComponent("로그인 성공")}`);
       }
     } catch (loginError: any) {
-      return res.redirect("/signup");
+      // 간편 로그인 실패 후, 간편 회원가입 시도
+      try {
+        const signUpResponse = await axiosInstance.post(
+          "/auth/sign-up/google",
+          {
+            name: name || "사용자",
+            token: id_token,
+            redirectUri,
+          }
+        );
+
+        const accessToken = signUpResponse.data.access_token;
+        if (accessToken) {
+          res.setHeader(
+            "Set-Cookie",
+            serialize("accessToken", accessToken, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV === "production",
+              sameSite: "lax",
+              maxAge: 60 * 60 * 24,
+              path: "/",
+            })
+          );
+          return res.status(200).json({
+            message: "회원가입 성공",
+            redirectUrl: "/?message=" + encodeURIComponent("회원가입 성공"),
+          });
+        }
+      } catch (signUpError: any) {
+        return res.redirect(
+          "/signin?message=" + encodeURIComponent("간편 로그인 실패")
+        );
+      }
     }
   } catch (error: any) {
     console.error("Error:", error.response?.data || error.message);

@@ -1,39 +1,55 @@
+import useForm from "@/hooks/useForm";
 import AuthInput from "@/components/Auth/AuthInput";
+import SnsLogin from "@/components/Auth/SnsLogin";
 import SubmitButton from "@/components/SubMitButton";
 import AuthLayout from "@/components/Layout/AuthLayout";
 import Link from "next/link";
-import useForm from "@/hooks/useForm";
+import { useRouter } from "next/router";
+import useAuthStore from "@/store/useAuthStore";
+import { useEffect } from "react";
 import Head from "next/head";
-import SnsLogin from "@/components/Auth/SnsLogin";
+import toast from "react-hot-toast";
 
-const SignupPage = () => {
+const SigninPage = () => {
   const { values, errors, handleChange, handleBlur, handleSubmit } =
-    useForm(true);
+    useForm(false);
+  const router = useRouter();
+  const { message } = router.query;
+  const { user } = useAuthStore();
+
+  useEffect(() => {
+    if (user) {
+      router.replace("/");
+    }
+
+    if (message) {
+      toast.error(message as string);
+    }
+  }, [user, message, router]);
 
   return (
     <>
       <Head>
-        <title>Linkbrary - 회원가입</title>
+        <title>Linkbrary - 로그인</title>
         <meta
           name="description"
-          content="Linkbrary에 가입하여 나만의 링크를 관리하고, 즐겨찾기 및 공유 기능을 활용해보세요. 간편한 회원가입 절차로 시작하세요."
+          content="Linkbrary에 로그인하여 당신의 링크를 관리하고, 즐겨찾기를 추가하고 편리하게 링크를 정리하세요."
         />
       </Head>
       <div className="bg-gray100 min-h-screen">
         <AuthLayout>
           <p className="mt-[16px] text-base font-normal">
-            이미 회원이신가요?{" "}
+            회원이 아니신가요?{" "}
             <Link
-              href="/signin"
+              href="/signup"
               className="text-purple100 underline font-semibold"
             >
-              로그인하기
+              회원가입하기
             </Link>
           </p>
           <form
-            className="w-full sm:max-w-[325px] md:max-w-[400px] lg:max-w-[400px] mt-[30px] h-full"
+            className="w-full sm:max-w-[325px] md:max-w-[400px] lg:max-w-[400px] mt-[30px]"
             aria-labelledby="login-form"
-            onSubmit={handleSubmit}
           >
             <AuthInput
               text="이메일"
@@ -46,16 +62,6 @@ const SignupPage = () => {
               error={errors.email}
             />
             <AuthInput
-              text="이름"
-              type="text"
-              name="nickname"
-              placeholder="이름을 입력해주세요."
-              value={values.nickname}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={errors.nickname}
-            />
-            <AuthInput
               text="비밀번호"
               type="password"
               name="password"
@@ -65,23 +71,14 @@ const SignupPage = () => {
               onBlur={handleBlur}
               error={errors.password}
             />
-            <AuthInput
-              text="비밀번호 확인"
-              type="password"
-              name="passwordConfirm"
-              placeholder="비밀번호를 한번 더 입력해주세요."
-              value={values.passwordConfirm}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={errors.passwordConfirm}
-            />
             <SubmitButton
               type="submit"
               width="w-full"
               height="h-[53px]"
               className="mt-[30px]"
+              onClick={handleSubmit}
             >
-              회원가입
+              로그인
             </SubmitButton>
             <SnsLogin />
           </form>
@@ -91,4 +88,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default SigninPage;

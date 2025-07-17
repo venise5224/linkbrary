@@ -15,13 +15,13 @@ const HeaderMenu = () => {
   const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  useOutsideClick(dropdownRef, () => {
-    setIsOpen(false);
-  });
-
   useEffect(() => {
     fetchUserInfo();
   }, [fetchUserInfo]);
+
+  useOutsideClick(dropdownRef, () => {
+    setIsOpen(false);
+  });
 
   const dropdownItems = [
     {
@@ -40,7 +40,7 @@ const HeaderMenu = () => {
       {!user ? (
         <SubmitButton
           onClick={() => {
-            router.push("/login");
+            router.push("/signin");
           }}
           width="w-[80px] md:w-[128px] lg:w-[128px]"
           height="h-[37px] md:h-[53px] lg:h-[53px]"
@@ -58,9 +58,8 @@ const HeaderMenu = () => {
             <Image
               src={Star}
               width={14}
-              height={17}
-              alt=""
-              className="align-top"
+              alt="별"
+              className="h-auto align-top"
             />
             즐겨찾기
           </Link>

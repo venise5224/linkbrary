@@ -5,6 +5,7 @@ import useAuthStore from "@/store/useAuthStore";
 import toast from "react-hot-toast";
 import toastMessages from "@/lib/toastMessage";
 import { getUserInfo } from "@/lib/api/user";
+import { validateEmail } from "@/util/regex";
 
 interface FormValues {
   email: string;
@@ -100,7 +101,7 @@ const useForm = (isSignUp = false) => {
         });
 
         if (data) {
-          router.push("/login");
+          router.push("/signin");
           toast.success(toastMessages.success.signup);
         } else {
           toast.error(toastMessages.error.signup);
@@ -121,11 +122,6 @@ const useForm = (isSignUp = false) => {
       setIsLoading(false);
       setValues(INITIAL_VALUES);
     }
-  };
-
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
   };
 
   const isFormInvalid = () =>

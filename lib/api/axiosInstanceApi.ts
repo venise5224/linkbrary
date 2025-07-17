@@ -5,8 +5,7 @@ const axiosInstance = axios.create({
 });
 
 export const proxy = axios.create({
-  baseURL: "https://linkbrary-sooty.vercel.app/",
-  //baseURL: "http://localhost:3000",
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
 });
 
 proxy.interceptors.response.use(
@@ -14,7 +13,7 @@ proxy.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-      window.location.href = "/login";
+      window.location.href = "/signin";
     }
     return Promise.reject(error);
   }
